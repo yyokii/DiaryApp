@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct DiaryApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceController = CoreDataProvider.shared
 
     var body: some Scene {
         WindowGroup {
