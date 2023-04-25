@@ -13,6 +13,9 @@
 		F5358CAC29F52468005FD6C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5358CAB29F52468005FD6C8 /* Preview Assets.xcassets */; };
 		F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAD29F52468005FD6C8 /* Persistence.swift */; };
 		F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */; };
+		F5358CBE29F691E8005FD6C8 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CBD29F691E8005FD6C8 /* BaseModel.swift */; };
+		F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CBF29F69276005FD6C8 /* Item+Extension.swift */; };
+		F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		F5358CB029F52468005FD6C8 /* Diary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diary.xcdatamodel; sourceTree = "<group>"; };
 		F5358CB229F52468005FD6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5358CB829F53BB5005FD6C8 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diary.entitlements; sourceTree = "<group>"; };
+		F5358CBD29F691E8005FD6C8 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		F5358CBF29F69276005FD6C8 /* Item+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Extension.swift"; sourceTree = "<group>"; };
+		F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */,
+				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
+				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -97,6 +105,7 @@
 		F5358CBB29F60286005FD6C8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -181,8 +190,11 @@
 			files = (
 				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
+				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
+				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
+				F5358CBE29F691E8005FD6C8 /* BaseModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

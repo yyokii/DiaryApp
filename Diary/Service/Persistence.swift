@@ -7,8 +7,10 @@
 
 import CoreData
 
-struct CoreDataProvider {
+public class CoreDataProvider: ObservableObject {
     static let shared = CoreDataProvider()
+
+    @Published var coreDataProviderError: CoreDataProviderError?
 
     static var preview: CoreDataProvider = {
         let result = CoreDataProvider()
@@ -20,8 +22,6 @@ struct CoreDataProvider {
         do {
             try viewContext.save()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
@@ -33,10 +33,10 @@ struct CoreDataProvider {
     init() {
         container = NSPersistentCloudKitContainer(name: "Diary")
 
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
+        container.loadPersistentStores(completionHandler: { [weak self] (storeDescription, error) in
+            if let self,
+               let error = error as NSError? {
                 /*
-                 TODO:
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
                  * The persistent store is not accessible, due to permissions or data protection when the device is locked.
@@ -44,9 +44,27 @@ struct CoreDataProvider {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                self.coreDataProviderError = .failedToInit(error: error)
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+}
+
+public enum CoreDataProviderError: Error, LocalizedError {
+    case failedToInit(error: Error?)
+
+    public var errorDescription: String? {
+        switch self {
+        case .failedToInit:
+            return "Failed to save"
+        }
+    }
+
+    public var recoverySuggestion: String? {
+        switch self {
+        case .failedToInit(let error):
+            return "Sorry, please check message👇\n\(error?.localizedDescription ?? "")"
+        }
     }
 }
