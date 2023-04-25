@@ -14,17 +14,35 @@ struct ContentView: View {
     @FetchRequest(fetchRequest: Item.thisMonth)
     private var items: FetchedResults<Item>
 
+    @FetchRequest(fetchRequest: Item.favorites)
+    private var favorites: FetchedResults<Item>
+
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        DiaryDetailView(item: item)
-                    } label: {
-                        Text(item.createdAt!, formatter: itemFormatter)
+            VStack {
+                List {
+                    ForEach(items) { item in
+                        NavigationLink {
+                            DiaryDetailView(item: item)
+                        } label: {
+                            Text(item.createdAt!, formatter: itemFormatter)
+                        }
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
+
+                Divider()
+
+                List {
+                    ForEach(favorites) { item in
+                        NavigationLink {
+                            DiaryDetailView(item: item)
+                        } label: {
+                            Text(item.createdAt!, formatter: itemFormatter)
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

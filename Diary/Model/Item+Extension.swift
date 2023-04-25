@@ -33,4 +33,13 @@ extension Item: Model {
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         return request
     }
+
+    static var favorites: NSFetchRequest<Item> {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "isFavorite == true"
+        )
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        return request
+    }
 }
