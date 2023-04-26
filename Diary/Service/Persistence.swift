@@ -57,7 +57,7 @@ public enum CoreDataProviderError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .failedToInit:
-            return "Failed to save"
+            return "Failed to setup"
         }
     }
 
