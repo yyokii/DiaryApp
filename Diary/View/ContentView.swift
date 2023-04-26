@@ -7,9 +7,12 @@
 
 import SwiftUI
 import CoreData
+import WeatherKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+
+    @StateObject var weatherData = WeatherData()
 
     @FetchRequest(fetchRequest: Item.thisMonth)
     private var items: FetchedResults<Item>
@@ -43,6 +46,10 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteItems)
                 }
+
+                Divider()
+
+                todayWeather
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -54,7 +61,9 @@ struct ContentView: View {
                     }
                 }
             }
-            Text("Select an item")
+        }
+        .onAppear{
+            weatherData.requestLocationAuth()
         }
     }
 
@@ -91,6 +100,17 @@ struct ContentView: View {
 
 private extension ContentView {
 
+    var todayWeather: some View {
+        VStack {
+            if let todayWeather = weatherData.todayWeather {
+                Text(todayWeather.date, format: Date.FormatStyle().hour(.defaultDigits(amPM: .abbreviated)).day())
+                Image(systemName: todayWeather.symbolName)
+                Text(todayWeather.lowTemperature.formatted(.measurement(width: .abbreviated, usage: .weather)))
+                Text(todayWeather.highTemperature.formatted(.measurement(width: .abbreviated, usage: .weather)))
+            }
+        }
+        .asyncState(weatherData.phase)
+    }
 }
 
 struct DiaryDetailView: View {

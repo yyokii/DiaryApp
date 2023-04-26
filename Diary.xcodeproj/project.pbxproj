@@ -18,6 +18,10 @@
 		F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */; };
 		F5358D0129F80879005FD6C8 /* DiaryItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0029F80879005FD6C8 /* DiaryItemTests.swift */; };
 		F5358D0829F8B602005FD6C8 /* MockCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0729F8B602005FD6C8 /* MockCoreData.swift */; };
+		F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */; };
+		F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */; };
+		F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */; };
+		F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +50,10 @@
 		F5358CFE29F80879005FD6C8 /* DiaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5358D0029F80879005FD6C8 /* DiaryItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryItemTests.swift; sourceTree = "<group>"; };
 		F5358D0729F8B602005FD6C8 /* MockCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreData.swift; sourceTree = "<group>"; };
+		F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataStore.swift; sourceTree = "<group>"; };
+		F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncState.swift; sourceTree = "<group>"; };
+		F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AsyncState.swift"; sourceTree = "<group>"; };
+		F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +122,7 @@
 				F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */,
 				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
 				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
+				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -130,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */,
+				F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */,
+				F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -138,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				F5358CAD29F52468005FD6C8 /* Persistence.swift */,
+				F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -251,11 +263,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */,
 				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
+				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
+				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
+				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
 				F5358CBE29F691E8005FD6C8 /* BaseModel.swift in Sources */,
 			);
@@ -408,6 +424,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "日記に自動で正確な天気予報を表示するために利用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -439,6 +456,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "日記に自動で正確な天気予報を表示するために利用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
