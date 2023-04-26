@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @StateObject var weatherData = WeatherData()
+    let notificationService = NotificationService()
 
     @FetchRequest(fetchRequest: Item.thisMonth)
     private var items: FetchedResults<Item>
@@ -64,6 +65,7 @@ struct ContentView: View {
         }
         .onAppear{
             weatherData.requestLocationAuth()
+            notificationService.requestAuth()
         }
     }
 
