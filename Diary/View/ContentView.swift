@@ -5,8 +5,10 @@
 //  Created by Higashihara Yoki on 2023/04/23.
 //
 
-import SwiftUI
 import CoreData
+import PhotosUI
+import SwiftUI
+import UIKit
 import WeatherKit
 
 struct ContentView: View {
@@ -39,11 +41,7 @@ struct ContentView: View {
 
                 List {
                     ForEach(favorites) { item in
-                        NavigationLink {
-                            DiaryDetailView(item: item)
-                        } label: {
-                            Text(item.createdAt!, formatter: itemFormatter)
-                        }
+                        Text(item.createdAt!, formatter: itemFormatter)
                     }
                     .onDelete(perform: deleteItems)
                 }
@@ -118,23 +116,30 @@ private extension ContentView {
 struct DiaryDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    /*
-     Core DataのEntityはClassでありObservableObjectではないので、Stateで管理しても状態更新は正常にされない。
-     自動生成のものをそのまま利用したいのでバインドするものに関してはプロパティを用意し、更新タイミングでEntityを変更するようにしている
-     */
-    let item: Item
-
     // Diary editable contents
     @State var emoji: String
     @State var diaryBody: String
     @State var isFavorite: Bool
 
+    @State private var selectedPickerItem: PhotosPickerItem?
+    @State private var selectedImage: UIImage?
+
+    /*
+     このViewで入力を行い、保存しないで他の画面に遷移し再度本Viewを開いた際に値は元に戻っていてほしい。
+     従って編集項目はStateで管理している。
+     また、Core DataのEntityはClassでありObservableObjectではないので、Stateで管理しても状態更新は正常にされない。
+     自動生成のものをそのまま利用したいのでバインドするものに関してはプロパティを用意し、更新タイミングでEntityを変更するようにしている
+     */
+    private let item: Item
+
+    private let imageSize: CGSize = .init(width: 300, height: 300)
+
     init(item: Item) {
         self.item = item
 
-        self.emoji = item.emoji ?? ""
-        self.diaryBody = item.body ?? ""
-        self.isFavorite = item.isFavorite
+        _emoji = State(initialValue: item.emoji ?? "")
+        _diaryBody = State(initialValue: item.body ?? "")
+        _isFavorite = State(initialValue: item.isFavorite)
     }
 
     var body: some View {
@@ -151,16 +156,47 @@ struct DiaryDetailView: View {
                 Text("updated at \(updatedAt, formatter: itemFormatter)")
             }
 
+            if let imageData = item.imageData,
+               let uiImage: UIImage = .init(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300)
+            }
+
+            if let selectedImage {
+                Image(uiImage: selectedImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300)
+            }
+
+            PhotosPicker("Select image", selection: $selectedPickerItem, matching: .images)
+
             Button("Save") {
                 item.emoji = emoji
                 item.body = diaryBody
                 item.isFavorite = isFavorite
+                if let selectedImage,
+                   let imageData = selectedImage.jpegData(compressionQuality: 0.5) {
+                    item.imageData = imageData
+                }
 
                 do {
                     try item.save()
                 } catch {
                     let nsError = error as NSError
                     fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                }
+            }
+        }
+        .onChange(of: selectedPickerItem) { _ in
+            Task {
+                if let data = try? await selectedPickerItem?.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data),
+                   let resizedImage = uiImage.resizeImage(to: imageSize),
+                   let rotatedImage = resizedImage.reorientToUp() {
+                    selectedImage = rotatedImage
                 }
             }
         }
@@ -173,17 +209,6 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
-
-extension Binding {
-    func withDefault<T>(_ defaultValue: T) -> Binding<T> where Value == Optional<T> {
-        return Binding<T>(get: {
-            self.wrappedValue ?? defaultValue
-        }, set: { newValue in
-            print(newValue)
-            self.wrappedValue = newValue
-        })
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

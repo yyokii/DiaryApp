@@ -18,6 +18,7 @@ extension Item: BaseModel {
         newItem.isFavorite = Bool.random()
         newItem.updatedAt = Date()
         newItem.weather = "sunny"
+        newItem.imageData = nil
         return newItem
     }
     #endif
@@ -54,7 +55,7 @@ extension Item: BaseModel {
         else { return 0 }
 
         var count = 0
-        var now = Date()
+        let now = Date()
 
         // 最新のItemと今日の日付が同じかどうかを判別する
         let dayDiffBetweenLatestItemAndNow = Calendar.current.dateComponents([.day], from: latestItemCreatedAt, to: now).day
