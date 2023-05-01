@@ -24,6 +24,8 @@
 		F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */; };
 		F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D1129F92DDD005FD6C8 /* NotificationService.swift */; };
 		F5358D1429FAADAC005FD6C8 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */; };
+		F5358D2429FEAB60005FD6C8 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D2329FEAB60005FD6C8 /* View+Extension.swift */; };
+		F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D2529FEB2E9005FD6C8 /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		F5358D1129F92DDD005FD6C8 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		F5358D2329FEAB60005FD6C8 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		F5358D2529FEB2E9005FD6C8 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		F5358CA329F52467005FD6C8 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				F5358D2229FEAB46005FD6C8 /* StyleGuide */,
 				F5358CBB29F60286005FD6C8 /* Extension */,
 				F5358CB929F60273005FD6C8 /* Model */,
 				F5358CBC29F602BD005FD6C8 /* Service */,
@@ -156,6 +161,7 @@
 				F5358CAD29F52468005FD6C8 /* Persistence.swift */,
 				F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */,
 				F5358D1129F92DDD005FD6C8 /* NotificationService.swift */,
+				F5358D2529FEB2E9005FD6C8 /* UserDefaults.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -167,6 +173,14 @@
 				F5358D0729F8B602005FD6C8 /* MockCoreData.swift */,
 			);
 			path = DiaryTests;
+			sourceTree = "<group>";
+		};
+		F5358D2229FEAB46005FD6C8 /* StyleGuide */ = {
+			isa = PBXGroup;
+			children = (
+				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
+			);
+			path = StyleGuide;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,7 +294,9 @@
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
+				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
+				F5358D2429FEAB60005FD6C8 /* View+Extension.swift in Sources */,
 				F5358CBE29F691E8005FD6C8 /* BaseModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

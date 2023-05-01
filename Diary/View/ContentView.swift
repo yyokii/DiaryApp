@@ -17,7 +17,7 @@ struct ContentView: View {
     @StateObject var weatherData = WeatherData()
     let notificationService = NotificationService()
 
-    @FetchRequest(fetchRequest: Item.thisMonth)
+    @FetchRequest(fetchRequest: Item.all)
     private var items: FetchedResults<Item>
 
     @FetchRequest(fetchRequest: Item.favorites)
@@ -115,6 +115,10 @@ private extension ContentView {
 
 struct DiaryDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var textOptions: TextOptions
+
+    @AppStorage("name") var name: String = "Kanye"
+
 
     // Diary editable contents
     @State var emoji: String
@@ -134,6 +138,8 @@ struct DiaryDetailView: View {
 
     private let imageSize: CGSize = .init(width: 300, height: 300)
 
+    private let userDefault = UserDefaults.standard
+
     init(item: Item) {
         self.item = item
 
@@ -144,31 +150,80 @@ struct DiaryDetailView: View {
 
     var body: some View {
         VStack {
-            TextField("emoji", text: $emoji)
-            Text("weather: \(item.weather ?? "")")
-            TextField("body", text: $diaryBody)
-            Toggle(isOn: $isFavorite) {
-                Text("favorite")
-            }
-            Text("created at \(item.createdAt!, formatter: itemFormatter)")
+            VStack {
+                TextField("emoji", text: $emoji)
+                Text("weather: \(item.weather ?? "")")
+                TextField("body", text: $diaryBody)
+                    .textOption(textOptions)
+                Toggle(isOn: $isFavorite) {
+                    Text("favorite")
+                }
+                Text("created at \(item.createdAt!, formatter: itemFormatter)")
 
-            if let updatedAt = item.updatedAt {
-                Text("updated at \(updatedAt, formatter: itemFormatter)")
+                if let updatedAt = item.updatedAt {
+                    Text("updated at \(updatedAt, formatter: itemFormatter)")
+                }
+
+                if let imageData = item.imageData,
+                   let uiImage: UIImage = .init(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300)
+                }
             }
 
-            if let imageData = item.imageData,
-               let uiImage: UIImage = .init(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 300)
-            }
 
             if let selectedImage {
                 Image(uiImage: selectedImage)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 300)
+            }
+
+            Slider(
+                value: $textOptions.fontSize,
+                in: 8...40,
+                step: 1
+            ) {
+                Text("font size")
+            } minimumValueLabel: {
+                Text("8")
+            } maximumValueLabel: {
+                Text("40")
+            } onEditingChanged: { editing in
+                if !editing {
+                    print("📝 save fontSize: \(textOptions.fontSize)")
+//                    fontSize = Int(textOptions.fontSize)
+//                    userDefault.set(textOptions.fontSize, forKey: UserDefaultsKey.fontSize.rawValue)
+                }
+            }
+
+            Slider(
+                value: $textOptions.lineSpacing,
+                in: 1...20,
+                step: 1
+            ) {
+                Text("line spacing")
+            } minimumValueLabel: {
+                Text("1")
+            } maximumValueLabel: {
+                Text("20")
+            } onEditingChanged: { editing in
+                if !editing {
+                    print("📝 save lineSpacing: \(textOptions.lineSpacing)")
+//                    lineSpacing = Int(textOptions.lineSpacing)
+//                    userDefault.set(textOptions.lineSpacing, forKey: UserDefaultsKey.lineSpacing.rawValue)
+                }
+            }
+
+            Button("demo") {
+                // TODO: 保存する値は合っているが、エラーでてないのに保存がされてない事象が発生する。cloudkitの処理とバッティングしてる？　最小実装作ってみた方がいいかも
+                userDefault.set(textOptions.fontSize, forKey: UserDefaultsKey.fontSize.rawValue)
+                userDefault.set(textOptions.lineSpacing, forKey: UserDefaultsKey.lineSpacing.rawValue)
+//                let savedFontSize: Int = userDefault.integer(forKey: UserDefaultsKey.fontSize.rawValue)
+//                let savedLineSpacing: Int = userDefault.integer(forKey: UserDefaultsKey.lineSpacing.rawValue)
+//                print("📝 demo: (\(savedFontSize), \(savedLineSpacing))")
             }
 
             PhotosPicker("Select image", selection: $selectedPickerItem, matching: .images)
