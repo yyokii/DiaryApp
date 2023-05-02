@@ -14,7 +14,7 @@ struct DiaryApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
                 .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
                 .environmentObject(textOptions)
         }
