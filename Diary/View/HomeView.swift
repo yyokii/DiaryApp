@@ -5,14 +5,14 @@
 //  Created by Higashihara Yoki on 2023/05/01.
 //
 
+import CoreData
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @StateObject private var diaryDataStore = DiaryDataStore()
-
-    @State var items: [Item] = []
     @State var firstDateOfDisplayedMonth = Date().startOfMonth!
+
+    @FetchRequest(fetchRequest: Item.thisMonth)
+    private var items: FetchedResults<Item>
 
     private let calendar = Calendar.current
 
@@ -38,9 +38,6 @@ struct HomeView: View {
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
-        }
-        .onAppear{
-            fetchItemsForMonth(date: firstDateOfDisplayedMonth)
         }
     }
 
@@ -132,11 +129,8 @@ private extension HomeView {
     }
 
     func fetchItemsForMonth(date: Date) {
-        do {
-            let itemsOfMonth: [Item] = try Item.itemsOfMonth(date: date)
-            self.items = itemsOfMonth
-        } catch {
-            // エラー処理
-        }
+        let request: NSFetchRequest = Item.itemsOfMonth(date: date)
+        items.nsSortDescriptors = request.sortDescriptors ?? []
+        items.nsPredicate = request.predicate
     }
 }
