@@ -91,6 +91,7 @@ extension Item: BaseModel {
         }
     }
 
+    // TODO: 未使用と思う
     static func itemsOfMonth(date: Date) -> NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(
@@ -136,5 +137,31 @@ extension Item: BaseModel {
         }
 
         return hasTodayItem ? count + 1 : count
+    }
+
+    static func create(
+        date: Date,
+        title: String,
+        body: String,
+        isFavorite: Bool = false,
+        weather: String,
+        imageData: Data?
+    ) throws {
+        let now = Date()
+        let diaryItem = Item(context: CoreDataProvider.shared.container.viewContext)
+
+        diaryItem.date = date
+        diaryItem.title = title
+        diaryItem.body = body
+        diaryItem.createdAt = now
+        diaryItem.updatedAt = now
+        diaryItem.isFavorite = isFavorite
+        diaryItem.weather = weather
+
+        if let imageData {
+            diaryItem.imageData = imageData
+        }
+
+        try diaryItem.save()
     }
 }

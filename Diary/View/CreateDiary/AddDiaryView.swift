@@ -39,7 +39,7 @@ struct AddDiaryView: View {
                     VStack(spacing: 20) {
                         date
                         weather
-                        inputEmoji
+                        inputTitle
                         diaryBody
                         createButton
                     }
@@ -116,7 +116,7 @@ private extension AddDiaryView {
         .labelsHidden()
     }
 
-    var inputEmoji: some View {
+    var inputTitle: some View {
         TextField("title", text: $title)
             .font(.system(size: 32))
             .multilineTextAlignment(.center)
@@ -129,7 +129,7 @@ private extension AddDiaryView {
             Image(systemName: todayWeather.symbolName)
                 .asyncState(weatherData.phase)
         } else {
-            Picker("select weather", selection: $selectedWeather) {
+            Picker("weather", selection: $selectedWeather) {
                 ForEach(dayWeatherSymbolNames, id: \.self) { symbolName in
                     Image(systemName: symbolName)
                 }
@@ -150,10 +150,36 @@ private extension AddDiaryView {
 
     var createButton: some View {
         Button("Create") {
-            let diaryItem = Item()
-            // TODO: save
+            createItemFromInput()
         }
         .buttonStyle(ActionButtonStyle())
+    }
+
+    func createItemFromInput() {
+        var weather: String
+        if Calendar.current.isDateInToday(selectedDate),
+           let todayWeather = weatherData.todayWeather {
+            weather = todayWeather.symbolName
+        } else {
+            weather = selectedWeather
+        }
+
+        var imageData: Data?
+        if let selectedImage {
+            imageData = selectedImage.jpegData(compressionQuality: 0.5)
+        }
+
+        do {
+            try Item.create(
+                date: selectedDate,
+                title: title,
+                body: bodyText,
+                weather: weather,
+                imageData: imageData
+            )
+        } catch {
+            // TODO: handle error
+        }
     }
 }
 
