@@ -9,10 +9,11 @@ import CoreData
 import SwiftUI
 
 struct HomeView: View {
-    @State var firstDateOfDisplayedMonth = Date().startOfMonth!
 
     @FetchRequest(fetchRequest: Item.thisMonth)
     private var items: FetchedResults<Item>
+    @State var firstDateOfDisplayedMonth = Date().startOfMonth!
+    @State var isPresentedCreateDiaryView = false
 
     private let calendar = Calendar.current
 
@@ -33,11 +34,14 @@ struct HomeView: View {
                 }
 
                 FloatingButton(action: {
-                    // Perform some action here...
+                    isPresentedCreateDiaryView = true
                 }, icon: "plus")
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
+        }
+        .fullScreenCover(isPresented: $isPresentedCreateDiaryView) {
+            AddDiaryView()
         }
     }
 

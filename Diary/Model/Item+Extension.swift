@@ -21,18 +21,30 @@ extension Item {
 
 extension Item: BaseModel {
 #if DEBUG
-    static func makeRandom(withImage: Bool = false) -> Item {
+    static func makeRandom(
+        context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext,
+        date: Date = Date(),
+        withImage: Bool = false
+    ) -> Item {
+        let titleSourceString = "あ漢カ👋"
+        var title = ""
+        let repeatCountForTitle = Int.random(in: 1...4)
+        for _ in 1...repeatCountForTitle {
+            title += titleSourceString
+        }
+
         let bodySourceString = "AaGgYyQq123あいうえお漢字カタカナ@+"
         var body = ""
-        let repeatCount = Int.random(in: 1...10)
-        for _ in 1...repeatCount {
+        let repeatCountForBody = Int.random(in: 1...10)
+        for _ in 1...repeatCountForBody {
             body += bodySourceString
         }
 
-        let newItem = Item(context: CoreDataProvider.shared.container.viewContext)
+        let newItem = Item(context: context)
+        newItem.title = title
         newItem.body = body
+        newItem.date = date
         newItem.createdAt = Date()
-        newItem.emoji = ["🏝️", "📝", "🎨", "🎉", "💎"].randomElement()
         newItem.isFavorite = Bool.random()
         newItem.updatedAt = Date()
         newItem.weather = "sunny"
@@ -51,11 +63,11 @@ extension Item: BaseModel {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         let now = Date()
         request.predicate = NSPredicate(
-            format: "createdAt >= %@ && createdAt < %@",
+            format: "date >= %@ && date < %@",
             now.startOfMonth! as CVarArg,
             now.endOfMonth! as CVarArg
         )
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request
     }
 
@@ -64,7 +76,7 @@ extension Item: BaseModel {
         request.predicate = NSPredicate(
             format: "isFavorite == true"
         )
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request
     }
 
@@ -82,11 +94,11 @@ extension Item: BaseModel {
     static func itemsOfMonth(date: Date) -> NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(
-            format: "createdAt >= %@ && createdAt < %@",
+            format: "date >= %@ && date < %@",
             date.startOfMonth! as CVarArg,
             date.endOfMonth! as CVarArg
         )
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request
     }
 
@@ -94,18 +106,17 @@ extension Item: BaseModel {
      今日までの継続日数を算出する
      今日未作成の場合は昨日までの継続日数を出力
      */
-    // TODO: 引数変更してテストする
-    static func calculateConsecutiveDays(_ context: NSManagedObjectContext) throws -> Int {
+    static func calculateConsecutiveDays(_ context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext) throws -> Int {
         var items = try context.fetch(all)
         guard !items.isEmpty,
-              let latestItemCreatedAt = items[0].createdAt
+              let latestItemDate = items[0].date
         else { return 0 }
 
         var count = 0
         let now = Date()
 
         // 最新のItemと今日の日付が同じかどうかを判別する
-        let dayDiffBetweenLatestItemAndNow = Calendar.current.dateComponents([.day], from: latestItemCreatedAt, to: now).day
+        let dayDiffBetweenLatestItemAndNow = Calendar.current.dateComponents([.day], from: latestItemDate, to: now).day
 
         let hasTodayItem = dayDiffBetweenLatestItemAndNow == 0
         if hasTodayItem {
@@ -113,7 +124,7 @@ extension Item: BaseModel {
         }
 
         for item in items {
-            let currentItemDate = Calendar.current.startOfDay(for: item.createdAt!)
+            let currentItemDate = Calendar.current.startOfDay(for: item.date!)
             let expectedDate = Calendar.current.date(byAdding: .day, value: -(count + 1), to: now)!
             let expectedDateStartOfDay = Calendar.current.startOfDay(for: expectedDate)
 

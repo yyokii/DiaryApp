@@ -17,7 +17,7 @@ public class CoreDataProvider: ObservableObject {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
-            newItem.createdAt = Date()
+            newItem.date = Date()
         }
         do {
             try viewContext.save()

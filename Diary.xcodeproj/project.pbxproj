@@ -33,6 +33,9 @@
 		F5358D342A000E9B005FD6C8 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D332A000E9B005FD6C8 /* Shadow.swift */; };
 		F5358D382A00B621005FD6C8 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D372A00B621005FD6C8 /* Direction.swift */; };
 		F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */; };
+		F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */; };
+		F5358D3E2A00D8AD005FD6C8 /* AddDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3D2A00D8AD005FD6C8 /* AddDiaryView.swift */; };
+		F5358D4B2A03CC43005FD6C8 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +79,8 @@
 		F5358D332A000E9B005FD6C8 /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		F5358D372A00B621005FD6C8 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
+		F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonStyle.swift; sourceTree = "<group>"; };
+		F5358D3D2A00D8AD005FD6C8 /* AddDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5358D4B2A03CC43005FD6C8 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,10 +123,10 @@
 		F5358CA329F52467005FD6C8 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				F5358D2229FEAB46005FD6C8 /* StyleGuide */,
 				F5358CBB29F60286005FD6C8 /* Extension */,
 				F5358CB929F60273005FD6C8 /* Model */,
 				F5358CBC29F602BD005FD6C8 /* Service */,
+				F5358D2229FEAB46005FD6C8 /* StyleGuide */,
 				F5358CBA29F6027A005FD6C8 /* View */,
 				F5358CB829F53BB5005FD6C8 /* Diary.entitlements */,
 				F5358CA429F52467005FD6C8 /* DiaryApp.swift */,
@@ -155,10 +161,9 @@
 		F5358CBA29F6027A005FD6C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
+				F5358D422A03AB72005FD6C8 /* Home */,
 				F5358CA629F52467005FD6C8 /* ContentView.swift */,
-				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
-				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
-				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,8 +205,27 @@
 				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
 				F5358D312A000E5D005FD6C8 /* Color.swift */,
 				F5358D332A000E9B005FD6C8 /* Shadow.swift */,
+				F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */,
 			);
 			path = StyleGuide;
+			sourceTree = "<group>";
+		};
+		F5358D422A03AB72005FD6C8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
+				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
+				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		F5358D432A03AB8C005FD6C8 /* CreateDiary */ = {
+			isa = PBXGroup;
+			children = (
+				F5358D3D2A00D8AD005FD6C8 /* AddDiaryView.swift */,
+			);
+			path = CreateDiary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +244,9 @@
 			dependencies = (
 			);
 			name = Diary;
+			packageProductDependencies = (
+				F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */,
+			);
 			productName = Diary;
 			productReference = F5358CA129F52467005FD6C8 /* Diary.app */;
 			productType = "com.apple.product-type.application";
@@ -270,6 +297,9 @@
 				Base,
 			);
 			mainGroup = F5358C9829F52467005FD6C8;
+			packageReferences = (
+				F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
+			);
 			productRefGroup = F5358CA229F52467005FD6C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -310,9 +340,11 @@
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
+				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
+				F5358D3E2A00D8AD005FD6C8 /* AddDiaryView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
@@ -596,6 +628,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */ = {

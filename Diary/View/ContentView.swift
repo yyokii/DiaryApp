@@ -31,7 +31,7 @@ struct ContentView: View {
                         NavigationLink {
                             DiaryDetailView(item: item)
                         } label: {
-                            Text(item.createdAt!, formatter: itemFormatter)
+                            Text(item.date!, formatter: itemFormatter)
                         }
                     }
                     .onDelete(perform: deleteItems)
@@ -41,7 +41,7 @@ struct ContentView: View {
 
                 List {
                     ForEach(favorites) { item in
-                        Text(item.createdAt!, formatter: itemFormatter)
+                        Text(item.date!, formatter: itemFormatter)
                     }
                     .onDelete(perform: deleteItems)
                 }
@@ -117,11 +117,7 @@ struct DiaryDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var textOptions: TextOptions
 
-    @AppStorage("name") var name: String = "Kanye"
-
-
     // Diary editable contents
-    @State var emoji: String
     @State var diaryBody: String
     @State var isFavorite: Bool
 
@@ -143,7 +139,6 @@ struct DiaryDetailView: View {
     init(item: Item) {
         self.item = item
 
-        _emoji = State(initialValue: item.emoji ?? "")
         _diaryBody = State(initialValue: item.body ?? "")
         _isFavorite = State(initialValue: item.isFavorite)
     }
@@ -151,14 +146,13 @@ struct DiaryDetailView: View {
     var body: some View {
         VStack {
             VStack {
-                TextField("emoji", text: $emoji)
                 Text("weather: \(item.weather ?? "")")
                 TextField("body", text: $diaryBody)
                     .textOption(textOptions)
                 Toggle(isOn: $isFavorite) {
                     Text("favorite")
                 }
-                Text("created at \(item.createdAt!, formatter: itemFormatter)")
+                Text("created at \(item.date!, formatter: itemFormatter)")
 
                 if let updatedAt = item.updatedAt {
                     Text("updated at \(updatedAt, formatter: itemFormatter)")
@@ -229,7 +223,6 @@ struct DiaryDetailView: View {
             PhotosPicker("Select image", selection: $selectedPickerItem, matching: .images)
 
             Button("Save") {
-                item.emoji = emoji
                 item.body = diaryBody
                 item.isFavorite = isFavorite
                 if let selectedImage,

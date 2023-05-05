@@ -27,9 +27,8 @@ struct DiaryItem: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Rectangle()
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(Color.adaptiveWhite)
-                .cornerRadius(cornerRadius)
                 .adaptiveShadow()
 
             HStack(alignment: .top, spacing: 20) {
@@ -53,9 +52,9 @@ private extension DiaryItem {
     var diaryDate: some View {
         VStack(alignment: .center) {
             Spacer()
-            Text(item.createdAt!, formatter: dayFormatter)
-                .font(.system(size: 36))
-            Text(item.createdAt!, formatter: weekdayFormatter)
+            Text(item.date!, formatter: dayFormatter)
+                .font(.system(size: 32))
+            Text(item.date!, formatter: weekdayFormatter)
                 .font(.system(size: 20))
             Spacer()
         }
@@ -91,9 +90,11 @@ private extension DiaryItem {
 
         } else {
             VStack(alignment: .leading, spacing: 14) {
-
-                Text(item.emoji ?? "")
-                    .font(.system(size: 40))
+                Text(item.title ?? "")
+                    .font(.system(size: 36))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .padding(.trailing, 40)
 
                 Text(item.body ?? "")
                     .font(.system(size: 12))
@@ -101,7 +102,7 @@ private extension DiaryItem {
                     .lineLimit(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-                    .padding(.vertical, 10)
+            .padding(.vertical, 10)
         }
     }
 
