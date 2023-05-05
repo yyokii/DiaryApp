@@ -1,5 +1,5 @@
 //
-//  AddDiaryView.swift
+//  CreateDiaryView.swift
 //  Diary
 //
 //  Created by Higashihara Yoki on 2023/05/02.
@@ -8,7 +8,7 @@
 import PhotosUI
 import SwiftUI
 
-struct AddDiaryView: View {
+struct CreateDiaryView: View {
     @StateObject private var weatherData = WeatherData()
 
     @State private var selectedDate = Date()
@@ -65,7 +65,7 @@ struct AddDiaryView: View {
 
 }
 
-private extension AddDiaryView {
+private extension CreateDiaryView {
     var addImage: some View {
         ZStack() {
             if let selectedImage {
@@ -185,10 +185,10 @@ private extension AddDiaryView {
 
 #if DEBUG
 
-struct AddDiaryView_Previews: PreviewProvider {
+struct CreateDiaryView_Previews: PreviewProvider {
 
     static var content: some View {
-        AddDiaryView()
+        CreateDiaryView()
     }
 
     static var previews: some View {

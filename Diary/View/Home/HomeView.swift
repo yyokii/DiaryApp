@@ -41,7 +41,7 @@ struct HomeView: View {
             }
         }
         .fullScreenCover(isPresented: $isPresentedCreateDiaryView) {
-            AddDiaryView()
+            CreateDiaryView()
         }
     }
 
