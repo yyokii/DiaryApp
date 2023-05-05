@@ -33,9 +33,12 @@ struct HomeView: View {
                     diaryList
                 }
 
-                FloatingButton(action: {
-                    isPresentedCreateDiaryView = true
-                }, icon: "plus")
+                FloatingButton(
+                    action: {
+                        isPresentedCreateDiaryView = true
+                    },
+                    icon: "plus"
+                )
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
