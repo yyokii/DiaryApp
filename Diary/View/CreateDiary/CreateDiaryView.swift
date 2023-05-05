@@ -18,6 +18,11 @@ struct CreateDiaryView: View {
     @State private var selectedPickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
 
+    enum FocusedField {
+        case title, body
+    }
+    @FocusState private var focusedField: FocusedField?
+
     private let imageSize: CGSize = .init(width: 300, height: 300)
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -47,15 +52,15 @@ struct CreateDiaryView: View {
                 }
             }
         }
-        .onChange(of: selectedPickerItem) { _ in
-            Task {
-                if let data = try? await selectedPickerItem?.loadTransferable(type: Data.self),
-                   let uiImage = UIImage(data: data),
-                   let resizedImage = uiImage.resizeImage(to: imageSize),
-                   let rotatedImage = resizedImage.reorientToUp() {
-                    selectedImage = rotatedImage
-                }
+        .onSubmit {
+            if focusedField == .title {
+                focusedField = .body
+            } else {
+                focusedField = nil
             }
+        }
+        .onChange(of: selectedPickerItem) { pickerItem in
+            updateSelectedImage(to: pickerItem)
         }
         .onAppear{
             // TODO: 移動させてもいいかも
@@ -66,6 +71,19 @@ struct CreateDiaryView: View {
 }
 
 private extension CreateDiaryView {
+
+    // MARK: Validation
+
+    var validTitle: Bool {
+        title.count > 0 && title.count <= 10
+    }
+
+    var validBody: Bool {
+        bodyText.count > 0 && bodyText.count <= 1000
+    }
+
+    // MARK: View
+
     var addImage: some View {
         ZStack() {
             if let selectedImage {
@@ -117,16 +135,16 @@ private extension CreateDiaryView {
     }
 
     var inputTitle: some View {
-        TextField("title", text: $title)
-            .font(.system(size: 32))
+        TextField("タイトル（1~10文字）", text: $title)
+            .font(.system(size: 24))
             .multilineTextAlignment(.center)
+            .focused($focusedField, equals: .title)
     }
 
     @ViewBuilder
     var weather: some View {
-        if Calendar.current.isDateInToday(selectedDate),
-           let todayWeather = weatherData.todayWeather {
-            Image(systemName: todayWeather.symbolName)
+        if Calendar.current.isDateInToday(selectedDate) {
+            Image(systemName: weatherData.todayWeather?.symbolName ?? "")
                 .asyncState(weatherData.phase)
         } else {
             Picker("weather", selection: $selectedWeather) {
@@ -138,22 +156,29 @@ private extension CreateDiaryView {
     }
 
     var diaryBody: some View {
-        TextField("Write your life", text: $bodyText ,axis: .vertical)
-            .font(.system(size: 16))
-            .frame(height: 250, alignment: .top)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(.gray.opacity(0.2), lineWidth: 1)
-                    .padding(-5)
-            )
+        TextField(
+            "思い出 📝（1000文字以内）",
+            text: $bodyText,
+            axis: .vertical
+        )
+        .focused($focusedField, equals: .body)
+        .font(.system(size: 16))
+        .frame(height: 250, alignment: .top)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(.gray.opacity(0.2), lineWidth: 1)
+                .padding(-5)
+        )
     }
 
     var createButton: some View {
         Button("Create") {
             createItemFromInput()
         }
-        .buttonStyle(ActionButtonStyle())
+        .buttonStyle(ActionButtonStyle(isActive: (validTitle && validBody)))
     }
+
+    // MARK: Action
 
     func createItemFromInput() {
         var weather: String
@@ -179,6 +204,17 @@ private extension CreateDiaryView {
             )
         } catch {
             // TODO: handle error
+        }
+    }
+
+    func updateSelectedImage(to pickerItem: PhotosPickerItem?) {
+        Task {
+            if let data = try? await pickerItem?.loadTransferable(type: Data.self),
+               let uiImage = UIImage(data: data),
+               let resizedImage = uiImage.resizeImage(to: imageSize),
+               let rotatedImage = resizedImage.reorientToUp() {
+                selectedImage = rotatedImage
+            }
         }
     }
 }

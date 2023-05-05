@@ -175,6 +175,7 @@
 				F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */,
 				F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */,
 				F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */,
+				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -202,7 +203,6 @@
 		F5358D2229FEAB46005FD6C8 /* StyleGuide */ = {
 			isa = PBXGroup;
 			children = (
-				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
 				F5358D312A000E5D005FD6C8 /* Color.swift */,
 				F5358D332A000E9B005FD6C8 /* Shadow.swift */,
 				F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */,
