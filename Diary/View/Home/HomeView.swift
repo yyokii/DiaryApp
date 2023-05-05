@@ -40,11 +40,10 @@ struct HomeView: View {
                 .padding(.bottom, 20)
             }
         }
-        .fullScreenCover(isPresented: $isPresentedCreateDiaryView) {
+        .sheet(isPresented: $isPresentedCreateDiaryView) {
             CreateDiaryView()
         }
     }
-
 }
 
 private extension HomeView {

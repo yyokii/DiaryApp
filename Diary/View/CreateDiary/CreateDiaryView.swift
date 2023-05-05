@@ -67,7 +67,6 @@ struct CreateDiaryView: View {
             weatherData.requestLocationAuth()
         }
     }
-
 }
 
 private extension CreateDiaryView {
