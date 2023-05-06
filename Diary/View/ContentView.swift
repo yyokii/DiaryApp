@@ -24,12 +24,12 @@ struct ContentView: View {
     private var favorites: FetchedResults<Item>
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 List {
                     ForEach(items) { item in
                         NavigationLink {
-                            DiaryDetailView(item: item)
+                            DiaryDetailViewDemo(item: item)
                         } label: {
                             Text(item.date!, formatter: itemFormatter)
                         }
@@ -113,7 +113,7 @@ private extension ContentView {
     }
 }
 
-struct DiaryDetailView: View {
+struct DiaryDetailViewDemo: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var textOptions: TextOptions
 

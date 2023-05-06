@@ -37,7 +37,7 @@ struct AdaptiveShadow: ViewModifier {
 struct AdaptiveShadow_Previews: PreviewProvider {
 
     static var content: some View {
-        NavigationView {
+        NavigationStack {
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 300, height: 300)
                 .foregroundColor(.adaptiveWhite)

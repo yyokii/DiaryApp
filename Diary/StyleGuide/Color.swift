@@ -53,7 +53,7 @@ extension Color {
 struct DemoColorView_Previews: PreviewProvider {
 
     static var content: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.adaptiveBlack)

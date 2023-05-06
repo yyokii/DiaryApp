@@ -36,7 +36,7 @@ struct CreateDiaryView: View {
     ]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     addImage
@@ -103,12 +103,10 @@ private extension CreateDiaryView {
                         .padding(.top, 4)
                         .padding(.trailing, 4)
                     })
-                    .frame(height: imageSize.height)
-
             } else {
                 Rectangle()
                     .foregroundColor(.gray.opacity(0.2))
-                    .frame(height: imageSize.height)
+                    .frame(height: 300)
             }
 
             if selectedImage == nil {
@@ -144,6 +142,9 @@ private extension CreateDiaryView {
     var weather: some View {
         if Calendar.current.isDateInToday(selectedDate) {
             Image(systemName: weatherData.todayWeather?.symbolName ?? "")
+                .resizable()
+                .scaledToFit()
+                .frame(width:24)
                 .asyncState(weatherData.phase)
         } else {
             Picker("weather", selection: $selectedWeather) {
