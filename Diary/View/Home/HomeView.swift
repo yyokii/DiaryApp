@@ -99,8 +99,8 @@ private extension HomeView {
                         DiaryDetailView(diaryDataStore: .init(item: item))
                     } label: {
                         DiaryItem(item: item)
-                            .padding(.horizontal, 30)
                     }
+                    .padding(.horizontal, 30)
                     .buttonStyle(PlainButtonStyle())
                 }
             }

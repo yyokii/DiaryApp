@@ -84,6 +84,16 @@ public class DiaryDataStore: ObservableObject {
     }
 
     func delete() {
+        guard let originalItem else {
+            // TODO: エラー
+            return
+        }
+
+        do {
+            try originalItem.delete()
+        } catch {
+            // TODO: エラー
+        }
     }
 
     func update() {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DiaryDetailView: View {
+    @Environment(\.dismiss) var dismiss
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
@@ -27,6 +28,7 @@ struct DiaryDetailView: View {
                         diaryBody
                         if isEditing {
                             saveButton
+                            deleteButton
                         }
                     }
                     .padding(.horizontal, 40)
@@ -146,8 +148,6 @@ private extension DiaryDetailView {
         }
     }
 
-    // MARK: Action
-
     var saveButton: some View {
         Button("Save") {
             isEditing = false
@@ -155,6 +155,17 @@ private extension DiaryDetailView {
         }
         .buttonStyle(ActionButtonStyle())
     }
+
+    var deleteButton: some View {
+        Button("Delete") {
+            isEditing = false
+            diaryDataStore.delete()
+            dismiss()
+        }
+        .buttonStyle(ActionButtonStyle(backgroundColor: .orange))
+    }
+
+    // MARK: Action
 }
 
 #if DEBUG

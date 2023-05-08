@@ -85,6 +85,12 @@ struct Buttons_Previews: PreviewProvider {
                 }
                 .buttonStyle(ActionButtonStyle())
 
+                Section(header: Text("Active with Color")) {
+                    Button("ぼたん") {}
+                    NavigationLink("りんく", destination: EmptyView())
+                }
+                .buttonStyle(ActionButtonStyle(backgroundColor: .orange))
+
                 Section(header: Text("Active, smal")) {
                     Button("ぼたん") {}
                     NavigationLink("りんく", destination: EmptyView())

@@ -52,10 +52,13 @@ private extension DiaryItem {
     var diaryDate: some View {
         VStack(alignment: .center) {
             Spacer()
-            Text(item.date!, formatter: dayFormatter)
-                .font(.system(size: 32))
-            Text(item.date!, formatter: weekdayFormatter)
-                .font(.system(size: 20))
+
+            if let date = item.date {
+                Text(date, formatter: dayFormatter)
+                    .font(.system(size: 32))
+                Text(date, formatter: weekdayFormatter)
+                    .font(.system(size: 20))
+            }
             Spacer()
         }
         .frame(width: 50)
