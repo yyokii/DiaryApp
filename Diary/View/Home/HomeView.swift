@@ -95,8 +95,13 @@ private extension HomeView {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(items) { item in
-                    DiaryItem(item: item)
-                        .padding(.horizontal, 30)
+                    NavigationLink {
+                        DiaryDetailView(diaryDataStore: .init(item: item))
+                    } label: {
+                        DiaryItem(item: item)
+                            .padding(.horizontal, 30)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .padding(.top, 10)

@@ -35,7 +35,11 @@
 		F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */; };
 		F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */; };
 		F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */; };
-		F5358D4B2A03CC43005FD6C8 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */; };
+		F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */; };
+		F5358D532A0698BE005FD6C8 /* WeatherPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D522A0698BE005FD6C8 /* WeatherPicker.swift */; };
+		F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D542A069BB2005FD6C8 /* InputTitle.swift */; };
+		F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBody.swift */; };
+		F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* AddPhoto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +85,11 @@
 		F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonStyle.swift; sourceTree = "<group>"; };
 		F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
+		F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailView.swift; sourceTree = "<group>"; };
+		F5358D522A0698BE005FD6C8 /* WeatherPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPicker.swift; sourceTree = "<group>"; };
+		F5358D542A069BB2005FD6C8 /* InputTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTitle.swift; sourceTree = "<group>"; };
+		F5358D562A069C90005FD6C8 /* InputBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBody.swift; sourceTree = "<group>"; };
+		F53E3A722A087ADE0064CB62 /* AddPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +97,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5358D4B2A03CC43005FD6C8 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +172,7 @@
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
 				F5358CA629F52467005FD6C8 /* ContentView.swift */,
+				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,6 +233,10 @@
 			isa = PBXGroup;
 			children = (
 				F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */,
+				F5358D522A0698BE005FD6C8 /* WeatherPicker.swift */,
+				F53E3A722A087ADE0064CB62 /* AddPhoto.swift */,
+				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
+				F5358D562A069C90005FD6C8 /* InputBody.swift */,
 			);
 			path = CreateDiary;
 			sourceTree = "<group>";
@@ -245,7 +258,6 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
-				F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */,
 			);
 			productName = Diary;
 			productReference = F5358CA129F52467005FD6C8 /* Diary.app */;
@@ -298,7 +310,6 @@
 			);
 			mainGroup = F5358C9829F52467005FD6C8;
 			packageReferences = (
-				F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			productRefGroup = F5358CA229F52467005FD6C8 /* Products */;
 			projectDirPath = "";
@@ -342,12 +353,17 @@
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
+				F5358D532A0698BE005FD6C8 /* WeatherPicker.swift in Sources */,
+				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
 				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
+				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
+				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
+				F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
@@ -628,25 +644,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F5358D4A2A03CC43005FD6C8 /* MCEmojiPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5358D492A03CC43005FD6C8 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
-			productName = MCEmojiPicker;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */ = {

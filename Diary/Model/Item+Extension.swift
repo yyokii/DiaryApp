@@ -47,7 +47,7 @@ extension Item: BaseModel {
         newItem.createdAt = Date()
         newItem.isFavorite = Bool.random()
         newItem.updatedAt = Date()
-        newItem.weather = "sunny"
+        newItem.weather = "sun.max"
 
         if withImage {
             let image: Data = UIImage(named: "sample")!.jpegData(compressionQuality: 0.5)!
@@ -80,18 +80,6 @@ extension Item: BaseModel {
         return request
     }
 
-    static func itemsOfMonth(date: Date) throws -> [Item] {
-        let fetchRequest: NSFetchRequest<Item> = itemsOfMonth(date: date)
-        do {
-            let result = try  CoreDataProvider.shared.container.viewContext.fetch(fetchRequest)
-            return result
-        } catch {
-            print("🚨 \(error.localizedDescription)")
-            throw BaseModelError.databaseOperationError(error: error)
-        }
-    }
-
-    // TODO: 未使用と思う
     static func itemsOfMonth(date: Date) -> NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(

@@ -9,43 +9,37 @@ import PhotosUI
 import SwiftUI
 
 struct CreateDiaryView: View {
+    @Environment(\.dismiss) var dismiss
+
     @StateObject private var weatherData = WeatherData()
 
+    // modelに置き換える
     @State private var selectedDate = Date()
     @State private var title = ""
     @State private var bodyText = ""
     @State private var selectedWeather = ""
-    @State private var selectedPickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
 
-    enum FocusedField {
-        case title, body
-    }
     @FocusState private var focusedField: FocusedField?
 
-    private let imageSize: CGSize = .init(width: 300, height: 300)
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter
     }
     private let dateRange: ClosedRange<Date> = Date(timeIntervalSince1970: 0)...Date()
-    private let dayWeatherSymbolNames = [
-        "sun.min", "sun.max",
-        "cloud.sun", "cloud.sun.rain", "cloud.sun.bolt", "cloud", "cloud.drizzle", "cloud.rain", "cloud.heavyrain", "cloud.fog", "cloud.hail", "cloud.snow", "cloud.sleet", "cloud.bolt", "cloud.bolt.rain",
-    ]
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    addImage
+                    AddPhoto(selectedImage: $selectedImage)
 
                     VStack(spacing: 20) {
                         date
                         weather
-                        inputTitle
-                        diaryBody
+                        InputTitle(title: $title, focusedField: _focusedField)
+                        InputBody(bodyText: $bodyText, focusedField: _focusedField)
                         createButton
                     }
                     .padding(.horizontal, 40)
@@ -59,9 +53,6 @@ struct CreateDiaryView: View {
                 focusedField = nil
             }
         }
-        .onChange(of: selectedPickerItem) { pickerItem in
-            updateSelectedImage(to: pickerItem)
-        }
         .onAppear{
             // TODO: 移動させてもいいかも
             weatherData.requestLocationAuth()
@@ -74,52 +65,16 @@ private extension CreateDiaryView {
     // MARK: Validation
 
     var validTitle: Bool {
-        title.count > 0 && title.count <= 10
+        title.count >= InputTitle.titleCount.min &&
+        title.count <= InputTitle.titleCount.max
     }
 
     var validBody: Bool {
-        bodyText.count > 0 && bodyText.count <= 1000
+        bodyText.count >= InputBody.bodyCount.min &&
+        bodyText.count <= InputBody.bodyCount.max
     }
 
     // MARK: View
-
-    var addImage: some View {
-        ZStack() {
-            if let selectedImage {
-                Image(uiImage: selectedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .overlay(alignment: .topTrailing, content: {
-                        Button {
-                            self.selectedImage = nil
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .symbolRenderingMode(.palette)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30)
-                                .foregroundStyle(.white, .black)
-                        }
-                        .padding(.top, 4)
-                        .padding(.trailing, 4)
-                    })
-            } else {
-                Rectangle()
-                    .foregroundColor(.gray.opacity(0.2))
-                    .frame(height: 300)
-            }
-
-            if selectedImage == nil {
-                PhotosPicker(selection: $selectedPickerItem) {
-                    Image(systemName: "camera")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30)
-                        .foregroundColor(.primary)
-                }
-            }
-        }
-    }
 
     var date: some View {
         DatePicker(
@@ -131,51 +86,25 @@ private extension CreateDiaryView {
         .labelsHidden()
     }
 
-    var inputTitle: some View {
-        TextField("タイトル（1~10文字）", text: $title)
-            .font(.system(size: 24))
-            .multilineTextAlignment(.center)
-            .focused($focusedField, equals: .title)
-    }
-
     @ViewBuilder
     var weather: some View {
         if Calendar.current.isDateInToday(selectedDate) {
+            // TODO: この時も変更できた方がいい
             Image(systemName: weatherData.todayWeather?.symbolName ?? "")
                 .resizable()
                 .scaledToFit()
                 .frame(width:24)
                 .asyncState(weatherData.phase)
         } else {
-            Picker("weather", selection: $selectedWeather) {
-                ForEach(dayWeatherSymbolNames, id: \.self) { symbolName in
-                    Image(systemName: symbolName)
-                }
-            }
+            WeatherPicker(selectedWeather: $selectedWeather)
         }
-    }
-
-    var diaryBody: some View {
-        TextField(
-            "思い出 📝（1000文字以内）",
-            text: $bodyText,
-            axis: .vertical
-        )
-        .focused($focusedField, equals: .body)
-        .font(.system(size: 16))
-        .frame(height: 250, alignment: .top)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(.gray.opacity(0.2), lineWidth: 1)
-                .padding(-5)
-        )
     }
 
     var createButton: some View {
         Button("Create") {
             createItemFromInput()
         }
-        .buttonStyle(ActionButtonStyle(isActive: (validTitle && validBody)))
+        .buttonStyle(ActionButtonStyle(isActive: (validTitle && validBody))) // TODO: activeとdisable連動させる？
     }
 
     // MARK: Action
@@ -202,19 +131,9 @@ private extension CreateDiaryView {
                 weather: weather,
                 imageData: imageData
             )
+            dismiss()
         } catch {
             // TODO: handle error
-        }
-    }
-
-    func updateSelectedImage(to pickerItem: PhotosPickerItem?) {
-        Task {
-            if let data = try? await pickerItem?.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data),
-               let resizedImage = uiImage.resizeImage(to: imageSize),
-               let rotatedImage = resizedImage.reorientToUp() {
-                selectedImage = rotatedImage
-            }
         }
     }
 }

@@ -62,7 +62,6 @@ public class WeatherData: ObservableObject {
             Calendar.current.isDateInToday(weather.date)
         }) {
             self.todayWeather = todayWeather
-            print(todayWeather)
             phase = .success(Date())
         } else {
             phase = .failure(WeatherDataError.notFoundTodayWeatherError)
