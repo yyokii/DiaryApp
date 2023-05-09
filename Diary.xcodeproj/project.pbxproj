@@ -40,6 +40,11 @@
 		F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D542A069BB2005FD6C8 /* InputTitle.swift */; };
 		F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBody.swift */; };
 		F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* AddPhoto.swift */; };
+		F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */; };
+		F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */; };
+		F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A792A0941F20064CB62 /* BannerState.swift */; };
+		F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7C2A0942710064CB62 /* BannerView.swift */; };
+		F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +95,11 @@
 		F5358D542A069BB2005FD6C8 /* InputTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTitle.swift; sourceTree = "<group>"; };
 		F5358D562A069C90005FD6C8 /* InputBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBody.swift; sourceTree = "<group>"; };
 		F53E3A722A087ADE0064CB62 /* AddPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoto.swift; sourceTree = "<group>"; };
+		F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppDelegate.swift; sourceTree = "<group>"; };
+		F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppSceneDelegate.swift; sourceTree = "<group>"; };
+		F53E3A792A0941F20064CB62 /* BannerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerState.swift; sourceTree = "<group>"; };
+		F53E3A7C2A0942710064CB62 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,13 +141,13 @@
 		F5358CA329F52467005FD6C8 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				F53E3A742A0941180064CB62 /* App */,
 				F5358CBB29F60286005FD6C8 /* Extension */,
 				F5358CB929F60273005FD6C8 /* Model */,
 				F5358CBC29F602BD005FD6C8 /* Service */,
 				F5358D2229FEAB46005FD6C8 /* StyleGuide */,
 				F5358CBA29F6027A005FD6C8 /* View */,
 				F5358CB829F53BB5005FD6C8 /* Diary.entitlements */,
-				F5358CA429F52467005FD6C8 /* DiaryApp.swift */,
 				F5358CA829F52468005FD6C8 /* Assets.xcassets */,
 				F5358CB229F52468005FD6C8 /* Info.plist */,
 				F5358CAA29F52468005FD6C8 /* Preview Content */,
@@ -239,6 +249,27 @@
 				F5358D562A069C90005FD6C8 /* InputBody.swift */,
 			);
 			path = CreateDiary;
+			sourceTree = "<group>";
+		};
+		F53E3A742A0941180064CB62 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F53E3A7B2A0942590064CB62 /* Banner */,
+				F5358CA429F52467005FD6C8 /* DiaryApp.swift */,
+				F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */,
+				F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */,
+				F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F53E3A7B2A0942590064CB62 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				F53E3A792A0941F20064CB62 /* BannerState.swift */,
+				F53E3A7C2A0942710064CB62 /* BannerView.swift */,
+			);
+			path = Banner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,10 +379,12 @@
 				F5358D1429FAADAC005FD6C8 /* UIImage+Extension.swift in Sources */,
 				F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */,
 				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
+				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
+				F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
 				F5358D532A0698BE005FD6C8 /* WeatherPicker.swift in Sources */,
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
@@ -360,11 +393,14 @@
 				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
+				F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
+				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
 				F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,
+				F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */,
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,

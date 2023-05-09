@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct DiaryApp: App {
+    @UIApplicationDelegateAdaptor var delegate: DiaryAppDelegate
+
+    @StateObject var bannerState = BannerState()
     @StateObject var coreDataProvider = CoreDataProvider.shared
     @StateObject var textOptions: TextOptions = .makeUserOptions()
 
@@ -25,6 +28,7 @@ struct DiaryApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(bannerState)
                 .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
                 .environmentObject(textOptions)
         }
