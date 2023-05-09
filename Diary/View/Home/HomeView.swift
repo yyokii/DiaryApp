@@ -9,11 +9,11 @@ import CoreData
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject private var sceneDelegate: DiaryAppSceneDelegate
+    @EnvironmentObject private var bannerState: BannerState
 
-    @FetchRequest(fetchRequest: Item.thisMonth)
-    private var items: FetchedResults<Item>
-    @State var firstDateOfDisplayedMonth = Date().startOfMonth!
-    @State var isPresentedCreateDiaryView = false
+    @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
+    @State private var isPresentedCreateDiaryView = false
 
     private let calendar = Calendar.current
 
@@ -30,7 +30,7 @@ struct HomeView: View {
                     settings
                         .padding(.horizontal, 30)
                     displayingMonth
-                    diaryList
+                    DiaryList(date: firstDateOfDisplayedMonth)
                 }
 
                 FloatingButton(
@@ -42,6 +42,9 @@ struct HomeView: View {
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
+        }
+        .onAppear {
+            sceneDelegate.bannerState = bannerState
         }
         .sheet(isPresented: $isPresentedCreateDiaryView) {
             CreateDiaryView()
@@ -91,23 +94,6 @@ private extension HomeView {
         }
     }
 
-    var diaryList: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                ForEach(items) { item in
-                    NavigationLink {
-                        DiaryDetailView(diaryDataStore: .init(item: item))
-                    } label: {
-                        DiaryItem(item: item)
-                    }
-                    .padding(.horizontal, 30)
-                    .buttonStyle(PlainButtonStyle())
-                }
-            }
-            .padding(.top, 10)
-        }
-    }
-
     func chevronIcon(_ direction: Direction, disabled: Bool = false) -> some View {
         var imageName: String
         switch direction {
@@ -136,12 +122,5 @@ private extension HomeView {
         guard let date = calendar.date(byAdding: .month, value: diff, to: firstDateOfDisplayedMonth) else { return }
 
         self.firstDateOfDisplayedMonth = date
-        fetchItemsForMonth(date: date)
-    }
-
-    func fetchItemsForMonth(date: Date) {
-        let request: NSFetchRequest = Item.itemsOfMonth(date: date)
-        items.nsSortDescriptors = request.sortDescriptors ?? []
-        items.nsPredicate = request.predicate
     }
 }

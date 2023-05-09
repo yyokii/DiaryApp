@@ -50,7 +50,6 @@ private extension BannerView {
             }
         }
         .frame(height: baseHeight)
-        .border(.indigo)
         .onReceive(bannerState.$isPresented) { isPresented in
             if isPresented {
                 dismissTask = Task.init { @MainActor in

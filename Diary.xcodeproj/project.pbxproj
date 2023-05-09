@@ -45,6 +45,7 @@
 		F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A792A0941F20064CB62 /* BannerState.swift */; };
 		F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7C2A0942710064CB62 /* BannerView.swift */; };
 		F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */; };
+		F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A842A0A1F510064CB62 /* DiaryList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		F53E3A792A0941F20064CB62 /* BannerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerState.swift; sourceTree = "<group>"; };
 		F53E3A7C2A0942710064CB62 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughWindow.swift; sourceTree = "<group>"; };
+		F53E3A842A0A1F510064CB62 /* DiaryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
+				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
+				F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */,
 				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
 				F5358D2A29FF401D005FD6C8 /* HomeView.swift in Sources */,
