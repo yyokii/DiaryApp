@@ -30,7 +30,8 @@ private extension BannerView {
     var banner: some View {
         GeometryReader { geometry in
             VStack(alignment: .center) {
-                Label(bannerState.title, systemImage: bannerState.systemImage)
+                Text(bannerState.message)
+                    .font(.system(size: 16))
                     .padding(16)
                     .padding(.horizontal, 12)
                     .background(

@@ -6,16 +6,24 @@
 //
 
 import Combine
+import Foundation
 
 final class BannerState: ObservableObject {
     @Published var isPresented: Bool = false
-    // TODO: change value
-    private(set) var title: String = "this is title"
-    private(set) var systemImage: String = "star.fill"
 
-    func show(title: String, systemImage: String) {
-        self.title = title
-        self.systemImage = systemImage
+    private(set) var message: String = BannerState.defaultMessage
+    private static let defaultMessage = "Something went wrong, try again🙏"
+
+    func show(message: String) {
+        self.message = message
         isPresented = true
+    }
+
+    func show(with error: Error) {
+        if let localizedError = error as? LocalizedError {
+            show(message: localizedError.recoverySuggestion ?? BannerState.defaultMessage)
+        } else {
+            show(message: BannerState.defaultMessage)
+        }
     }
 }

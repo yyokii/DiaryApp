@@ -83,23 +83,17 @@ public class DiaryDataStore: ObservableObject {
     func create() {
     }
 
-    func delete() {
+    func delete() throws {
         guard let originalItem else {
-            // TODO: エラー
-            return
+            throw DiaryDataStoreError.notFoundItem
         }
 
-        do {
-            try originalItem.delete()
-        } catch {
-            // TODO: エラー
-        }
+        try originalItem.delete()
     }
 
-    func update() {
+    func update() throws {
         guard let originalItem else {
-            // TODO: エラー
-            return
+            throw DiaryDataStoreError.notFoundItem
         }
 
         // 値の変更があるかどうかを元の値との比較より行い、変更されている場合のみプロパティの更新を行う
@@ -132,11 +126,24 @@ public class DiaryDataStore: ObservableObject {
         }
 
         originalItem.updatedAt = Date()
+        try originalItem.save()
+    }
+}
 
-        do {
-            try originalItem.save()
-        } catch {
-            // TODO: エラー処理
+public enum DiaryDataStoreError: Error, LocalizedError {
+    case notFoundItem // 操作対象のItemが存在しない
+
+    public var errorDescription: String? {
+        switch self {
+        case .notFoundItem:
+            return "Not found item"
+        }
+    }
+
+    public var recoverySuggestion: String? {
+        switch self {
+        case .notFoundItem:
+            return "Sorry, restart your app and try again🙏"
         }
     }
 }

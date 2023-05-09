@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DiaryItem: View {
+    @EnvironmentObject private var bannerState: BannerState
+
     @ObservedObject var item: Item
 
     let height: CGFloat = 140
@@ -114,9 +116,7 @@ private extension DiaryItem {
         do {
             try item.save()
         } catch {
-            // TODO: エラー処理
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            bannerState.show(with: error)
         }
     }
 }

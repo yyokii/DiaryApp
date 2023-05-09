@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DiaryDetailView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var bannerState: BannerState
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
@@ -71,8 +72,7 @@ private extension DiaryDetailView {
     var navigationToolBar: some View {
         HStack {
             Button {
-                diaryDataStore.isFavorite.toggle()
-                diaryDataStore.update()
+               update()
             } label: {
                 Image(systemName: diaryDataStore.isFavorite ? "bookmark.fill" : "bookmark")
                     .resizable()
@@ -150,22 +150,47 @@ private extension DiaryDetailView {
 
     var saveButton: some View {
         Button("Save") {
-            isEditing = false
-            diaryDataStore.update()
+            save()
         }
         .buttonStyle(ActionButtonStyle())
     }
 
     var deleteButton: some View {
         Button("Delete") {
-            isEditing = false
-            diaryDataStore.delete()
-            dismiss()
+            delete()
         }
         .buttonStyle(ActionButtonStyle(backgroundColor: .orange))
     }
 
     // MARK: Action
+
+    func update() {
+        diaryDataStore.isFavorite.toggle()
+        do {
+            try diaryDataStore.update()
+        } catch {
+            bannerState.show(with: error)
+        }
+    }
+
+    func save() {
+        do {
+            try diaryDataStore.update()
+            isEditing = false
+        } catch {
+            bannerState.show(with: error)
+        }
+    }
+
+    func delete() {
+        do {
+            try diaryDataStore.delete()
+            isEditing = false
+            dismiss()
+        } catch {
+            bannerState.show(with: error)
+        }
+    }
 }
 
 #if DEBUG
