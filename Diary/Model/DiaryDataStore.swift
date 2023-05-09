@@ -128,7 +128,6 @@ public class DiaryDataStore: ObservableObject {
         }
 
         if originalItemImage != selectedImage {
-            // TODO: 動作確認、変更時のみここにくるか
             originalItem.imageData = selectedImage?.jpegData(compressionQuality: 0.5)
         }
 
