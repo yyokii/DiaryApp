@@ -61,8 +61,9 @@ private extension HomeView {
     var settings: some View {
         HStack {
             Spacer()
-            Button {
-                // TODO: 遷移先
+
+            NavigationLink {
+                SettingsView()
             } label: {
                 Image(systemName: "gearshape")
                     .resizable()
@@ -70,6 +71,7 @@ private extension HomeView {
                     .foregroundColor(.primary)
                     .frame(width: 24)
             }
+            .buttonStyle(PlainButtonStyle())
         }
     }
 

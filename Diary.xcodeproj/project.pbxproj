@@ -46,6 +46,10 @@
 		F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7C2A0942710064CB62 /* BannerView.swift */; };
 		F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */; };
 		F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A842A0A1F510064CB62 /* DiaryList.swift */; };
+		F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */; };
+		F53E3A8A2A0BC88E0064CB62 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A892A0BC88E0064CB62 /* SettingsView.swift */; };
+		F53E3A8C2A0BE31A0064CB62 /* SettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8B2A0BE31A0064CB62 /* SettingsRow.swift */; };
+		F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8D2A0C07680064CB62 /* TextOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +106,10 @@
 		F53E3A7C2A0942710064CB62 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		F53E3A7E2A0944A20064CB62 /* PassThroughWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughWindow.swift; sourceTree = "<group>"; };
 		F53E3A842A0A1F510064CB62 /* DiaryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryList.swift; sourceTree = "<group>"; };
+		F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptionsView.swift; sourceTree = "<group>"; };
+		F53E3A892A0BC88E0064CB62 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F53E3A8B2A0BE31A0064CB62 /* SettingsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRow.swift; sourceTree = "<group>"; };
+		F53E3A8D2A0C07680064CB62 /* TextOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +182,7 @@
 				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
 				F5358D2D29FF53E6005FD6C8 /* DiaryDataStore.swift */,
 				F5358D372A00B621005FD6C8 /* Direction.swift */,
+				F53E3A8D2A0C07680064CB62 /* TextOptions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +190,7 @@
 		F5358CBA29F6027A005FD6C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F53E3A862A0BB6A60064CB62 /* Settings */,
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
 				F5358CA629F52467005FD6C8 /* ContentView.swift */,
@@ -273,6 +283,16 @@
 				F53E3A7C2A0942710064CB62 /* BannerView.swift */,
 			);
 			path = Banner;
+			sourceTree = "<group>";
+		};
+		F53E3A862A0BB6A60064CB62 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
+				F53E3A892A0BC88E0064CB62 /* SettingsView.swift */,
+				F53E3A8B2A0BE31A0064CB62 /* SettingsRow.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,8 +405,10 @@
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
+				F53E3A8A2A0BC88E0064CB62 /* SettingsView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
+				F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */,
 				F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
 				F5358D532A0698BE005FD6C8 /* WeatherPicker.swift in Sources */,
@@ -398,6 +420,7 @@
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
 				F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
+				F53E3A8C2A0BE31A0064CB62 /* SettingsRow.swift in Sources */,
 				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
@@ -407,6 +430,7 @@
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
+				F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */,
 				F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */,
 				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,

@@ -10,6 +10,8 @@ import SwiftUI
 struct InputBody: View {
     static let bodyCount: (min: Int, max:Int) = (1, 1000)
 
+    @EnvironmentObject private var textOptions: TextOptions
+
     @Binding var bodyText: String
     @FocusState var focusedField: FocusedField?
 
@@ -20,8 +22,8 @@ struct InputBody: View {
                 text: $bodyText,
                 axis: .vertical
             )
+            .textOption(textOptions)
             .focused($focusedField, equals: .body)
-            .font(.system(size: 16))
             .frame(height: 250, alignment: .top)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
@@ -50,6 +52,7 @@ struct InputBody_Previews: PreviewProvider {
                 InputBody(bodyText: .constant("あいうえお123abd"))
                 InputBody(bodyText: .constant(largBody))
             }
+            .environmentObject(TextOptions.preview)
         }
     }
 

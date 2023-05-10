@@ -12,22 +12,6 @@ public class CoreDataProvider: ObservableObject {
 
     @Published var coreDataProviderError: CoreDataProviderError?
 
-    static var preview: CoreDataProvider = {
-        let result = CoreDataProvider()
-        let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.date = Date()
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
-
     let container: NSPersistentCloudKitContainer
 
     init() {
@@ -49,6 +33,24 @@ public class CoreDataProvider: ObservableObject {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+}
+
+extension CoreDataProvider {
+    static var preview: CoreDataProvider = {
+        let result = CoreDataProvider()
+        let viewContext = result.container.viewContext
+        for _ in 0..<10 {
+            let newItem = Item(context: viewContext)
+            newItem.date = Date()
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return result
+    }()
 }
 
 public enum CoreDataProviderError: Error, LocalizedError {

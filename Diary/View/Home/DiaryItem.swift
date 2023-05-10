@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DiaryItem: View {
     @EnvironmentObject private var bannerState: BannerState
+    @EnvironmentObject private var textOptions: TextOptions
 
     @ObservedObject var item: Item
 
@@ -102,8 +103,7 @@ private extension DiaryItem {
                     .padding(.trailing, 40)
 
                 Text(item.body ?? "")
-                    .font(.system(size: 12))
-                    .lineSpacing(4)
+                    .textOption(textOptions)
                     .lineLimit(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -133,7 +133,7 @@ struct DiaryItem_Previews: PreviewProvider {
             DiaryItem(item: .makeRandom(withImage: true))
                 .padding(.horizontal)
         }
-
+        .environmentObject(TextOptions.preview)
     }
 
     static var previews: some View {

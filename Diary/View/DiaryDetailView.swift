@@ -10,6 +10,7 @@ import SwiftUI
 struct DiaryDetailView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var bannerState: BannerState
+    @EnvironmentObject private var textOptions: TextOptions
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
@@ -142,7 +143,7 @@ private extension DiaryDetailView {
             InputBody(bodyText: $diaryDataStore.bodyText)
         } else if !diaryDataStore.bodyText.isEmpty {
             Text(diaryDataStore.bodyText)
-                .font(.system(size: 16))
+                .textOption(textOptions)
                 .frame(maxWidth: .infinity)
                 .frame(height: 250, alignment: .top)
         }
