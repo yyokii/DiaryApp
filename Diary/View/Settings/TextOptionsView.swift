@@ -109,6 +109,7 @@ private extension TextOptionsView {
     var saveButton: some View {
         Button("保存") {
             textOptions.save(fontSize: fontSize, lineSpacing: lineSpacing)
+            bannerState.show(of: .success(message: "テキストの設定を更新しました🎉"))
         }
         .buttonStyle(ActionButtonStyle())
     }
