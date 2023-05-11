@@ -92,13 +92,16 @@ extension Item: BaseModel {
     }
 
     /**
-     今日までの継続日数を算出する
+     今日までの継続日数を算出する。
+     作成日をもとに算出している。従って毎日"いつかの"日記を書いていれば継続日数は増加する。
      今日未作成の場合は昨日までの継続日数を出力
      */
     static func calculateConsecutiveDays(_ context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext) throws -> Int {
-        var items = try context.fetch(all)
+        let request = all
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        var items = try context.fetch(request)
         guard !items.isEmpty,
-              let latestItemDate = items[0].date
+              let latestItemDate = items.first?.createdAt
         else { return 0 }
 
         var count = 0
@@ -113,12 +116,21 @@ extension Item: BaseModel {
         }
 
         for item in items {
-            let currentItemDate = Calendar.current.startOfDay(for: item.date!)
+            let currentItemDateStartOfDay = Calendar.current.startOfDay(for: item.createdAt!)
             let expectedDate = Calendar.current.date(byAdding: .day, value: -(count + 1), to: now)!
-            let expectedDateStartOfDay = Calendar.current.startOfDay(for: expectedDate)
+            let expectedStartOfDay = Calendar.current.startOfDay(for: expectedDate)
 
-            if currentItemDate == expectedDateStartOfDay {
+            let dayDiffBetweenCurrentItemAndExpected = Calendar.current.dateComponents(
+                [.day],
+                from: currentItemDateStartOfDay,
+                to: expectedStartOfDay
+            ).day
+
+            if dayDiffBetweenCurrentItemAndExpected == 0 {
                 count += 1
+            } else if dayDiffBetweenCurrentItemAndExpected == -1 {
+                // 同日に複数件作成している場合もあるのでその場合は次のループへ（countの変化はないので、expectedDateは同じでitemが更新されて再度処理される）
+                continue
             } else {
                 break
             }
