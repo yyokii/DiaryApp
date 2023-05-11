@@ -13,20 +13,34 @@ struct DiaryItem: View {
 
     @ObservedObject var item: Item
 
-    let height: CGFloat = 140
-    let cornerRadius: CGFloat = 10
-
-    let dayFormatter: DateFormatter = {
+    private let isYearDisplayed: Bool
+    private let height: CGFloat = 140
+    private let cornerRadius: CGFloat = 10
+    private let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
         return formatter
     }()
-
-    let weekdayFormatter: DateFormatter = {
+    private let weekdayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EE"
         return formatter
     }()
+    private let yearFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter
+    }()
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d"
+        return formatter
+    }()
+
+    init(item: Item, withYear: Bool = false) {
+        self.item = item
+        self.isYearDisplayed = withYear
+    }
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -55,15 +69,22 @@ private extension DiaryItem {
     var diaryDate: some View {
         VStack(alignment: .center) {
             Spacer()
-
             if let date = item.date {
-                Text(date, formatter: dayFormatter)
-                    .font(.system(size: 32))
+                if isYearDisplayed {
+                    Text(date, formatter: yearFormatter)
+                        .font(.system(size: 18))
+                    Text(date, formatter: dateFormatter)
+                        .font(.system(size: 18))
+                } else {
+                    Text(date, formatter: dayFormatter)
+                        .font(.system(size: 32))
+                }
                 Text(date, formatter: weekdayFormatter)
-                    .font(.system(size: 20))
+                    .font(.system(size: isYearDisplayed ? 18 : 20))
             }
             Spacer()
         }
+        .foregroundColor(.appBlack.opacity(0.8))
         .frame(width: 50)
     }
 
@@ -71,7 +92,7 @@ private extension DiaryItem {
         Button {
             bookMark()
         } label: {
-            Image(systemName: item.isFavorite ? "bookmark.fill" : "bookmark")
+            Image(systemName: item.isBookmarked ? "bookmark.fill" : "bookmark")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 14)
@@ -112,7 +133,7 @@ private extension DiaryItem {
     }
 
     func bookMark() {
-        item.isFavorite = !item.isFavorite
+        item.isBookmarked = !item.isBookmarked
         do {
             try item.save()
         } catch {
@@ -131,6 +152,9 @@ struct DiaryItem_Previews: PreviewProvider {
                 .padding(.horizontal)
 
             DiaryItem(item: .makeRandom(withImage: true))
+                .padding(.horizontal)
+
+            DiaryItem(item: .makeRandom(), withYear: true)
                 .padding(.horizontal)
         }
         .environmentObject(TextOptions.preview)

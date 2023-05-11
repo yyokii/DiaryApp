@@ -26,7 +26,7 @@ struct DiaryList: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            LazyVStack(spacing: 20) {
                 ForEach(items) { item in
                     NavigationLink {
                         DiaryDetailView(diaryDataStore: .init(item: item))
@@ -37,7 +37,7 @@ struct DiaryList: View {
                     .buttonStyle(PlainButtonStyle())
                 }
             }
-            .padding(.top, 10)
+            .padding(.vertical)
         }
     }
 }

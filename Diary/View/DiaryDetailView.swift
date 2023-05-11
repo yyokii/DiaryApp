@@ -75,7 +75,7 @@ private extension DiaryDetailView {
             Button {
                update()
             } label: {
-                Image(systemName: diaryDataStore.isFavorite ? "bookmark.fill" : "bookmark")
+                Image(systemName: diaryDataStore.isBookmarked ? "bookmark.fill" : "bookmark")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 14)
@@ -166,7 +166,7 @@ private extension DiaryDetailView {
     // MARK: Action
 
     func update() {
-        diaryDataStore.isFavorite.toggle()
+        diaryDataStore.isBookmarked.toggle()
         do {
             try diaryDataStore.update()
         } catch {

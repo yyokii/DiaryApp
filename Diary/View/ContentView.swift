@@ -20,8 +20,8 @@ struct ContentView: View {
     @FetchRequest(fetchRequest: Item.all)
     private var items: FetchedResults<Item>
 
-    @FetchRequest(fetchRequest: Item.favorites)
-    private var favorites: FetchedResults<Item>
+    @FetchRequest(fetchRequest: Item.bookmarks)
+    private var bookmarks: FetchedResults<Item>
 
     var body: some View {
         NavigationStack {
@@ -40,7 +40,7 @@ struct ContentView: View {
                 Divider()
 
                 List {
-                    ForEach(favorites) { item in
+                    ForEach(bookmarks) { item in
                         Text(item.date!, formatter: itemFormatter)
                     }
                     .onDelete(perform: deleteItems)
@@ -119,7 +119,7 @@ struct DiaryDetailViewDemo: View {
 
     // Diary editable contents
     @State var diaryBody: String
-    @State var isFavorite: Bool
+    @State var isBookmarked: Bool
 
     @State private var selectedPickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
@@ -140,7 +140,7 @@ struct DiaryDetailViewDemo: View {
         self.item = item
 
         _diaryBody = State(initialValue: item.body ?? "")
-        _isFavorite = State(initialValue: item.isFavorite)
+        _isBookmarked = State(initialValue: item.isBookmarked)
     }
 
     var body: some View {
@@ -149,7 +149,7 @@ struct DiaryDetailViewDemo: View {
                 Text("weather: \(item.weather ?? "")")
                 TextField("body", text: $diaryBody)
                     .textOption(textOptions)
-                Toggle(isOn: $isFavorite) {
+                Toggle(isOn: $isBookmarked) {
                     Text("favorite")
                 }
                 Text("created at \(item.date!, formatter: itemFormatter)")
@@ -224,7 +224,7 @@ struct DiaryDetailViewDemo: View {
 
             Button("Save") {
                 item.body = diaryBody
-                item.isFavorite = isFavorite
+                item.isBookmarked = isBookmarked
                 if let selectedImage,
                    let imageData = selectedImage.jpegData(compressionQuality: 0.5) {
                     item.imageData = imageData

@@ -26,9 +26,9 @@ extension Item: BaseModel {
         date: Date = Date(),
         withImage: Bool = false
     ) -> Item {
-        let titleSourceString = "あ漢カ👋"
+        let titleSourceString = "あ漢1"
         var title = ""
-        let repeatCountForTitle = Int.random(in: 1...4)
+        let repeatCountForTitle = Int.random(in: 1...3)
         for _ in 1...repeatCountForTitle {
             title += titleSourceString
         }
@@ -45,7 +45,7 @@ extension Item: BaseModel {
         newItem.body = body
         newItem.date = date
         newItem.createdAt = Date()
-        newItem.isFavorite = Bool.random()
+        newItem.isBookmarked = Bool.random()
         newItem.updatedAt = Date()
         newItem.weather = "sun.max"
 
@@ -71,10 +71,10 @@ extension Item: BaseModel {
         return request
     }
 
-    static var favorites: NSFetchRequest<Item> {
+    static var bookmarks: NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(
-            format: "isFavorite == true"
+            format: "isBookmarked == true"
         )
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request
@@ -131,7 +131,7 @@ extension Item: BaseModel {
         date: Date,
         title: String,
         body: String,
-        isFavorite: Bool = false,
+        isBookmarked: Bool = false,
         weather: String,
         imageData: Data?
     ) throws {
@@ -143,7 +143,7 @@ extension Item: BaseModel {
         diaryItem.body = body
         diaryItem.createdAt = now
         diaryItem.updatedAt = now
-        diaryItem.isFavorite = isFavorite
+        diaryItem.isBookmarked = isBookmarked
         diaryItem.weather = weather
 
         if let imageData {

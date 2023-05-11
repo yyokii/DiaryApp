@@ -49,6 +49,7 @@
 		F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */; };
 		F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */; };
 		F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8D2A0C07680064CB62 /* TextOptions.swift */; };
+		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptionsView.swift; sourceTree = "<group>"; };
 		F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		F53E3A8D2A0C07680064CB62 /* TextOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptions.swift; sourceTree = "<group>"; };
+		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,8 +288,9 @@
 		F53E3A862A0BB6A60064CB62 /* AppInfo */ = {
 			isa = PBXGroup;
 			children = (
-				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */,
+				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
+				F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */,
 			);
 			path = AppInfo;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
 				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
+				F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */,
 				F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,

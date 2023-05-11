@@ -19,7 +19,7 @@ struct TextOptionsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                Text("日記本文のテキスト設定を変更できます😄")
+                Text("日記のテキスト設定を変更できます😄")
                     .font(.system(size: 16))
                 previousSettingsDemo
                 downImage
@@ -35,7 +35,6 @@ struct TextOptionsView: View {
             lineSpacing = textOptions.lineSpacing
         }
         .navigationTitle("テキスト設定")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -45,7 +44,7 @@ private extension TextOptionsView {
     // MARK: View
 
     var previousSettingsDemo: some View {
-        Text("これは現在の設定の設定です。\n日記の本文はこのように表示されています。\n設定を変更するには下部のスライダーを変更してみてください🦈")
+        Text("これは現在の設定の設定です。\n日記の本文はこのように表示されています。\n下部のスライダーを動かしてみてください🦈")
             .textOption(
                 .init(
                     fontSize: textOptions.fontSize,

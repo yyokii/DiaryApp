@@ -12,15 +12,18 @@ struct AppInfoView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("日記の設定") {
+                Section("日記") {
+                    streak
+                    totalCount
+                    bookMark
                     textOption
                 }
 
-                Section("アプリについて") {
+                Section("サポート") {
 
                 }
             }
-            .navigationTitle("設定")
+            .navigationTitle("アプリについて")
         }
     }
 }
@@ -29,9 +32,27 @@ private extension AppInfoView {
 
     // MARK: View
 
+    var streak: some View {
+        NavigationLink("継続日数") {
+            TextOptionsView()
+        }
+    }
+
+    var totalCount: some View {
+        NavigationLink("合計") {
+            TextOptionsView()
+        }
+    }
+
     var textOption: some View {
         NavigationLink("テキストの設定") {
             TextOptionsView()
+        }
+    }
+
+    var bookMark: some View {
+        NavigationLink("ブックマークした日記") {
+            BookmarkListView()
         }
     }
     
@@ -57,5 +78,3 @@ struct AppInfoView_Previews: PreviewProvider {
 }
 
 #endif
-
-
