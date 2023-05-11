@@ -84,7 +84,7 @@ private extension DiaryItem {
             }
             Spacer()
         }
-        .foregroundColor(.appBlack.opacity(0.8))
+        .foregroundColor(.adaptiveBlack.opacity(0.8))
         .frame(width: 50)
     }
 
@@ -129,6 +129,7 @@ private extension DiaryItem {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 10)
+            .padding(.trailing, 30)
         }
     }
 
