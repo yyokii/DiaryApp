@@ -27,7 +27,7 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 VStack() {
-                    settings
+                    appInfo
                         .padding(.horizontal, 30)
                     displayingMonth
                     DiaryList(date: firstDateOfDisplayedMonth)
@@ -58,12 +58,12 @@ private extension HomeView {
         return firstDateOfDisplayedMonth == firstDateOfThisMonth
     }
 
-    var settings: some View {
+    var appInfo: some View {
         HStack {
             Spacer()
 
             NavigationLink {
-                SettingsView()
+                AppInfoView()
             } label: {
                 Image(systemName: "gearshape")
                     .resizable()

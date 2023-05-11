@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  AppInfoView.swift
 //  Diary
 //
 //  Created by Higashihara Yoki on 2023/05/10.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct AppInfoView: View {
 
     var body: some View {
         NavigationStack {
@@ -25,7 +25,7 @@ struct SettingsView: View {
     }
 }
 
-private extension SettingsView {
+private extension AppInfoView {
 
     // MARK: View
 
@@ -40,10 +40,10 @@ private extension SettingsView {
 
 #if DEBUG
 
-struct SettingsView_Previews: PreviewProvider {
+struct AppInfoView_Previews: PreviewProvider {
 
     static var content: some View {
-        SettingsView()
+        AppInfoView()
     }
 
     static var previews: some View {
