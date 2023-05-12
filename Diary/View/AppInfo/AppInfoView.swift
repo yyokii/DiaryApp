@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct AppInfoView: View {
+    @EnvironmentObject private var notificationSetting: NotificationSetting
 
-    @State var consecutiveDays: Int? = 0
-    @State var diaryCount: Int? = 0
+    @State private var consecutiveDays: Int? = 0
+    @State private var diaryCount: Int? = 0
+    @State private var isReminderOn = false
+
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     var body: some View {
         NavigationStack {
@@ -20,6 +29,7 @@ struct AppInfoView: View {
                     totalCount
                     bookMark
                     textOption
+                    reminder
                 }
 
                 Section("サポート") {
@@ -65,6 +75,14 @@ private extension AppInfoView {
         }
     }
 
+    var bookMark: some View {
+        NavigationLink {
+            BookmarkListView()
+        } label: {
+            rowTitle(emoji: "🔖", title: "ブックマークした日記")
+        }
+    }
+
     var textOption: some View {
         NavigationLink {
             TextOptionsView()
@@ -73,11 +91,24 @@ private extension AppInfoView {
         }
     }
 
-    var bookMark: some View {
+    var reminder: some View {
         NavigationLink {
-            BookmarkListView()
+            ReminderSettingView()
         } label: {
-            rowTitle(emoji: "🔖", title: "ブックマークした日記")
+            HStack {
+                rowTitle(emoji: "⏰", title: "通知")
+                Spacer()
+                Group {
+                    if notificationSetting.isSetNotification {
+                        Text("オン")
+                        Text(notificationSetting.setNotificationDate!, formatter: timeFormatter)
+                    } else {
+                        Text("オフ")
+                    }
+                }
+                .foregroundColor(.gray)
+                .font(.system(size: 14))
+            }
         }
     }
 
@@ -116,6 +147,7 @@ struct AppInfoView_Previews: PreviewProvider {
 
     static var content: some View {
         AppInfoView()
+            .environmentObject(NotificationSetting())
     }
 
     static var previews: some View {

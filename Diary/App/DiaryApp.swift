@@ -14,6 +14,7 @@ struct DiaryApp: App {
     @StateObject var bannerState = BannerState()
     @StateObject var coreDataProvider = CoreDataProvider.shared
     @StateObject var textOptions: TextOptions = .makeUserOptions()
+    @StateObject var notificationSetting: NotificationSetting = NotificationSetting()
 
 //    init() {
 //        let now = Date()
@@ -31,6 +32,7 @@ struct DiaryApp: App {
                 .environmentObject(bannerState)
                 .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
                 .environmentObject(textOptions)
+                .environmentObject(notificationSetting)
         }
     }
 }

@@ -50,6 +50,8 @@
 		F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */; };
 		F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8D2A0C07680064CB62 /* TextOptions.swift */; };
 		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
+		F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */; };
+		F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,8 @@
 		F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		F53E3A8D2A0C07680064CB62 /* TextOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptions.swift; sourceTree = "<group>"; };
 		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingView.swift; sourceTree = "<group>"; };
+		F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,13 +180,11 @@
 		F5358CB929F60273005FD6C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */,
-				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
-				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
+				F550BC9A2A0E58C100BCB0F2 /* Entity */,
 				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
 				F5358D2D29FF53E6005FD6C8 /* DiaryDataStore.swift */,
-				F5358D372A00B621005FD6C8 /* Direction.swift */,
 				F53E3A8D2A0C07680064CB62 /* TextOptions.swift */,
+				F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,8 +293,20 @@
 				F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */,
 				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */,
+				F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */,
 			);
 			path = AppInfo;
+			sourceTree = "<group>";
+		};
+		F550BC9A2A0E58C100BCB0F2 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */,
+				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
+				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
+				F5358D372A00B621005FD6C8 /* Direction.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +430,7 @@
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
+				F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */,
 				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
@@ -434,6 +449,7 @@
 				F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */,
 				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
+				F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */,
 				F5358D2A29FF401D005FD6C8 /* HomeView.swift in Sources */,
 				F5358D342A000E9B005FD6C8 /* Shadow.swift in Sources */,
 				F5358D2429FEAB60005FD6C8 /* View+Extension.swift in Sources */,

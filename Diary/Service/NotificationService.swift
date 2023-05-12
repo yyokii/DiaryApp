@@ -20,6 +20,23 @@ struct NotificationService {
         }
     }
 
+    func getLatestScheduledNotificationDate() async -> Date? {
+        return await withCheckedContinuation { continuation in
+            notificationCenter.getPendingNotificationRequests { requests in
+                guard !requests.isEmpty else {
+                    return continuation.resume(returning: nil)
+                }
+
+                if let trigger = requests.first?.trigger as? UNCalendarNotificationTrigger,
+                   let nextTriggerDate = trigger.nextTriggerDate() {
+                    return continuation.resume(returning: nextTriggerDate)
+                } else {
+                    return continuation.resume(returning: nil)
+                }
+            }
+        }
+    }
+
     func needToSetupInSettingsApp() async -> Bool {
         return await withCheckedContinuation { continuation in
             notificationCenter.getNotificationSettings { settings in
@@ -38,9 +55,16 @@ struct NotificationService {
         }
     }
 
-    func updateEverydayNotification(hour: Int, minute: Int) {
-        assert(0 <= hour && hour <= 24 && 0 <= minute && minute <= 59)
+    func getNotificationSettings() async -> UNAuthorizationStatus  {
+        return await withCheckedContinuation { continuation in
+            notificationCenter.getNotificationSettings { settings in
+                return continuation.resume(returning: settings.authorizationStatus)
+            }
+        }
+    }
 
+    func updateEverydayNotification(date: Date) {
+//        assert(0 <= hour && hour <= 24 && 0 <= minute && minute <= 59)
         deleteAllNotification()
 
         let content = UNMutableNotificationContent()
@@ -49,8 +73,12 @@ struct NotificationService {
         content.body = "Write diary, make your life beautiful"
         content.sound = UNNotificationSound.default
 
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+
         let scheduledDate = DateComponents(
-            calendar: Calendar.current,
+            calendar: calendar,
             timeZone: TimeZone.current,
             hour: hour,
             minute: minute

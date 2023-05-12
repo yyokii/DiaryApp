@@ -12,6 +12,7 @@ extension View {
         self.foregroundColor(.red)
     }
 
+    @MainActor
     func textOption(_ option: TextOptions) -> some View {
         self
             .font(.system(size: option.fontSize))
