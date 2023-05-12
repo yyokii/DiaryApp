@@ -10,8 +10,8 @@ import SwiftUI
 public struct ActionButtonStyle: ButtonStyle {
     let backgroundColor: Color
     let foregroundColor: Color
+    let cornerRadius: CGFloat
     let isActive: Bool
-    let isAdaptiveSize: Bool
     let size: Size
 
     public enum Size {
@@ -43,14 +43,14 @@ public struct ActionButtonStyle: ButtonStyle {
     public init(
         backgroundColor: Color = .adaptiveBlack,
         foregroundColor: Color = .adaptiveWhite,
-        isAdaptiveSize: Bool = true,
+        cornerRadius: CGFloat = 13,
         isActive: Bool = true,
         size: Size = .medium
     ) {
         self.backgroundColor = backgroundColor
         self.foregroundColor = foregroundColor
+        self.cornerRadius = cornerRadius
         self.isActive = isActive
-        self.isAdaptiveSize = isAdaptiveSize
         self.size = size
     }
 
@@ -63,7 +63,7 @@ public struct ActionButtonStyle: ButtonStyle {
             )
             .padding(.vertical, size.verticalPadding)
             .background(
-                RoundedRectangle(cornerRadius: 13)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(
                         self.backgroundColor
                             .opacity(self.isActive && !configuration.isPressed ? 1 : 0.5)

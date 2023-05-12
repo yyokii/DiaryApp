@@ -20,14 +20,36 @@ struct FloatingButton: View {
                 Spacer()
                 Button(action: action) {
                     Image(systemName: icon)
-                        .font(.system(size: 25))
-                        .foregroundColor(.white)
+                        .font(.system(size: 40))
+                        .foregroundColor(.adaptiveWhite)
                 }
                 .frame(width: size, height: size)
-                .background(Color.red)
+                .background(Color.adaptiveBlack)
                 .cornerRadius(size/2)
                 .adaptiveShadow()
             }
         }
     }
 }
+
+#if DEBUG
+
+struct FloatingButton_Previews: PreviewProvider {
+
+    static var content: some View {
+        FloatingButton(action: {
+            print("tap button")
+        }, icon: "plus")
+    }
+
+    static var previews: some View {
+        Group {
+            content
+                .environment(\.colorScheme, .light)
+            content
+                .environment(\.colorScheme, .dark)
+        }
+    }
+}
+
+#endif
