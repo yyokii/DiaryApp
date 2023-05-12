@@ -114,7 +114,7 @@ private extension DiaryItem {
                 .frame(height: height)
                 .clipped()
                 .cornerRadius(cornerRadius, corners: [.topRight, .bottomRight])
-
+                .allowsHitTesting(false) // clipはUI上のcropは起こるが内部では画像をそのままのサイズで保持しているため、予期せぬタップ判定をもたらす。それを回避するためのワークアラウンド。 https://stackoverflow.com/questions/63300411/clipped-not-actually-clips-the-image-in-swiftui
         } else {
             VStack(alignment: .leading, spacing: 14) {
                 Text(item.title ?? "")
