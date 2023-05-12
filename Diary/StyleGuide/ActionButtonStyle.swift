@@ -56,6 +56,7 @@ public struct ActionButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         return configuration.label
+            .bold()
             .foregroundColor(
                 self.foregroundColor
                     .opacity(!configuration.isPressed ? 1 : 0.5)
