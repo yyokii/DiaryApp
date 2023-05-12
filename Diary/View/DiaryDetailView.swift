@@ -160,7 +160,7 @@ private extension DiaryDetailView {
         Button("Delete") {
             delete()
         }
-        .buttonStyle(ActionButtonStyle(backgroundColor: .orange))
+        .buttonStyle(ActionButtonStyle(backgroundColor: .red))
     }
 
     // MARK: Action
@@ -200,6 +200,10 @@ struct DiaryDetailView_Previews: PreviewProvider {
 
     static var content: some View {
         DiaryDetailView(diaryDataStore: .init(item: .makeRandom(withImage: true)))
+            .environmentObject(TextOptions(
+                fontSize: TextOptions.defaultFontSize,
+                lineSpacing: TextOptions.defaultLineSpacing
+            ))
     }
 
     static var previews: some View {

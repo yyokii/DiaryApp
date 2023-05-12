@@ -13,23 +13,21 @@ struct BookmarkListView: View {
     private var bookmarks: FetchedResults<Item>
 
     var body: some View {
-        NavigationStack {
-            VStack() {
-                Text("\(bookmarks.count)件")
-                ScrollView {
-                    LazyVStack(spacing: 20) {
-                        ForEach(bookmarks) { item in
-                            NavigationLink {
-                                DiaryDetailView(diaryDataStore: .init(item: item))
-                            } label: {
-                                DiaryItem(item: item, withYear: true)
-                            }
-                            .padding(.horizontal, 30)
-                            .buttonStyle(PlainButtonStyle())
+        VStack() {
+            Text("\(bookmarks.count)件")
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    ForEach(bookmarks) { item in
+                        NavigationLink {
+                            DiaryDetailView(diaryDataStore: .init(item: item))
+                        } label: {
+                            DiaryItem(item: item, withYear: true)
                         }
+                        .padding(.horizontal, 30)
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .padding(.vertical)
                 }
+                .padding(.vertical)
             }
             .navigationTitle("ブックマーク")
         }

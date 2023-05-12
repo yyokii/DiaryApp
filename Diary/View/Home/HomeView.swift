@@ -26,9 +26,10 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack() {
+                VStack(spacing: 12) {
                     appInfo
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 32)
+                        .padding(.top, 12)
                     displayingMonth
                     DiaryList(date: firstDateOfDisplayedMonth)
                 }
@@ -69,7 +70,7 @@ private extension HomeView {
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.primary)
-                    .frame(width: 24)
+                    .frame(width: 28)
             }
             .buttonStyle(PlainButtonStyle())
         }
