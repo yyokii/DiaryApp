@@ -144,6 +144,10 @@ struct CreateDiaryView_Previews: PreviewProvider {
 
     static var content: some View {
         CreateDiaryView()
+            .environmentObject(TextOptions(
+                fontSize: TextOptions.defaultFontSize,
+                lineSpacing: TextOptions.defaultLineSpacing
+            ))
     }
 
     static var previews: some View {

@@ -16,48 +16,58 @@ struct AddPhoto: View {
     private let imageSize: CGSize = .init(width: 300, height: 300)
 
     var body: some View {
-        ZStack() {
-            if let selectedImage {
-                Image(uiImage: selectedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .overlay(alignment: .topTrailing, content: {
-                        Button {
-                            self.selectedImage = nil
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .symbolRenderingMode(.palette)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30)
-                                .foregroundStyle(.white, .black)
-                        }
-                        .padding(.top, 4)
-                        .padding(.trailing, 4)
-                    })
-            } else {
-                Rectangle()
-                    .foregroundColor(.gray.opacity(0.2))
-                    .frame(height: 300)
-            }
+        if let selectedImage {
+            imageViewer(selectedImage)
+        } else {
+            imagePicker
+        }
+    }
+}
 
-            if selectedImage == nil {
-                PhotosPicker(selection: $selectedPickerItem) {
-                    Image(systemName: "camera")
+private extension AddPhoto {
+
+    // MARK: View
+
+    func imageViewer(_ image: UIImage) -> some View {
+        Image(uiImage: image)
+            .resizable()
+            .scaledToFit()
+            .overlay(alignment: .topTrailing, content: {
+                Button {
+                    self.selectedImage = nil
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .symbolRenderingMode(.palette)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.white, .black)
                 }
+                .padding(.top, 8)
+                .padding(.trailing, 8)
+            })
+    }
+
+    var imagePicker: some View {
+        PhotosPicker(selection: $selectedPickerItem) {
+            ZStack() {
+                Rectangle()
+                    .foregroundColor(.gray.opacity(0.2))
+                    .frame(height: 300)
+                Image(systemName: "camera")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30)
+                    .foregroundColor(.primary)
             }
         }
         .onChange(of: selectedPickerItem) { pickerItem in
             updateSelectedImage(to: pickerItem)
         }
     }
-}
 
-private extension AddPhoto {
+    // MARK: Action
+
     func updateSelectedImage(to pickerItem: PhotosPickerItem?) {
         Task {
             if let data = try? await pickerItem?.loadTransferable(type: Data.self),
