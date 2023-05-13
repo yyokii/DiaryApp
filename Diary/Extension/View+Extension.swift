@@ -26,8 +26,30 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
-}
 
+    /**
+     Adds an action to perform when a swipe action occurs.
+     */
+    func onSwipe(perform action: ((SwipeDirection) -> Void)? = nil) -> some View {
+        self
+            .gesture(
+                DragGesture(minimumDistance: 30, coordinateSpace: .global)
+                    .onEnded { value in
+                        let horizontalAmount = value.translation.width
+                        let verticalAmount = value.translation.height
+
+                        var direction: SwipeDirection
+                        if abs(horizontalAmount) > abs(verticalAmount) {
+                            direction = horizontalAmount < 0 ? .left : .right
+                        } else {
+                            direction = verticalAmount < 0 ? .up : .down
+                        }
+
+                        action?(direction)
+                    }
+            )
+    }
+}
 
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
@@ -37,5 +59,9 @@ struct RoundedCorner: Shape {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
+}
+
+enum SwipeDirection {
+    case left, right, up, down, none
 }
 

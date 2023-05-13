@@ -47,6 +47,9 @@ struct HomeView: View {
         .onAppear {
             sceneDelegate.bannerState = bannerState
         }
+        .onSwipe { direction in
+            moveMonthWithSwipe(direction)
+        }
         .sheet(isPresented: $isPresentedCreateDiaryView) {
             CreateDiaryView()
         }
@@ -113,10 +116,13 @@ private extension HomeView {
             .frame(width: 12)
     }
 
+    // MARK: Action
+
     func moveMonth(_ direction: Direction) {
         var diff: Int
         switch direction {
         case .forward:
+            guard !isDisplayingThisMonth else { return }
             diff = 1
         case .backward:
             diff = -1
@@ -125,5 +131,16 @@ private extension HomeView {
         guard let date = calendar.date(byAdding: .month, value: diff, to: firstDateOfDisplayedMonth) else { return }
 
         self.firstDateOfDisplayedMonth = date
+    }
+
+    func moveMonthWithSwipe(_ direction: SwipeDirection) {
+        switch direction{
+        case .left:
+            moveMonth(.forward)
+        case .right:
+            moveMonth(.backward)
+        case .up, .down, .none:
+            break
+        }
     }
 }
