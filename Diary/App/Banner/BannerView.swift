@@ -33,14 +33,15 @@ private extension BannerView {
             VStack(alignment: .leading, spacing: 4) {
                 Text(bannerState.mode.emoji)
                 Text(bannerState.mode.message)
+                    .bold()
                     .font(.system(size: 16))
-                    .foregroundColor(.appBlack)
+                    .foregroundColor(.adaptiveBlack)
             }
             .padding(16)
             .padding(.horizontal, 12)
             .background(
                 Capsule()
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.adaptiveWhite)
             )
             .drawingGroup() // テキストの変更とオフセットの変更アニメーションを同期させるために使用。（memo: これにより、もしViewが.clear（タッチイベントが生じなくなる）などを利用していても、タッチイベントは発生する（透過しない）ようになる。）
             .offset(y: bannerState.isPresented ? 0 : -(geometry.safeAreaInsets.top + baseHeight))
