@@ -200,10 +200,7 @@ struct DiaryDetailView_Previews: PreviewProvider {
 
     static var content: some View {
         DiaryDetailView(diaryDataStore: .init(item: .makeRandom(withImage: true)))
-            .environmentObject(TextOptions(
-                fontSize: TextOptions.defaultFontSize,
-                lineSpacing: TextOptions.defaultLineSpacing
-            ))
+            .environmentObject(TextOptions.preview)
     }
 
     static var previews: some View {

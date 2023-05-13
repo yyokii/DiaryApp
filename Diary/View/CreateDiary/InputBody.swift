@@ -16,20 +16,25 @@ struct InputBody: View {
     @FocusState var focusedField: FocusedField?
 
     var body: some View {
+
         VStack(alignment: .leading) {
-            TextField(
-                "思い出 📝（1000文字以内）",
-                text: $bodyText,
-                axis: .vertical
-            )
-            .textOption(textOptions)
-            .focused($focusedField, equals: .body)
-            .frame(height: 250, alignment: .top)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(.gray.opacity(0.2), lineWidth: 1)
-                    .padding(-5)
-            )
+            ZStack(alignment: .topLeading) {
+                if bodyText.isEmpty {
+                    Text("思いで📝")
+                        .textOption(textOptions)
+                        .foregroundColor(.placeholderGray)
+                        .padding(.top, 8)
+                        .padding(.leading, 8)
+                        .disabled(true)
+                }
+
+                TextEditor(text: $bodyText)
+                    .textOption(textOptions)
+                    .focused($focusedField, equals: .body)
+                    .frame(height: 350)
+                    .cornerRadius(10)
+                    .opacity(bodyText.isEmpty ? 0.25 : 1)
+            }
 
             if bodyText.count > InputBody.bodyCount.max {
                 Text("1000文字以内にしましょう（現在 \(bodyText.count) 文字）")
@@ -49,6 +54,7 @@ struct InputBody_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             VStack {
+                InputBody(bodyText: .constant(""))
                 InputBody(bodyText: .constant("あいうえお123abd"))
                 InputBody(bodyText: .constant(largBody))
             }

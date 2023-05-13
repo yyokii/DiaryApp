@@ -42,7 +42,7 @@ struct CreateDiaryView: View {
                         InputBody(bodyText: $bodyText, focusedField: _focusedField)
                         createButton
                     }
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, 20)
                 }
             }
         }
@@ -144,10 +144,7 @@ struct CreateDiaryView_Previews: PreviewProvider {
 
     static var content: some View {
         CreateDiaryView()
-            .environmentObject(TextOptions(
-                fontSize: TextOptions.defaultFontSize,
-                lineSpacing: TextOptions.defaultLineSpacing
-            ))
+            .environmentObject(TextOptions.preview)
     }
 
     static var previews: some View {

@@ -50,6 +50,9 @@ final class TextOptions: ObservableObject {
 
 extension TextOptions {
     static var preview: TextOptions {
-        .init(fontSize: 12, lineSpacing: 4)
+        .init(
+            fontSize: TextOptions.defaultFontSize,
+            lineSpacing: TextOptions.defaultLineSpacing
+        )
     }
 }
