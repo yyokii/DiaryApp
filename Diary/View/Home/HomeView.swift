@@ -88,6 +88,7 @@ private extension HomeView {
             })
 
             Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
+                .font(.system(size: 20))
                 .foregroundColor(.gray)
                 .frame(width: 175)
 
