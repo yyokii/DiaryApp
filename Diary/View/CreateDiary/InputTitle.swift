@@ -18,7 +18,13 @@ struct InputTitle: View {
     @FocusState var focusedField: FocusedField?
 
     var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 4) {
+            if !title.isEmpty {
+                Text("タイトル")
+                    .foregroundColor(.placeholderGray)
+                    .font(.system(size: 14))
+            }
+
             TextField("タイトル（1~10文字）", text: $title)
                 .font(.system(size: 24))
                 .multilineTextAlignment(.center)
@@ -39,7 +45,7 @@ struct InputTitle_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 50) {
                 InputTitle(title: .constant("あいうえお123abcdefg"))
                 InputTitle(title: .constant("あいうえお"))
             }

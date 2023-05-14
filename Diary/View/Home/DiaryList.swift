@@ -33,7 +33,7 @@ struct DiaryList: View {
                     } label: {
                         DiaryItem(item: item)
                     }
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, 20)
                     .buttonStyle(PlainButtonStyle())
                 }
             }

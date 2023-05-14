@@ -17,10 +17,16 @@ struct InputBody: View {
 
     var body: some View {
 
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
+            if !bodyText.isEmpty {
+                Text("思い出📝")
+                    .foregroundColor(.placeholderGray)
+                    .font(.system(size: 14))
+            }
+
             ZStack(alignment: .topLeading) {
                 if bodyText.isEmpty {
-                    Text("思いで📝")
+                    Text("思い出📝")
                         .textOption(textOptions)
                         .foregroundColor(.placeholderGray)
                         .padding(.top, 8)

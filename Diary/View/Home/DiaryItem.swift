@@ -118,7 +118,8 @@ private extension DiaryItem {
         } else {
             VStack(alignment: .leading, spacing: 14) {
                 Text(item.title ?? "")
-                    .font(.system(size: 36))
+                    .bold()
+                    .font(.system(size: 32))
                     .lineLimit(2)
                     .minimumScaleFactor(0.7)
                     .padding(.trailing, 40)

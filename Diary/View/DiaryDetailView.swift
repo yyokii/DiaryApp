@@ -25,8 +25,7 @@ struct DiaryDetailView: View {
                 VStack(spacing: 20) {
                     image
                     VStack(spacing: 20) {
-                        weather
-                        title
+                        header
                         diaryBody
                         if isEditing {
                             saveButton
@@ -34,6 +33,7 @@ struct DiaryDetailView: View {
                         }
                     }
                     .padding(.horizontal, 40)
+                    .padding(.top, paddingTopToImage)
                 }
             }
             .navigationTitle(date)
@@ -66,6 +66,13 @@ private extension DiaryDetailView {
         } else {
             return "no date"
         }
+    }
+
+    var paddingTopToImage: CGFloat {
+        // 画像標示関連Viewが標示されている場合とそれ以外で見栄えを変える
+        isEditing || diaryDataStore.selectedImage != nil
+        ? 0
+        : 40
     }
 
     // MARK: View
@@ -120,6 +127,21 @@ private extension DiaryDetailView {
     }
 
     @ViewBuilder
+    var header: some View {
+        if isEditing {
+            VStack {
+                weather
+                title
+            }
+        } else {
+            HStack {
+                title
+                weather
+            }
+        }
+    }
+
+    @ViewBuilder
     var weather: some View {
         if isEditing {
             WeatherPicker(selectedWeather: $diaryDataStore.selectedWeather)
@@ -137,6 +159,7 @@ private extension DiaryDetailView {
             InputTitle(title: $diaryDataStore.title)
         } else if !diaryDataStore.title.isEmpty {
             Text(diaryDataStore.title)
+                .bold()
                 .font(.system(size: 24))
                 .multilineTextAlignment(.center)
         }
@@ -149,20 +172,21 @@ private extension DiaryDetailView {
         } else if !diaryDataStore.bodyText.isEmpty {
             Text(diaryDataStore.bodyText)
                 .textOption(textOptions)
+                .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity)
                 .frame(height: 250, alignment: .top)
         }
     }
 
     var saveButton: some View {
-        Button("Save") {
+        Button("保存する🎉") {
             save()
         }
         .buttonStyle(ActionButtonStyle())
     }
 
     var deleteButton: some View {
-        Button("Delete") {
+        Button("削除する🗑️") {
             delete()
         }
         .buttonStyle(ActionButtonStyle(backgroundColor: .red))
@@ -203,16 +227,23 @@ private extension DiaryDetailView {
 
 struct DiaryDetailView_Previews: PreviewProvider {
 
-    static var content: some View {
-        DiaryDetailView(diaryDataStore: .init(item: .makeRandom(withImage: true)))
+    static func content(withImage: Bool) -> some View {
+        DiaryDetailView(diaryDataStore: .init(item: .makeRandom(withImage: withImage)))
             .environmentObject(TextOptions.preview)
     }
 
     static var previews: some View {
         Group {
-            content
+            content(withImage: true)
                 .environment(\.colorScheme, .light)
-            content
+            content(withImage: true)
+                .environment(\.colorScheme, .dark)
+        }
+
+        Group {
+            content(withImage: false)
+                .environment(\.colorScheme, .light)
+            content(withImage: false)
                 .environment(\.colorScheme, .dark)
         }
     }

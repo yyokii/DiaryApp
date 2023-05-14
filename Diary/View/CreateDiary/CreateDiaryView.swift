@@ -101,7 +101,7 @@ private extension CreateDiaryView {
     }
 
     var createButton: some View {
-        Button("Create") {
+        Button("作成する🎉") {
             createItemFromInput()
         }
         .buttonStyle(ActionButtonStyle(isActive: (validTitle && validBody))) // TODO: activeとdisable連動させる？
