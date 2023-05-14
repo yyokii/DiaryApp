@@ -91,7 +91,9 @@ private extension DiaryDetailView {
                 }
             } else {
                 Button {
-                    isEditing = true
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isEditing = true
+                    }
                 } label: {
                     Image(systemName: "pencil")
                         .resizable()
@@ -105,13 +107,16 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var image: some View {
-        if isEditing {
-            AddPhoto(selectedImage: $diaryDataStore.selectedImage)
-        } else if let uiImage = diaryDataStore.selectedImage {
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFit()
+        Group {
+            if isEditing {
+                AddPhoto(selectedImage: $diaryDataStore.selectedImage)
+            } else if let uiImage = diaryDataStore.selectedImage {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+            }
         }
+        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
     }
 
     @ViewBuilder

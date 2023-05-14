@@ -88,7 +88,10 @@ struct AddPhoto_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            AddPhoto(selectedImage: .constant(nil))
+            VStack {
+                AddPhoto(selectedImage: .constant(nil))
+                AddPhoto(selectedImage: .constant(UIImage(named: "sample")!))
+            }
         }
     }
 
