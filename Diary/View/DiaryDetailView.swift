@@ -79,35 +79,35 @@ private extension DiaryDetailView {
 
     var navigationToolBar: some View {
         HStack {
-            Button {
+            Button(actionWithHapticFB: {
                update()
-            } label: {
+            }, label: {
                 Image(systemName: diaryDataStore.isBookmarked ? "bookmark.fill" : "bookmark")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 14)
                     .foregroundColor(.primary)
-            }
+            })
 
             if isEditing {
-                Button {
+                Button(action: {
                     diaryDataStore.updateValuesWithOriginalData()
                     isEditing = false
-                } label: {
+                }, label: {
                     Text("キャンセル")
-                }
+                })
             } else {
-                Button {
+                Button(action: {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = true
                     }
-                } label: {
+                }, label: {
                     Image(systemName: "pencil")
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.primary)
                         .frame(width: 22)
-                }
+                })
             }
         }
     }

@@ -89,15 +89,15 @@ private extension DiaryItem {
     }
 
     var bookMarkButton: some View {
-        Button {
+        Button(actionWithHapticFB: {
             bookMark()
-        } label: {
+        }, label: {
             Image(systemName: item.isBookmarked ? "bookmark.fill" : "bookmark")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 14)
                 .foregroundColor(.primary)
-        }
+        })
     }
 
     /**

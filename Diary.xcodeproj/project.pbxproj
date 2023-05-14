@@ -52,6 +52,7 @@
 		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
 		F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */; };
 		F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */; };
+		F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingView.swift; sourceTree = "<group>"; };
 		F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
+		F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Haptic.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */,
 				F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */,
 				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
+				F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
+				F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */,
 				F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */,
 				F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */,
 				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,

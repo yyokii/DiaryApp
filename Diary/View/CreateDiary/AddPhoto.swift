@@ -33,16 +33,16 @@ private extension AddPhoto {
             .resizable()
             .scaledToFit()
             .overlay(alignment: .topTrailing, content: {
-                Button {
+                Button(action: {
                     self.selectedImage = nil
-                } label: {
+                }, label: {
                     Image(systemName: "xmark.circle.fill")
                         .symbolRenderingMode(.palette)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30)
                         .foregroundStyle(.white, .black)
-                }
+                })
                 .padding(.top, 8)
                 .padding(.trailing, 8)
             })

@@ -81,21 +81,21 @@ private extension HomeView {
 
     var displayingMonth: some View {
         HStack {
-            Button {
+            Button(action: {
                 moveMonth(.backward)
-            } label: {
+            }, label: {
                 chevronIcon(.backward)
-            }
+            })
 
             Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
                 .foregroundColor(.gray)
                 .frame(width: 175)
 
-            Button {
+            Button(action: {
                 moveMonth(.forward)
-            } label: {
+            }, label: {
                 chevronIcon(.forward, disabled: isDisplayingThisMonth)
-            }
+            })
             .disabled(isDisplayingThisMonth)
         }
     }

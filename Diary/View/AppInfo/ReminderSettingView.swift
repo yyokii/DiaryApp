@@ -66,23 +66,23 @@ private extension ReminderSettingView {
     }
 
     var saveButton: some View {
-        Button {
+        Button(action: {
             save()
-        } label: {
+        }, label: {
             Text("設定する")
-        }
+        })
         .buttonStyle(ActionButtonStyle())
     }
 
     var deleteButton: some View {
-        Button {
+        Button(action: {
             Task {
                 await notificationSetting.delete()
             }
             bannerState.show(of: .success(message: "通知を未設定にしました🗑️"))
-        } label: {
+        }, label: {
             Text("未設定にする")
-        }
+        })
         .buttonStyle(ActionButtonStyle(backgroundColor: .red))
     }
 

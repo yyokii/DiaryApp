@@ -18,7 +18,7 @@ struct FloatingButton: View {
             Spacer()
             HStack {
                 Spacer()
-                Button(action: action) {
+                Button(actionWithHapticFB: action) {
                     Image(systemName: icon)
                         .font(.system(size: 40))
                         .foregroundColor(.adaptiveWhite)
