@@ -33,7 +33,7 @@ extension View {
     func onSwipe(perform action: ((SwipeDirection) -> Void)? = nil) -> some View {
         self
             .gesture(
-                DragGesture(minimumDistance: 30, coordinateSpace: .global)
+                DragGesture(minimumDistance: 24, coordinateSpace: .global)
                     .onEnded { value in
                         let horizontalAmount = value.translation.width
                         let verticalAmount = value.translation.height
