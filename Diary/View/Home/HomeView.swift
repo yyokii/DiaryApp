@@ -33,6 +33,15 @@ struct HomeView: View {
                     displayingMonth
                     DiaryList(date: firstDateOfDisplayedMonth)
                 }
+                .background(
+                    FluidGradient(
+                        blobs: [.blue],
+                        highlights:  [.blue],
+                        speed: 0.2
+                    )
+                    .opacity(0.3)
+                    .ignoresSafeArea()
+                )
 
                 FloatingButton(
                     action: {
@@ -89,7 +98,6 @@ private extension HomeView {
 
             Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
                 .font(.system(size: 20))
-                .foregroundColor(.gray)
                 .frame(width: 175)
 
             Button(action: {
@@ -99,6 +107,13 @@ private extension HomeView {
             })
             .disabled(isDisplayingThisMonth)
         }
+        .padding(.vertical, 14)
+        .padding(.horizontal, 20)
+        .background(
+            Capsule()
+                .foregroundColor(.adaptiveWhite)
+                .adaptiveShadow()
+        )
     }
 
     func chevronIcon(_ direction: Direction, disabled: Bool = false) -> some View {
@@ -145,3 +160,25 @@ private extension HomeView {
         }
     }
 }
+
+#if DEBUG
+
+struct Home_Previews: PreviewProvider {
+
+    static var content: some View {
+        HomeView()
+        .environmentObject(DiaryAppSceneDelegate())
+        .environmentObject(BannerState())
+    }
+
+    static var previews: some View {
+        Group {
+            content
+                .environment(\.colorScheme, .light)
+            content
+                .environment(\.colorScheme, .dark)
+        }
+    }
+}
+
+#endif

@@ -41,3 +41,9 @@ struct DiaryList: View {
         }
     }
 }
+
+private extension DiaryList {
+    var emptyItem: some View {
+        Text("no items")
+    }
+}
