@@ -94,7 +94,7 @@ private extension DiaryDetailView {
                     diaryDataStore.updateValuesWithOriginalData()
                     isEditing = false
                 }, label: {
-                    Text("キャンセル")
+                    Text("戻す")
                 })
             } else {
                 Button(action: {

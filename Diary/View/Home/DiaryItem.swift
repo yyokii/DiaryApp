@@ -48,9 +48,8 @@ struct DiaryItem: View {
                 .fill(Color.adaptiveWhite)
                 .adaptiveShadow()
 
-            HStack(alignment: .top, spacing: 20) {
+            HStack(alignment: .top, spacing: 0) {
                 diaryDate
-                    .padding(.leading, 20)
 
                 ZStack(alignment: .topTrailing) {
                     diaryContent
@@ -84,8 +83,17 @@ private extension DiaryItem {
             }
             Spacer()
         }
-        .foregroundColor(.adaptiveBlack.opacity(0.8))
-        .frame(width: 50)
+        .foregroundColor(Color.white)
+        .padding(.horizontal, 28)
+        .background {
+            FluidGradient(
+                blobs: [.blue, .green, .yellow, .orange, .red, .pink, .teal],
+                highlights:  [.blue, .green, .yellow, .orange, .red, .pink, .purple, .teal, .indigo],
+                speed: 0.5
+            )
+            .opacity(0.9)
+            .cornerRadius(cornerRadius, corners: [.topLeft, .bottomLeft])
+        }
     }
 
     var bookMarkButton: some View {
@@ -130,7 +138,7 @@ private extension DiaryItem {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 10)
-            .padding(.trailing, 30)
+            .padding(.horizontal, 20)
         }
     }
 

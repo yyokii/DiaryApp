@@ -33,15 +33,6 @@ struct HomeView: View {
                     displayingMonth
                     DiaryList(date: firstDateOfDisplayedMonth)
                 }
-                .background(
-                    FluidGradient(
-                        blobs: [.blue],
-                        highlights:  [.blue],
-                        speed: 0.2
-                    )
-                    .opacity(0.3)
-                    .ignoresSafeArea()
-                )
 
                 FloatingButton(
                     action: {
