@@ -93,7 +93,9 @@ private extension DiaryDetailView {
             if isEditing {
                 Button(action: {
                     diaryDataStore.updateValuesWithOriginalData()
-                    isEditing = false
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isEditing = false
+                    }
                 }, label: {
                     Text("戻す")
                 })
