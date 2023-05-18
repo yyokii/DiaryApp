@@ -20,6 +20,7 @@ struct WeatherSelectButton: View {
         .foregroundColor(.adaptiveBlack)
         .sheet(isPresented: $isPresentedSelectView) {
             WeatherSelect(selectedWeather: $selectedWeather)
+                .padding(30)
                 .presentationDetents([.height(280)])
         }
     }
@@ -88,7 +89,6 @@ struct WeatherSelect: View {
                     )
                 }
             }
-            .padding(30)
         }
     }
 }
