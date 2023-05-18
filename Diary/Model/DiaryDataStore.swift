@@ -29,7 +29,7 @@ public class DiaryDataStore: ObservableObject {
     @Published var title = ""
     @Published var bodyText = ""
     @Published var isBookmarked = false
-    @Published var selectedWeather = ""
+    @Published var selectedWeather: WeatherSymbol = .sun
     @Published var selectedPickerItem: PhotosPickerItem?
     @Published var selectedImage: UIImage?
 
@@ -66,7 +66,7 @@ public class DiaryDataStore: ObservableObject {
         self.isBookmarked = item.isBookmarked
 
         if let weather = item.weather {
-            self.selectedWeather = weather
+            self.selectedWeather = WeatherSymbol.make(from: weather)
         }
 
         if let imageData = item.imageData,
@@ -117,8 +117,8 @@ public class DiaryDataStore: ObservableObject {
             originalItem.isBookmarked = isBookmarked
         }
 
-        if originalItem.weather != selectedWeather {
-            originalItem.weather = selectedWeather
+        if originalItem.weather != selectedWeather.symbol {
+            originalItem.weather = selectedWeather.symbol
         }
 
         if originalItemImage != selectedImage {

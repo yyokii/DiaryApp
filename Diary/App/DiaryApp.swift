@@ -11,10 +11,11 @@ import SwiftUI
 struct DiaryApp: App {
     @UIApplicationDelegateAdaptor var delegate: DiaryAppDelegate
 
-    @StateObject var bannerState = BannerState()
-    @StateObject var coreDataProvider = CoreDataProvider.shared
-    @StateObject var textOptions: TextOptions = .makeUserOptions()
-    @StateObject var notificationSetting: NotificationSetting = NotificationSetting()
+    @StateObject private var bannerState = BannerState()
+    @StateObject private var coreDataProvider = CoreDataProvider.shared
+    @StateObject private var textOptions: TextOptions = .makeUserOptions()
+    @StateObject private var notificationSetting: NotificationSetting = NotificationSetting()
+    @StateObject private var weatherData = WeatherData()
 
 //    init() {
 //        let now = Date()
@@ -33,6 +34,7 @@ struct DiaryApp: App {
                 .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
                 .environmentObject(textOptions)
                 .environmentObject(notificationSetting)
+                .environmentObject(weatherData)
         }
     }
 }

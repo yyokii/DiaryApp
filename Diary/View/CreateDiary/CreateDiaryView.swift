@@ -10,14 +10,13 @@ import SwiftUI
 
 struct CreateDiaryView: View {
     @Environment(\.dismiss) private var dismiss
-
-    @StateObject private var weatherData = WeatherData()
+    @EnvironmentObject private var weatherData: WeatherData
 
     // modelに置き換える
     @State private var selectedDate = Date()
     @State private var title = ""
     @State private var bodyText = ""
-    @State private var selectedWeather = ""
+    @State private var selectedWeather: WeatherSymbol = .sun
     @State private var selectedImage: UIImage?
 
     @FocusState private var focusedField: FocusedField?
@@ -53,6 +52,10 @@ struct CreateDiaryView: View {
                 focusedField = nil
             }
         }
+        .onReceive(weatherData.$todayWeather , perform: { todayWeather in
+            guard let todayWeather else { return }
+            selectedWeather = .make(from: todayWeather.symbolName)
+        })
         .onAppear{
             // TODO: 移動させてもいいかも
             weatherData.requestLocationAuth()
@@ -88,16 +91,9 @@ private extension CreateDiaryView {
 
     @ViewBuilder
     var weather: some View {
-        if Calendar.current.isDateInToday(selectedDate) {
-            // TODO: この時も変更できた方がいい
-            Image(systemName: weatherData.todayWeather?.symbolName ?? "")
-                .resizable()
-                .scaledToFit()
-                .frame(width:24)
-                .asyncState(weatherData.phase)
-        } else {
-            WeatherPicker(selectedWeather: $selectedWeather)
-        }
+        WeatherSelectButton(selectedWeather: $selectedWeather)
+            .asyncState(weatherData.phase)
+
     }
 
     var createButton: some View {
@@ -115,7 +111,7 @@ private extension CreateDiaryView {
            let todayWeather = weatherData.todayWeather {
             weather = todayWeather.symbolName
         } else {
-            weather = selectedWeather
+            weather = selectedWeather.symbol
         }
 
         var imageData: Data?
@@ -145,6 +141,7 @@ struct CreateDiaryView_Previews: PreviewProvider {
     static var content: some View {
         CreateDiaryView()
             .environmentObject(TextOptions.preview)
+            .environmentObject(WeatherData())
     }
 
     static var previews: some View {

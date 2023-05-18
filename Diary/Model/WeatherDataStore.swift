@@ -17,6 +17,13 @@ public class WeatherData: ObservableObject {
 
     @Published public var phase: AsyncStatePhase = .initial
     @Published public var todayWeather: DayWeather?
+    public var hasTodayWeather: Bool {
+        guard let todayWeather else {
+            return false
+        }
+        return Calendar.current.isDateInToday(todayWeather.date)
+    }
+
     private var location: CLLocation?
 
     private let service = WeatherService.shared
@@ -36,7 +43,7 @@ public class WeatherData: ObservableObject {
             .store(in: &cancellables)
     }
 
-    public func load() async {
+    public func load() {
         if let location {
             Task.detached(priority: .userInitiated) {
                 await self.loadDailyForecast(for: location)

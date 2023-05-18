@@ -11,6 +11,7 @@ struct DiaryDetailView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var bannerState: BannerState
     @EnvironmentObject private var textOptions: TextOptions
+    @EnvironmentObject private var weatherData: WeatherData
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
@@ -129,7 +130,7 @@ private extension DiaryDetailView {
     @ViewBuilder
     var header: some View {
         if isEditing {
-            VStack {
+            VStack(spacing: 20) {
                 weather
                 title
             }
@@ -144,9 +145,10 @@ private extension DiaryDetailView {
     @ViewBuilder
     var weather: some View {
         if isEditing {
-            WeatherPicker(selectedWeather: $diaryDataStore.selectedWeather)
+            WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
+                .asyncState(weatherData.phase)
         } else {
-            Image(systemName: diaryDataStore.selectedWeather)
+            Image(systemName: diaryDataStore.selectedWeather.symbol)
                 .resizable()
                 .scaledToFit()
                 .frame(width:24)
@@ -230,6 +232,7 @@ struct DiaryDetailView_Previews: PreviewProvider {
     static func content(withImage: Bool) -> some View {
         DiaryDetailView(diaryDataStore: .init(item: .makeRandom(withImage: withImage)))
             .environmentObject(TextOptions.preview)
+            .environmentObject(WeatherData())
     }
 
     static var previews: some View {

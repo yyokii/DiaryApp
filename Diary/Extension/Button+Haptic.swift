@@ -14,9 +14,8 @@ extension Button {
     ) {
         self.init(
             action: {
-                let generator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
-                generator.prepare()
-                generator.notificationOccurred(.success)
+                let impactMed = UIImpactFeedbackGenerator(style: .light)
+                impactMed.impactOccurred()
                 actionWithHapticFB()
             },
             label: label
