@@ -19,6 +19,8 @@ struct CreateDiaryView: View {
     @State private var selectedWeather: WeatherSymbol = .sun
     @State private var selectedImage: UIImage?
 
+    @State var isPresentedDatePicker: Bool = false
+
     @FocusState private var focusedField: FocusedField?
 
     private var dateFormatter: DateFormatter {
@@ -80,20 +82,36 @@ private extension CreateDiaryView {
     // MARK: View
 
     var date: some View {
-        DatePicker(
-            "",
-            selection: $selectedDate,
-            in: dateRange,
-            displayedComponents: [.date]
-        )
-        .labelsHidden()
+        Button(action: {
+            isPresentedDatePicker.toggle()
+        }, label: {
+            HStack {
+                Text(selectedDate, style: .date)
+                Image(systemName: "pencil")
+            }
+            .font(.system(size: 20))
+        })
+        .foregroundColor(.adaptiveBlack)
+        .sheet(isPresented: $isPresentedDatePicker) {
+            /*
+             https://developer.apple.com/forums/thread/725965
+
+             下部に限らずDatePickerを表示している状態または閉じてすぐに他のsheetを表示させるとPresentaionエラーとなり、
+             以降Viewが再生成？されるまでSheetは表示されない。（iOS 16.4.1(a)実機で検証）
+             そのため、DatePickerをそのまま利用するのではなくsheetで表示している。
+             */
+
+            DatePicker("", selection: $selectedDate, displayedComponents: [.date])
+                .padding(.horizontal)
+                .datePickerStyle(GraphicalDatePickerStyle())
+                .presentationDetents([.medium])
+        }
     }
 
     @ViewBuilder
     var weather: some View {
         WeatherSelectButton(selectedWeather: $selectedWeather)
             .asyncState(weatherData.phase)
-
     }
 
     var createButton: some View {
