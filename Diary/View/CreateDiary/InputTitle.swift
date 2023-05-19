@@ -36,6 +36,7 @@ struct InputTitle: View {
                     .font(.system(size: 12))
             }
         }
+        .animation(.easeInOut, value: title)
     }
 }
 

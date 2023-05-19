@@ -26,7 +26,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack(spacing: 12) {
+                VStack(spacing: 8) {
                     appInfo
                         .padding(.horizontal, 32)
                         .padding(.top, 12)
@@ -42,9 +42,6 @@ struct HomeView: View {
                 )
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
-            }
-            .onSwipe { direction in
-                moveMonthWithSwipe(direction)
             }
         }
         .onAppear {
@@ -89,7 +86,7 @@ private extension HomeView {
 
             Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
                 .font(.system(size: 20))
-                .frame(width: 175)
+                .frame(width: 172)
 
             Button(action: {
                 moveMonth(.forward)
@@ -98,29 +95,37 @@ private extension HomeView {
             })
             .disabled(isDisplayingThisMonth)
         }
-        .padding(.vertical, 14)
+        .onSwipe { direction in
+            moveMonthWithSwipe(direction)
+        }
+        .padding(.vertical, 8)
         .padding(.horizontal, 20)
-        .background(
-            Capsule()
-                .foregroundColor(.adaptiveWhite)
-                .adaptiveShadow()
-        )
     }
 
     func chevronIcon(_ direction: Direction, disabled: Bool = false) -> some View {
         var imageName: String
+        var xOffset: CGFloat
         switch direction {
         case .forward:
             imageName = "chevron.forward"
+            xOffset = 2
         case .backward:
             imageName = "chevron.backward"
+            xOffset = -2
         }
 
-        return Image(systemName: imageName)
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(disabled ? .gray : .primary)
-            .frame(width: 12)
+        return Circle()
+            .foregroundColor(.adaptiveWhite)
+            .frame(width: 48)
+            .adaptiveShadow()
+            .overlay {
+                Image(systemName: imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(disabled ? .gray : .primary)
+                    .frame(width: 12)
+                    .offset(x: xOffset)
+            }
     }
 
     // MARK: Action

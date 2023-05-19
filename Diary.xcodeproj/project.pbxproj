@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CA429F52467005FD6C8 /* DiaryApp.swift */; };
-		F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CA629F52467005FD6C8 /* ContentView.swift */; };
 		F5358CA929F52468005FD6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5358CA829F52468005FD6C8 /* Assets.xcassets */; };
 		F5358CAC29F52468005FD6C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5358CAB29F52468005FD6C8 /* Preview Assets.xcassets */; };
 		F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAD29F52468005FD6C8 /* Persistence.swift */; };
@@ -73,7 +72,6 @@
 /* Begin PBXFileReference section */
 		F5358CA129F52467005FD6C8 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5358CA429F52467005FD6C8 /* DiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryApp.swift; sourceTree = "<group>"; };
-		F5358CA629F52467005FD6C8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5358CA829F52468005FD6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5358CAB29F52468005FD6C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5358CAD29F52468005FD6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 				F53E3A862A0BB6A60064CB62 /* AppInfo */,
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
-				F5358CA629F52467005FD6C8 /* ContentView.swift */,
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
 			);
 			path = View;
@@ -444,7 +441,6 @@
 				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
-				F5358CA729F52467005FD6C8 /* ContentView.swift in Sources */,
 				F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */,
 				F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,

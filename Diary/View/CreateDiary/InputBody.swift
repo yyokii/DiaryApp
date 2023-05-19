@@ -48,6 +48,7 @@ struct InputBody: View {
                     .font(.system(size: 12))
             }
         }
+        .animation(.easeInOut, value: bodyText)
     }
 }
 

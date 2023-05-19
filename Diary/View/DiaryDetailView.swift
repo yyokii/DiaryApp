@@ -29,7 +29,6 @@ struct DiaryDetailView: View {
                         header
                         diaryBody
                         if isEditing {
-                            saveButton
                             deleteButton
                         }
                     }
@@ -92,12 +91,12 @@ private extension DiaryDetailView {
 
             if isEditing {
                 Button(action: {
-                    diaryDataStore.updateValuesWithOriginalData()
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = false
                     }
+                    save()
                 }, label: {
-                    Text("戻す")
+                    Text("保存")
                 })
             } else {
                 Button(action: {
@@ -180,13 +179,6 @@ private extension DiaryDetailView {
                 .frame(maxWidth: .infinity)
                 .frame(height: 250, alignment: .top)
         }
-    }
-
-    var saveButton: some View {
-        Button("保存する🎉") {
-            save()
-        }
-        .buttonStyle(ActionButtonStyle())
     }
 
     var deleteButton: some View {
