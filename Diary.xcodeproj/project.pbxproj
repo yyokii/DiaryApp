@@ -207,6 +207,8 @@
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
+				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
+				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -258,9 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
-				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
-				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
