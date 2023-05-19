@@ -175,9 +175,8 @@ private extension DiaryDetailView {
         } else if !diaryDataStore.bodyText.isEmpty {
             Text(diaryDataStore.bodyText)
                 .textOption(textOptions)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity)
-                .frame(height: 250, alignment: .top)
         }
     }
 
