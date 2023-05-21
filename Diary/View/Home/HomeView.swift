@@ -78,7 +78,7 @@ private extension HomeView {
 
     var displayingMonth: some View {
         HStack {
-            Button(action: {
+            Button(actionWithHapticFB: {
                 moveMonth(.backward)
             }, label: {
                 chevronIcon(.backward)
@@ -88,7 +88,7 @@ private extension HomeView {
                 .font(.system(size: 20))
                 .frame(width: 172)
 
-            Button(action: {
+            Button(actionWithHapticFB: {
                 moveMonth(.forward)
             }, label: {
                 chevronIcon(.forward, disabled: isDisplayingThisMonth)
