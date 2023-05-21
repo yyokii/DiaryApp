@@ -18,8 +18,6 @@ struct DiaryDetailView: View {
     @State private var isEditing: Bool = false
     @FocusState private var focusedField: FocusedField?
 
-    private let imageHeight: CGFloat = 300
-
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -35,6 +33,7 @@ struct DiaryDetailView: View {
                     .padding(.horizontal, 40)
                     .padding(.top, paddingTopToImage)
                 }
+                .padding(.bottom, 500)
             }
             .navigationTitle(date)
             .navigationBarTitleDisplayMode(.inline)
@@ -80,7 +79,7 @@ private extension DiaryDetailView {
     var navigationToolBar: some View {
         HStack {
             Button(actionWithHapticFB: {
-               update()
+                update()
             }, label: {
                 Image(systemName: diaryDataStore.isBookmarked ? "bookmark.fill" : "bookmark")
                     .resizable()
