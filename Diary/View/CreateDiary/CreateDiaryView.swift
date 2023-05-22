@@ -127,6 +127,7 @@ private extension CreateDiaryView {
         var weather: String
         if Calendar.current.isDateInToday(selectedDate),
            let todayWeather = weatherData.todayWeather {
+            // 位置情報から取得した天気のsymbolは必ずしもWeatherSelectより選択可能なものではないので、その際はsymbolNameをそのまま利用する
             weather = todayWeather.symbolName
         } else {
             weather = selectedWeather.symbol
@@ -139,7 +140,7 @@ private extension CreateDiaryView {
 
         do {
             try Item.create(
-                date: selectedDate,
+                date: Calendar.current.startOfDay(for: selectedDate),
                 title: title,
                 body: bodyText,
                 weather: weather,
