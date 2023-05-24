@@ -28,12 +28,13 @@ struct DiaryDetailView: View {
                         diaryBody
                         if isEditing {
                             deleteButton
+                                .padding(.top, 80)
                         }
                     }
                     .padding(.horizontal, 40)
                     .padding(.top, paddingTopToImage)
                 }
-                .padding(.bottom, 500)
+                .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
             }
             .navigationTitle(date)
             .navigationBarTitleDisplayMode(.inline)

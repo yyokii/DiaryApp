@@ -44,6 +44,7 @@ struct HomeView: View {
                 .padding(.bottom, 20)
             }
         }
+        .tint(.adaptiveBlack)
         .onAppear {
             sceneDelegate.bannerState = bannerState
         }

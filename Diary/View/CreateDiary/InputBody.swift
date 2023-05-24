@@ -37,7 +37,7 @@ struct InputBody: View {
                 TextEditor(text: $bodyText)
                     .textOption(textOptions)
                     .focused($focusedField, equals: .body)
-                    .frame(height: 350)
+                    .frame(height: 400)
                     .cornerRadius(10)
                     .opacity(bodyText.isEmpty ? 0.25 : 1)
             }

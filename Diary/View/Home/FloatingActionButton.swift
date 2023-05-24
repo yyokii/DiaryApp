@@ -21,10 +21,10 @@ struct FloatingButton: View {
                 Button(actionWithHapticFB: action) {
                     Image(systemName: icon)
                         .font(.system(size: 40))
-                        .foregroundColor(.adaptiveWhite)
+                        .foregroundColor(.adaptiveBlack)
                 }
                 .frame(width: size, height: size)
-                .background(Color.adaptiveBlack)
+                .background(Color.adaptiveWhite)
                 .cornerRadius(size/2)
                 .adaptiveShadow()
             }
