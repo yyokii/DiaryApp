@@ -31,7 +31,7 @@ struct HomeView: View {
                         .padding(.horizontal, 32)
                         .padding(.top, 12)
                     displayingMonth
-                    DiaryList(date: firstDateOfDisplayedMonth)
+                    DiaryList(dateInterval: displayDateInterval)
                 }
 
                 FloatingButton(
@@ -57,6 +57,13 @@ private extension HomeView {
     var isDisplayingThisMonth: Bool {
         guard let firstDateOfThisMonth = Date().startOfMonth else { return false }
         return firstDateOfDisplayedMonth == firstDateOfThisMonth
+    }
+
+    var displayDateInterval: DateInterval {
+        .init(
+            start: firstDateOfDisplayedMonth,
+            end: firstDateOfDisplayedMonth.endOfMonth!
+        )
     }
 
     var appInfo: some View {

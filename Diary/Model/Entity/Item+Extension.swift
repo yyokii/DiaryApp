@@ -80,12 +80,12 @@ extension Item: BaseModel {
         return request
     }
 
-    static func itemsOfMonth(date: Date) -> NSFetchRequest<Item> {
+    static func items(of dateInterval: DateInterval) -> NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(
-            format: "date >= %@ && date < %@",
-            date.startOfMonth! as CVarArg,
-            date.endOfMonth! as CVarArg
+            format: "date >= %@ && date <= %@",
+            dateInterval.start as CVarArg,
+            dateInterval.end as CVarArg
         )
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request

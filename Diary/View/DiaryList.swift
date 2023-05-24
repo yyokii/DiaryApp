@@ -16,12 +16,12 @@ struct DiaryList: View {
      */
     @FetchRequest private var items: FetchedResults<Item>
 
-    init(date: Date) {
+    init(dateInterval: DateInterval) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateに紐づくものであることを保証している。
          */
-        _items = FetchRequest(fetchRequest: Item.itemsOfMonth(date: date))
+        _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
     }
 
     var body: some View {
@@ -52,7 +52,7 @@ private extension DiaryList {
             Image(systemName: "drop")
                 .font(.system(size: 24))
 
-            Text("「+」ボタンから日記を作成して、\nあなたの経験の原液（Essence）を記録しましょう")
+            Text("「+」ボタンから日記を作成して、\nあなたの経験を振り返りましょう")
                 .foregroundColor(.gray)
                 .font(.system(size: 16))
         }
@@ -68,7 +68,7 @@ struct DiaryList_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            DiaryList(date: Date())
+            DiaryList(dateInterval: .init(start: Date(), end: Date()))
         }
     }
 
