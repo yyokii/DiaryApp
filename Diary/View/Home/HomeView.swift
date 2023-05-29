@@ -41,7 +41,7 @@ struct HomeView: View {
                     },
                     icon: "plus"
                 )
-                .padding(.trailing, 20)
+                .padding(.trailing, 10)
                 .padding(.bottom, 20)
             }
         }
@@ -102,7 +102,7 @@ private extension HomeView {
     }
 
     var displayingMonth: some View {
-        HStack {
+        HStack(spacing: 8) {
             Button(actionWithHapticFB: {
                 moveMonth(.backward)
             }, label: {
@@ -124,7 +124,6 @@ private extension HomeView {
                         .frame(width: 24)
                 }
                 .frame(width: 200)
-
             })
 
             Button(actionWithHapticFB: {

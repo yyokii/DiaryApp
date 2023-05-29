@@ -16,6 +16,7 @@ public class CoreDataProvider: ObservableObject {
 
     init() {
         container = NSPersistentCloudKitContainer(name: "Diary")
+        // TODO: storageをチェックして警告を出した方がいい
 
         container.loadPersistentStores(completionHandler: { [weak self] (storeDescription, error) in
             if let self,

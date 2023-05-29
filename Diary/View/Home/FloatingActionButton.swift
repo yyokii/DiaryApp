@@ -11,7 +11,7 @@ struct FloatingButton: View {
     let action: () -> Void
     let icon: String
 
-    let size: CGFloat = 60
+    let size: CGFloat = 70
 
     var body: some View {
         VStack {

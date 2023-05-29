@@ -29,15 +29,15 @@ struct DiaryList: View {
             empty
         } else {
             ScrollView {
-                LazyVStack(spacing: 20) {
+                LazyVStack(spacing: 24) {
                     ForEach(items) { item in
                         NavigationLink {
                             DiaryDetailView(diaryDataStore: .init(item: item))
                         } label: {
                             DiaryItem(item: item)
                         }
+                        .padding(.horizontal, 20)
                     }
-                    .padding(.vertical)
                 }
             }
         }
