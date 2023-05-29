@@ -10,8 +10,8 @@ import SwiftUI
 struct CalendarView: UIViewRepresentable {
 
     let calendar: Calendar
-    let items: [Item]
 
+    let selectedDate: Date
     let didSelectDate: (Date) -> Void
     let didChangeVisibleDateComponents: (DateComponents) -> Void
 
@@ -31,17 +31,15 @@ struct CalendarView: UIViewRepresentable {
         view.selectionBehavior = dateSelection
         view.delegate = context.coordinator
 
-        dateSelection.setSelected(Calendar.current.dateComponents(in: .current, from: Date()), animated: false)
+        dateSelection.setSelected(Calendar.current.dateComponents(in: .current, from: selectedDate), animated: false)
 
         return view
     }
 
-    func updateUIView(_ uiView: UICalendarView, context: Context) {
-        context.coordinator.items = items
-    }
+    func updateUIView(_ uiView: UICalendarView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Self.Coordinator(parent: self, items: items)
+        Self.Coordinator(parent: self)
     }
 }
 
@@ -52,35 +50,8 @@ extension CalendarView {
 
         private let parent: CalendarView
 
-        var items: [Item]
-
-        init(
-            parent: CalendarView,
-            items: [Item]
-        ) {
+        init(parent: CalendarView) {
             self.parent = parent
-            self.items = items
-        }
-
-        func calendarView(
-            _ calendarView: UICalendarView,
-            decorationFor dateComponents: DateComponents
-        ) -> UICalendarView.Decoration? {
-            let date = dateComponents.date!
-            let hasDiaryItem = items.contains(where: { item in
-                if let itemDate = item.date {
-                    return parent.calendar.isDate(itemDate, inSameDayAs: date)
-                } else {
-                    return false
-                }
-            })
-
-            if hasDiaryItem {
-                let image = UIImage(systemName: "circle.fill")
-                return .image(image, color: .cyan)
-            } else {
-                return nil
-            }
         }
 
         // MARK: Delegate

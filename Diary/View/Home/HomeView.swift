@@ -14,6 +14,7 @@ struct HomeView: View {
 
     @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
     @State private var isPresentedCreateDiaryView = false
+    @State private var isPresentedCalendar = false
 
     private let calendar = Calendar.current
 
@@ -50,6 +51,22 @@ struct HomeView: View {
         }
         .sheet(isPresented: $isPresentedCreateDiaryView) {
             CreateDiaryView()
+        }
+        .sheet(isPresented: $isPresentedCalendar) {
+            CalendarView(
+                calendar: .current,
+                selectedDate: firstDateOfDisplayedMonth,
+                didSelectDate: { date in
+                    // TODO: scroll
+                },
+                didChangeVisibleDateComponents: { dateComponents in
+                    if let startOfMonth = dateComponents.date?.startOfMonth {
+                        firstDateOfDisplayedMonth = startOfMonth
+                    }
+                }
+            )
+            .padding()
+            .presentationDetents([.medium])
         }
     }
 }
@@ -92,9 +109,23 @@ private extension HomeView {
                 chevronIcon(.backward)
             })
 
-            Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
-                .font(.system(size: 20))
-                .frame(width: 172)
+
+            Button(actionWithHapticFB: {
+                isPresentedCalendar = true
+            }, label: {
+                HStack(spacing: 12) {
+                    Text(firstDateOfDisplayedMonth, formatter: dateFormatter)
+                        .font(.system(size: 20))
+
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.primary)
+                        .frame(width: 24)
+                }
+                .frame(width: 200)
+
+            })
 
             Button(actionWithHapticFB: {
                 moveMonth(.forward)

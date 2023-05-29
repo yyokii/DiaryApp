@@ -40,7 +40,6 @@
 		F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBody.swift */; };
 		F53CE9632A153CB400E63078 /* WeatherSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9622A153CB400E63078 /* WeatherSymbol.swift */; };
 		F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9672A1B7C4F00E63078 /* CalendarView.swift */; };
-		F53CE96A2A1BB76B00E63078 /* DiaryCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9692A1BB76B00E63078 /* DiaryCalendar.swift */; };
 		F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* AddPhoto.swift */; };
 		F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */; };
 		F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */; };
@@ -109,7 +108,6 @@
 		F5358D562A069C90005FD6C8 /* InputBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBody.swift; sourceTree = "<group>"; };
 		F53CE9622A153CB400E63078 /* WeatherSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSymbol.swift; sourceTree = "<group>"; };
 		F53CE9672A1B7C4F00E63078 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		F53CE9692A1BB76B00E63078 /* DiaryCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCalendar.swift; sourceTree = "<group>"; };
 		F53E3A722A087ADE0064CB62 /* AddPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoto.swift; sourceTree = "<group>"; };
 		F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppDelegate.swift; sourceTree = "<group>"; };
 		F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppSceneDelegate.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
 				F53CE9672A1B7C4F00E63078 /* CalendarView.swift */,
-				F53CE9692A1BB76B00E63078 /* DiaryCalendar.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -475,7 +472,6 @@
 				F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */,
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F550BCA92A1281EC00BCB0F2 /* ResizableLayer.swift in Sources */,
-				F53CE96A2A1BB76B00E63078 /* DiaryCalendar.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
 				F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */,
