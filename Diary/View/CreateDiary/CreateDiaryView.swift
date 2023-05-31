@@ -147,6 +147,7 @@ private extension CreateDiaryView {
                 weather: weather,
                 imageData: imageData
             )
+            bannerState.show(of: .success(message: "Add diary🎉"))
             dismiss()
         } catch {
             bannerState.show(with: error)
