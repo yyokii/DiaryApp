@@ -35,14 +35,36 @@ extension BannerState {
         case error(message: String)
         case success(message: String)
 
-        var emoji: String {
+        var imageName: String {
             switch self {
             case .warning:
-                return "⚠️"
+                return "exclamationmark"
             case .error:
-                return "🚨"
+                return "xmark"
             case .success:
-                return "✅"
+                return "checkmark"
+            }
+        }
+
+        var mainColor: Color {
+            switch self {
+            case .warning:
+                return .yellow
+            case .error:
+                return .red
+            case .success:
+                return .green
+            }
+        }
+
+        var imageBackgroundCol: String {
+            switch self {
+            case .warning:
+                return "exclamationmark"
+            case .error:
+                return "xmark"
+            case .success:
+                return "checkmark"
             }
         }
 
@@ -54,17 +76,6 @@ extension BannerState {
                 return message
             case .success(let message):
                 return message
-            }
-        }
-
-        var mainColor: Color {
-            switch self {
-            case .warning:
-                return .yellow.opacity(0.5)
-            case .error:
-                return .red.opacity(0.5)
-            case .success:
-                return .green.opacity(0.5)
             }
         }
 

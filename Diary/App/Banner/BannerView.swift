@@ -30,8 +30,17 @@ private extension BannerView {
 
     var banner: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 4) {
-                Text(bannerState.mode.emoji)
+            HStack(alignment: .center, spacing: 12) {
+//                Text(bannerState.mode.emoji)
+                Image(systemName: bannerState.mode.imageName)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.adaptiveWhite)
+                    .bold()
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(bannerState.mode.mainColor)
+                    }
+
                 Text(bannerState.mode.message)
                     .bold()
                     .font(.system(size: 16))
@@ -54,6 +63,7 @@ private extension BannerView {
             }
         }
         .frame(height: baseHeight)
+        .border(.red)
         .background(.clear)
         .onReceive(bannerState.$isPresented) { isPresented in
             if isPresented {
