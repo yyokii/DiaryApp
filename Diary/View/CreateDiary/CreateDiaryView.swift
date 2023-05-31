@@ -11,6 +11,7 @@ import SwiftUI
 struct CreateDiaryView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var weatherData: WeatherData
+    @EnvironmentObject private var bannerState: BannerState
 
     // modelに置き換える
     @State private var selectedDate = Date()
@@ -148,7 +149,7 @@ private extension CreateDiaryView {
             )
             dismiss()
         } catch {
-            // TODO: handle error
+            bannerState.show(with: error)
         }
     }
 }
