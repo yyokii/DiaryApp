@@ -15,6 +15,9 @@ public extension Date {
     }
 
     var endOfMonth: Date? {
-        return currentCalendar.dateInterval(of: .month, for: self)?.end
+        guard let endOfNextDay = currentCalendar.dateInterval(of: .month, for: self)?.end else {
+            return nil
+        }
+        return endOfNextDay.addingTimeInterval(-1)
     }
 }

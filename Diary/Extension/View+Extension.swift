@@ -20,6 +20,17 @@ extension View {
     }
 
     /**
+     Animate when view appear
+     */
+    func animate(using animation: Animation = .easeInOut(duration: 1), _ action: @escaping () -> Void) -> some View {
+        onAppear {
+            withAnimation(animation) {
+                action()
+            }
+        }
+    }
+
+    /**
      部分的にradiusをつける
      https://stackoverflow.com/a/58606176/9015472
      */

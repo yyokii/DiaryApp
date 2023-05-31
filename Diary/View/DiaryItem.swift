@@ -13,6 +13,8 @@ struct DiaryItem: View {
 
     @ObservedObject var item: Item
 
+    @State private var opacity: Double = 0
+
     private let isYearDisplayed: Bool
     private let height: CGFloat = 140
     private let cornerRadius: CGFloat = 10
@@ -60,9 +62,12 @@ struct DiaryItem: View {
             }
         }
         .frame(height: height)
+        .opacity(opacity)
+        .animate {
+            opacity = 1
+        }
     }
 }
-
 
 private extension DiaryItem {
     var diaryDate: some View {
