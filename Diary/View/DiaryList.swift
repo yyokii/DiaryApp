@@ -15,30 +15,44 @@ struct DiaryList: View {
      FetchRequestにより、コンテキストの変化に応じて自動取得を行う
      */
     @FetchRequest private var items: FetchedResults<Item>
+    @Binding var selectedDate: Date
 
-    init(dateInterval: DateInterval) {
+    init(dateInterval: DateInterval, selectedDate: Binding<Date>) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateIntervalに紐づくものであることを保証している。
          */
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
+
+        self._selectedDate = selectedDate
     }
 
     var body: some View {
         if items.isEmpty {
             empty
         } else {
-            ScrollView {
-                LazyVStack(spacing: 24) {
-                    ForEach(items) { item in
-                        NavigationLink {
-                            DiaryDetailView(diaryDataStore: .init(item: item))
-                        } label: {
-                            DiaryItem(item: item)
+            ScrollViewReader { value in
+                ScrollView {
+                    LazyVStack(spacing: 24) {
+                        ForEach(items) { item in
+                            NavigationLink {
+                                DiaryDetailView(diaryDataStore: .init(item: item))
+                            } label: {
+                                DiaryItem(item: item)
+                            }
+                            .id(item.objectID)
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
                     }
+                    .padding(.bottom, 500) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
                 }
+                .onChange(of: selectedDate, perform: { newValue in
+                    if let firstItemOnDate = fetchFirstItem(on: newValue) {
+                        withAnimation {
+                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
+                        }
+                    }
+                })
             }
         }
     }
@@ -58,6 +72,22 @@ private extension DiaryList {
         .frame(maxHeight: .infinity)
         .offset(y: -70)
     }
+
+    func fetchFirstItem(on date: Date) -> Item? {
+        // 日付の範囲を設定
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let components = DateComponents(day: 1, second: -1)
+        guard let endOfDay = calendar.date(byAdding: components, to: startOfDay) else {
+            return nil
+        }
+
+        let itemsOnDate = items.filter { item in
+            guard let itemDate = item.date else { return false }
+            return itemDate >= startOfDay && itemDate <= endOfDay
+        }
+        return itemsOnDate.first
+    }
 }
 
 #if DEBUG
@@ -66,7 +96,10 @@ struct DiaryList_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            DiaryList(dateInterval: .init(start: Date(), end: Date()))
+            DiaryList(
+                dateInterval: .init(start: Date(), end: Date()),
+                selectedDate: .constant(Date())
+            )
         }
     }
 

@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
     @State private var isPresentedCreateDiaryView = false
     @State private var isPresentedCalendar = false
+    @State private var selectedDate = Date()
 
     private let calendar = Calendar.current
 
@@ -32,7 +33,10 @@ struct HomeView: View {
                         .padding(.horizontal, 32)
                         .padding(.top, 12)
                     displayingMonth
-                    DiaryList(dateInterval: displayDateInterval)
+                    DiaryList(
+                        dateInterval: displayDateInterval,
+                        selectedDate: $selectedDate
+                    )
                 }
 
                 FloatingButton(
@@ -57,7 +61,7 @@ struct HomeView: View {
                 calendar: .current,
                 selectedDate: firstDateOfDisplayedMonth,
                 didSelectDate: { date in
-                    // TODO: scroll
+                    selectedDate = date
                 },
                 didChangeVisibleDateComponents: { dateComponents in
                     if let startOfMonth = dateComponents.date?.startOfMonth {
