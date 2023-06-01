@@ -33,9 +33,9 @@ struct DiaryList: View {
         if items.isEmpty {
             empty
         } else {
-            ScrollViewReader { value in
-                ScrollView {
-                    LazyVStack(spacing: 24) {
+//            ScrollViewReader { value in
+//                ScrollView {
+                    VStack(spacing: 24) {
                         ForEach(items) { item in
                             NavigationLink {
                                 DiaryDetailView(diaryDataStore: .init(item: item))
@@ -47,7 +47,7 @@ struct DiaryList: View {
                         }
                     }
                     .padding(.bottom, 400) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
-                }
+//                }
                 .onChange(of: selectedDate, perform: { newValue in
                     guard let date = newValue else {
                         return
@@ -55,13 +55,13 @@ struct DiaryList: View {
 
                     if let firstItemOnDate = fetchFirstItem(on: date) {
                         withAnimation {
-                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
+//                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
                         }
                     } else {
                         bannerState.show(of: .warning(message: "No diary for this date"))
                     }
                 })
-            }
+//            }
         }
     }
 }

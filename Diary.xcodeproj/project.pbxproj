@@ -58,6 +58,9 @@
 		F550BCAB2A1284AC00BCB0F2 /* FluidGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAA2A1284AC00BCB0F2 /* FluidGradientView.swift */; };
 		F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */; };
 		F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */; };
+		F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTop.swift */; };
+		F5737D3C2A288B4000D706E8 /* OffsetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */; };
+		F5737D3E2A28930500D706E8 /* demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D3D2A28930500D706E8 /* demo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +129,9 @@
 		F550BCAA2A1284AC00BCB0F2 /* FluidGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradientView.swift; sourceTree = "<group>"; };
 		F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradient.swift; sourceTree = "<group>"; };
 		F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobLayer.swift; sourceTree = "<group>"; };
+		F5737D392A28882000D706E8 /* HomeTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTop.swift; sourceTree = "<group>"; };
+		F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetViewModifier.swift; sourceTree = "<group>"; };
+		F5737D3D2A28930500D706E8 /* demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,7 @@
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
+				F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -264,6 +271,8 @@
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
 				F53CE9672A1B7C4F00E63078 /* CalendarView.swift */,
+				F5737D392A28882000D706E8 /* HomeTop.swift */,
+				F5737D3D2A28930500D706E8 /* demo.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -449,6 +458,7 @@
 				F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
+				F5737D3C2A288B4000D706E8 /* OffsetViewModifier.swift in Sources */,
 				F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */,
 				F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
@@ -459,12 +469,14 @@
 				F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */,
 				F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */,
 				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
+				F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
 				F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
+				F5737D3E2A28930500D706E8 /* demo.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
 				F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,
