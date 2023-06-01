@@ -31,7 +31,6 @@ private extension BannerView {
     var banner: some View {
         GeometryReader { geometry in
             HStack(alignment: .center, spacing: 12) {
-//                Text(bannerState.mode.emoji)
                 Image(systemName: bannerState.mode.imageName)
                     .frame(width: 30, height: 30)
                     .foregroundColor(.adaptiveWhite)
@@ -66,9 +65,12 @@ private extension BannerView {
         .background(.clear)
         .onReceive(bannerState.$isPresented) { isPresented in
             if isPresented {
+                dismissTask?.cancel()
                 dismissTask = Task.init { @MainActor in
                     try? await Task.sleep(nanoseconds: 3_000_000_000)
-                    bannerState.isPresented = false
+                    if !Task.isCancelled {
+                        bannerState.isPresented = false
+                    }
                 }
             } else {
                 dismissTask?.cancel()

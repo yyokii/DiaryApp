@@ -15,7 +15,7 @@ struct HomeView: View {
     @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
     @State private var isPresentedCreateDiaryView = false
     @State private var isPresentedCalendar = false
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date? = Date()
 
     private let calendar = Calendar.current
 
@@ -71,6 +71,9 @@ struct HomeView: View {
             )
             .padding()
             .presentationDetents([.medium])
+            .onDisappear{
+                selectedDate = nil
+            }
         }
     }
 }
@@ -99,7 +102,7 @@ private extension HomeView {
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.primary)
-                    .frame(width: 28)
+                    .frame(width: 24)
             }
             .buttonStyle(PlainButtonStyle())
         }

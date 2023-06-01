@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DiaryList: View {
+    @EnvironmentObject private var bannerState: BannerState
+
     /*
      > The fetch request and its results use the managed object context stored in the environment, which you can access using the managedObjectContext environment value.
      https://developer.apple.com/documentation/swiftui/fetchrequest
@@ -15,9 +17,9 @@ struct DiaryList: View {
      FetchRequestにより、コンテキストの変化に応じて自動取得を行う
      */
     @FetchRequest private var items: FetchedResults<Item>
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
 
-    init(dateInterval: DateInterval, selectedDate: Binding<Date>) {
+    init(dateInterval: DateInterval, selectedDate: Binding<Date?>) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateIntervalに紐づくものであることを保証している。
@@ -44,13 +46,19 @@ struct DiaryList: View {
                             .padding(.horizontal, 20)
                         }
                     }
-                    .padding(.bottom, 500) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
+                    .padding(.bottom, 400) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
                 }
                 .onChange(of: selectedDate, perform: { newValue in
-                    if let firstItemOnDate = fetchFirstItem(on: newValue) {
+                    guard let date = newValue else {
+                        return
+                    }
+
+                    if let firstItemOnDate = fetchFirstItem(on: date) {
                         withAnimation {
                             value.scrollTo(firstItemOnDate.objectID, anchor: .top)
                         }
+                    } else {
+                        bannerState.show(of: .warning(message: "No diary for this date"))
                     }
                 })
             }
