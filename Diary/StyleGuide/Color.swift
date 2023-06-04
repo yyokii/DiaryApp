@@ -19,6 +19,11 @@ extension Color {
         $0.userInterfaceStyle == .dark ? .white : appBlack
     }
 
+    /// lightモードの場合に、白を設定し且つカラーテーマに対応する
+    public static let adaptiveBackground = Self {
+        $0.userInterfaceStyle == .dark ? .black : .white
+    }
+
     public static let appBlack = hex(0x2C2C2E)
 //    public static let appMain = hex(0x7ed957)
 //    public static let appAccent = hex(0x5ce1e6)

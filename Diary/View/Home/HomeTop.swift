@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct HomeTop: View {
-    var topEdge: CGFloat
-    var maxHeight: CGFloat
-
-    @Binding var offset: CGFloat
     @Binding var firstDateOfDisplayedMonth: Date
     @Binding var selectedDate: Date?
 
     @State private var isPresentedCalendar = false
     private let calendar = Calendar.current
+
+    var headerScrollProgress: CGFloat
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -25,21 +23,16 @@ struct HomeTop: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 28) {
+            callToActionView
 
-//            appInfo
-//                .padding(.horizontal, 32)
-//                .padding(.top, 12)
-//
-//            callToActionView
-//                .padding(.horizontal, 32)
-
-            Text("Monthly Diaries")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .bold()
-                .padding(.horizontal)
-                .padding(.top, 20)
-            displayingMonth
+            VStack(spacing: 8) {
+                Text("Monthly Diaries")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .bold()
+                displayingMonth
+            }
         }
         .sheet(isPresented: $isPresentedCalendar) {
             CalendarView(
@@ -60,20 +53,6 @@ struct HomeTop: View {
                 selectedDate = nil
             }
         }
-        .padding(.horizontal)
-        .opacity(getOpacity())
-    }
-
-    func getOpacity() -> CGFloat {
-        if offset >= 0 {
-            // 下にスクロールする際は常に表示
-            return 1
-        } else {
-            // 上にスクロールする際はだんだん透明化させる
-            let progress = -offset / 100
-            let opacity = max(1 - progress, 0)
-            return opacity
-        }
     }
 }
 
@@ -83,24 +62,8 @@ private extension HomeTop {
         return firstDateOfDisplayedMonth == firstDateOfThisMonth
     }
 
-    var appInfo: some View {
-        HStack {
-            Spacer()
-
-            NavigationLink {
-                AppInfoView()
-            } label: {
-                Image(systemName: "gearshape")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.primary)
-                    .frame(width: 24)
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-    }
-
     /*
+     TODO: create content
      今日の投稿がまだの場合: 今日のを書くような表示
      今日の投稿がありで且つ他のエラーがある場合: 褒める + エラー共有
      今日の投稿がありで且つ他のエラーがない場合: 褒める + 継続日数表示
@@ -125,6 +88,7 @@ private extension HomeTop {
                 .adaptiveShadow()
 
         }
+        .opacity(1 - headerScrollProgress)
     }
 
     var displayingMonth: some View {
@@ -162,8 +126,7 @@ private extension HomeTop {
         .onSwipe { direction in
             moveMonthWithSwipe(direction)
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 20)
+        .frame(maxWidth: .infinity)
     }
 
     func chevronIcon(_ direction: Direction, disabled: Bool = false) -> some View {
@@ -190,6 +153,7 @@ private extension HomeTop {
                     .frame(width: 12)
                     .offset(x: xOffset)
             }
+            .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
     }
 
     // MARK: Action
@@ -220,3 +184,27 @@ private extension HomeTop {
         }
     }
 }
+
+#if DEBUG
+
+struct HomeTop_Previews: PreviewProvider {
+
+    static var content: some View {
+        HomeTop(
+            firstDateOfDisplayedMonth: .constant(Date()),
+            selectedDate: .constant(Date()),
+            headerScrollProgress: 0
+        )
+    }
+
+    static var previews: some View {
+        Group {
+            content
+                .environment(\.colorScheme, .light)
+            content
+                .environment(\.colorScheme, .dark)
+        }
+    }
+}
+
+#endif

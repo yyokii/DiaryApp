@@ -32,36 +32,34 @@ struct DiaryList: View {
     var body: some View {
         if items.isEmpty {
             empty
+                .padding(.top, 60)
         } else {
-//            ScrollViewReader { value in
-//                ScrollView {
-                    VStack(spacing: 24) {
-                        ForEach(items) { item in
-                            NavigationLink {
-                                DiaryDetailView(diaryDataStore: .init(item: item))
-                            } label: {
-                                DiaryItem(item: item)
-                            }
-                            .id(item.objectID)
-                            .padding(.horizontal, 20)
-                        }
+            VStack(spacing: 24) {
+                ForEach(items) { item in
+                    NavigationLink {
+                        DiaryDetailView(diaryDataStore: .init(item: item))
+                    } label: {
+                        DiaryItem(item: item)
                     }
-                    .padding(.bottom, 400) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
-//                }
-                .onChange(of: selectedDate, perform: { newValue in
-                    guard let date = newValue else {
-                        return
-                    }
+                    .id(item.objectID)
+                    .padding(.horizontal, 20)
+                }
+            }
+            .padding(.bottom, 400) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
+            .onChange(of: selectedDate, perform: { newValue in
+                guard let date = newValue else {
+                    return
+                }
 
-                    if let firstItemOnDate = fetchFirstItem(on: date) {
-                        withAnimation {
-//                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
-                        }
-                    } else {
-                        bannerState.show(of: .warning(message: "No diary for this date"))
+                // TODO: fix 
+                if let firstItemOnDate = fetchFirstItem(on: date) {
+                    withAnimation {
+                        //                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
                     }
-                })
-//            }
+                } else {
+                    bannerState.show(of: .warning(message: "No diary for this date"))
+                }
+            })
         }
     }
 }
@@ -78,7 +76,6 @@ private extension DiaryList {
         }
         .multilineTextAlignment(.center)
         .frame(maxHeight: .infinity)
-        .offset(y: -70)
     }
 
     func fetchFirstItem(on date: Date) -> Item? {

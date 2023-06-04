@@ -29,20 +29,12 @@ struct DiaryApp: App {
 
     var body: some Scene {
         WindowGroup {
-            GeometryReader { proxy in
-                let topEdge = proxy.safeAreaInsets.top
-
-//                DemoStickyHeader(topEdge: topEdge)
-//                    .ignoresSafeArea(.all, edges: .top)
-
-                HomeView(topEdge: topEdge)
-                    .ignoresSafeArea(.all, edges: .top)
-                    .environmentObject(bannerState)
-                    .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
-                    .environmentObject(textOptions)
-                    .environmentObject(notificationSetting)
-                    .environmentObject(weatherData)
-            }
+            HomeView()
+                .environmentObject(bannerState)
+                .environment(\.managedObjectContext, coreDataProvider.container.viewContext)
+                .environmentObject(textOptions)
+                .environmentObject(notificationSetting)
+                .environmentObject(weatherData)
         }
     }
 }

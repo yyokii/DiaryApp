@@ -7,8 +7,11 @@
 
 import CoreData
 import SwiftUI
+import ScalingHeaderScrollView
 
 struct HomeView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     @EnvironmentObject private var sceneDelegate: DiaryAppSceneDelegate
     @EnvironmentObject private var bannerState: BannerState
 
@@ -16,11 +19,7 @@ struct HomeView: View {
     @State private var isPresentedCreateDiaryView = false
     @State private var isPresentedCalendar = false
     @State private var selectedDate: Date? = Date()
-
-    // For sticky header
-    @State var offset: CGFloat = 0
-    var topEdge: CGFloat
-    let maxHeight: CGFloat = UIScreen.main.bounds.height / 3.2
+    @State private var headerScrollProgress: CGFloat = 0
 
     private let calendar = Calendar.current
     private var dateFormatter: DateFormatter {
@@ -30,48 +29,45 @@ struct HomeView: View {
     }
 
     var body: some View {
-//        NavigationStack {
-//            ZStack {
-        ScrollView(.vertical) {
-                    VStack(spacing: 12) {
-                        GeometryReader { proxy in
-                            HomeTop(
-                                topEdge: topEdge,
-                                maxHeight: maxHeight,
-                                offset: $offset,
-                                firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
-                                selectedDate: $selectedDate
-                            )
-                            .frame(maxWidth: .infinity)
-                            .frame(height: getHeaderHeight(), alignment: .bottom)
-                            .background { Color.blue }
+        NavigationStack {
+            ZStack {
+                ScalingHeaderScrollView {
 
-                        }
-                        .frame(height: maxHeight)
-                        .offset(y: -offset) // fixing at top
-                        .zIndex(1)
-
-                        DiaryList(
-                            dateInterval: displayDateInterval,
-                            selectedDate: $selectedDate
+                    ZStack(alignment: .bottom) {
+                        Color.adaptiveBackground
+                        HomeTop(
+                            firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
+                            selectedDate: $selectedDate,
+                            headerScrollProgress: headerScrollProgress
                         )
-                        .zIndex(0)
+                        .padding(.horizontal)
+                        .background(
+                            Color.adaptiveBackground
+                        )
                     }
-                    .modifier(OffsetModifier(offset: $offset))
-
+                } content: {
+                    DiaryList(
+                        dateInterval: displayDateInterval,
+                        selectedDate: $selectedDate
+                    )
                 }
-//
-//                FloatingButton(
-//                    action: {
-//                        isPresentedCreateDiaryView = true
-//                    },
-//                    icon: "plus"
-//                )
-//                .padding(.trailing, 10)
-//                .padding(.bottom, 20)
-//            }
-//        }
-        .coordinateSpace(name: "SCROLL")
+                .height(min: 200)
+                .collapseProgress($headerScrollProgress)
+                .ignoresSafeArea()
+                
+                appInfo
+                    .padding(.trailing)
+                    .padding(.top, 4)
+                FloatingButton(
+                    action: {
+                        isPresentedCreateDiaryView = true
+                    },
+                    icon: "plus"
+                )
+                .padding(.trailing, 10)
+                .padding(.bottom, 20)
+            }
+        }
         .tint(.adaptiveBlack)
         .onAppear {
             sceneDelegate.bannerState = bannerState
@@ -95,14 +91,27 @@ private extension HomeView {
         )
     }
 
-    func getHeaderHeight() -> CGFloat {
-        let topContentHeight = maxHeight + offset
-        let isGraterThanMinHeight = topContentHeight > (80 + topEdge)
-        let height = isGraterThanMinHeight ? topContentHeight : 80 + topEdge
-        return height
-    }
+    var appInfo: some View {
+        VStack {
+            HStack {
+                Spacer()
 
-    // MARK: View
+                NavigationLink {
+                    AppInfoView()
+                } label: {
+                    Image(systemName: "gearshape")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.primary)
+                        .frame(width: 28)
+                        .bold()
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+
+            Spacer()
+        }
+    }
 }
 
 #if DEBUG
@@ -110,9 +119,9 @@ private extension HomeView {
 struct Home_Previews: PreviewProvider {
 
     static var content: some View {
-        HomeView(topEdge: 40)
-        .environmentObject(DiaryAppSceneDelegate())
-        .environmentObject(BannerState())
+        HomeView()
+            .environmentObject(DiaryAppSceneDelegate())
+            .environmentObject(BannerState())
     }
 
     static var previews: some View {
