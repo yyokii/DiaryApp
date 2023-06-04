@@ -10,8 +10,8 @@ import SwiftUI
 struct HomeTop: View {
     @Binding var firstDateOfDisplayedMonth: Date
     @Binding var selectedDate: Date?
+    @Binding var isPresentedCalendar: Bool
 
-    @State private var isPresentedCalendar = false
     private let calendar = Calendar.current
 
     var headerScrollProgress: CGFloat
@@ -153,7 +153,6 @@ private extension HomeTop {
                     .frame(width: 12)
                     .offset(x: xOffset)
             }
-            .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
     }
 
     // MARK: Action
@@ -193,6 +192,7 @@ struct HomeTop_Previews: PreviewProvider {
         HomeTop(
             firstDateOfDisplayedMonth: .constant(Date()),
             selectedDate: .constant(Date()),
+            isPresentedCalendar: .constant(false),
             headerScrollProgress: 0
         )
     }

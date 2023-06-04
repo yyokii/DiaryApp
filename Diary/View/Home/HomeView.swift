@@ -31,29 +31,34 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ScalingHeaderScrollView {
-
-                    ZStack(alignment: .bottom) {
-                        Color.adaptiveBackground
-                        HomeTop(
-                            firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
-                            selectedDate: $selectedDate,
-                            headerScrollProgress: headerScrollProgress
-                        )
-                        .padding(.horizontal)
-                        .background(
+                ScrollViewReader { scrollViewProxy in
+                    ScalingHeaderScrollView {
+                        ZStack(alignment: .bottom) {
                             Color.adaptiveBackground
+                            HomeTop(
+                                firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
+                                selectedDate: $selectedDate,
+                                isPresentedCalendar: $isPresentedCalendar,
+                                headerScrollProgress: headerScrollProgress
+                            )
+                            .padding(.horizontal)
+                            .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
+                            .background(
+                                Color.adaptiveBackground
+                            )
+                        }
+                    } content: {
+                        DiaryList(
+                            dateInterval: displayDateInterval,
+                            selectedDate: $selectedDate,
+                            isPresentedCalendar: $isPresentedCalendar,
+                            scrollViewProxy: scrollViewProxy
                         )
                     }
-                } content: {
-                    DiaryList(
-                        dateInterval: displayDateInterval,
-                        selectedDate: $selectedDate
-                    )
+                    .height(min: 200)
+                    .collapseProgress($headerScrollProgress)
+                    .ignoresSafeArea()
                 }
-                .height(min: 200)
-                .collapseProgress($headerScrollProgress)
-                .ignoresSafeArea()
                 
                 appInfo
                     .padding(.trailing)

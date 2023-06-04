@@ -18,8 +18,16 @@ struct DiaryList: View {
      */
     @FetchRequest private var items: FetchedResults<Item>
     @Binding var selectedDate: Date?
+    @Binding var isPresentedCalendar: Bool
 
-    init(dateInterval: DateInterval, selectedDate: Binding<Date?>) {
+    let scrollViewProxy: ScrollViewProxy
+
+    init(
+        dateInterval: DateInterval,
+        selectedDate: Binding<Date?>,
+        isPresentedCalendar: Binding<Bool>,
+        scrollViewProxy: ScrollViewProxy
+    ) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateIntervalに紐づくものであることを保証している。
@@ -27,12 +35,26 @@ struct DiaryList: View {
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
 
         self._selectedDate = selectedDate
+        self._isPresentedCalendar = isPresentedCalendar
+        self.scrollViewProxy = scrollViewProxy
     }
 
     var body: some View {
         if items.isEmpty {
+            /*
+             TODO: 修正したい
+
+             listのコンテンツがあり且つヘッダーがStickyになっている（十分に上にスクロールされている）状態から、emptyもしくはlistが1?に遷移した際に、
+             [SwiftUI] Modifying state during view update, this will cause undefined behavior.
+             が生じる。
+
+             ScalingHeaderScrollViewの
+             self.progress = getCollapseProgress()
+             の箇所。
+             */
             empty
                 .padding(.top, 60)
+                .padding(.bottom, UIScreen.contentBottomSpace)
         } else {
             VStack(spacing: 24) {
                 ForEach(items) { item in
@@ -45,16 +67,16 @@ struct DiaryList: View {
                     .padding(.horizontal, 20)
                 }
             }
-            .padding(.bottom, 400) // ScrollViewReaderでlistの下部の方のコンテンツにスクロール際に移動先が上部になるように余白を設定
+            .padding(.bottom, UIScreen.contentBottomSpace)
             .onChange(of: selectedDate, perform: { newValue in
                 guard let date = newValue else {
                     return
                 }
 
-                // TODO: fix 
                 if let firstItemOnDate = fetchFirstItem(on: date) {
                     withAnimation {
-                        //                            value.scrollTo(firstItemOnDate.objectID, anchor: .top)
+                        scrollViewProxy.scrollTo(firstItemOnDate.objectID, anchor: .center)
+                        isPresentedCalendar = false
                     }
                 } else {
                     bannerState.show(of: .warning(message: "No diary for this date"))
@@ -75,7 +97,7 @@ private extension DiaryList {
                 .font(.system(size: 16))
         }
         .multilineTextAlignment(.center)
-        .frame(maxHeight: .infinity)
+//        .frame(height: 200)
     }
 
     func fetchFirstItem(on date: Date) -> Item? {
@@ -101,10 +123,14 @@ struct DiaryList_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            DiaryList(
-                dateInterval: .init(start: Date(), end: Date()),
-                selectedDate: .constant(Date())
-            )
+            ScrollViewReader { proxy in
+                DiaryList(
+                    dateInterval: .init(start: Date(), end: Date()),
+                    selectedDate: .constant(Date()),
+                    isPresentedCalendar: .constant(false),
+                    scrollViewProxy: proxy
+                )
+            }
         }
     }
 
