@@ -60,16 +60,28 @@ struct DemoColorView_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             VStack {
+                Text("adaptiveBlack")
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.adaptiveBlack)
+
+                Text("adaptiveWhite")
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.adaptiveWhite)
+
+                Text("adaptiveBackground")
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(.adaptiveBackground)
+
+                Text("appBlack")
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.appBlack)
+
+                Text("placeholderGray")
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.placeholderGray)
             }
             .shadow(radius: 10)
+            .padding(.horizontal)
         }
     }
 
