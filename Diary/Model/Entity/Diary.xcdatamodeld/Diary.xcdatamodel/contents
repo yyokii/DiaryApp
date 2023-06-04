@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CheckListItem" representedClassName="CheckListItem" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="diary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="checkListItem" inverseEntity="Item"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String" minValueString="1" maxValueString="1000"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -9,5 +15,6 @@
         <attribute name="title" optional="YES" attributeType="String" minValueString="1" maxValueString="10"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="weather" optional="YES" attributeType="String"/>
+        <relationship name="checkListItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CheckListItem" inverseName="diary" inverseEntity="CheckListItem"/>
     </entity>
 </model>
