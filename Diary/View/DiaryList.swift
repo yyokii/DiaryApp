@@ -56,7 +56,7 @@ struct DiaryList: View {
                 .padding(.top, 60)
                 .padding(.bottom, UIScreen.contentBottomSpace)
         } else {
-            VStack(spacing: 24) {
+            LazyVStack(spacing: 24) {
                 ForEach(items) { item in
                     NavigationLink {
                         DiaryDetailView(diaryDataStore: .init(item: item))
