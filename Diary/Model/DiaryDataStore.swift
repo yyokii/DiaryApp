@@ -19,19 +19,25 @@ import UIKit
  元のデータと、それによって初期化された変数をViewで保持する必要があった。その際にinitでStateを初期化すると、initに渡している値が
  変わってもViewが再描画されることはない（initは初期化時のみ動作する）ので、Bindingとして持つ必要がある。
  ・そうなった場合、Itemのプロパティ分だけViewの変数が増える
- ・また、入力情報を保持するものはItem作成機能でも利用でき、Viewの状態を分割でき見通しが良くなる。
+ ・また、入力情報を保持するものはItem作成機能でも利用でき、Viewの状態を分割でき見通しが良くなる
  以上の理由から本Modelを作成した。
  */
 @MainActor
 public class DiaryDataStore: ObservableObject {
 
-    @Published var selectedDate: Date? = Date()
+    /*
+     Publishedの利用について
+     title, bodyTextはValidation結果を伝達するために利用
+     selectedDateはPickerの選択結果を伝達するために利用
+     */
     @Published var title = ""
     @Published var bodyText = ""
-    @Published var isBookmarked = false
-    @Published var selectedWeather: WeatherSymbol = .sun
-    @Published var selectedPickerItem: PhotosPickerItem?
-    @Published var selectedImage: UIImage?
+    @Published var selectedDate: Date = Date()
+
+    var isBookmarked = false
+    var selectedWeather: WeatherSymbol = .sun
+    var selectedPickerItem: PhotosPickerItem?
+    var selectedImage: UIImage?
 
     private let originalItem: Item?
     private var originalItemImage: UIImage?
@@ -41,6 +47,24 @@ public class DiaryDataStore: ObservableObject {
         updateValuesWithOriginalData()
     }
 
+    // MARK: Validation
+
+    var canCreate: Bool {
+        validTitle && validBody
+    }
+
+    var validTitle: Bool {
+        title.count >= InputTitle.titleCount.min &&
+        title.count <= InputTitle.titleCount.max
+    }
+
+    var validBody: Bool {
+        bodyText.count >= InputBody.bodyCount.min &&
+        bodyText.count <= InputBody.bodyCount.max
+    }
+
+    // MARK: func
+
     @discardableResult
     func updateValuesWithOriginalData() -> Bool {
         guard let item = originalItem else {
@@ -48,11 +72,12 @@ public class DiaryDataStore: ObservableObject {
             return false
         }
 
-        // Update published values
+        // Update values
+
         if let date = item.date {
             self.selectedDate = date
         } else {
-            self.selectedDate = nil
+            self.selectedDate = Date()
         }
 
         if let title = item.title {
@@ -80,7 +105,23 @@ public class DiaryDataStore: ObservableObject {
         return  true
     }
 
-    func create() {
+    func create() throws {
+        guard canCreate else {
+            throw DiaryDataStoreError.notValidData
+        }
+
+        var imageData: Data?
+        if let selectedImage {
+            imageData = selectedImage.jpegData(compressionQuality: 0.5)
+        }
+
+        try Item.create(
+            date: Calendar.current.startOfDay(for: selectedDate),
+            title: title,
+            body: bodyText,
+            weather: selectedWeather.symbol,
+            imageData: imageData
+        )
     }
 
     func delete() throws {
@@ -98,8 +139,7 @@ public class DiaryDataStore: ObservableObject {
 
         // 値の変更があるかどうかを元の値との比較より行い、変更されている場合のみプロパティの更新を行う
 
-        if originalItem.date != selectedDate,
-           selectedDate != nil {
+        if originalItem.date != selectedDate {
             originalItem.date = selectedDate
         }
 
@@ -132,11 +172,15 @@ public class DiaryDataStore: ObservableObject {
 
 public enum DiaryDataStoreError: Error, LocalizedError {
     case notFoundItem // 操作対象のItemが存在しない
+    case notValidData // 入力データが不適
+
 
     public var errorDescription: String? {
         switch self {
         case .notFoundItem:
             return "Not found item"
+        case .notValidData:
+            return "Not valid data"
         }
     }
 
@@ -144,6 +188,8 @@ public enum DiaryDataStoreError: Error, LocalizedError {
         switch self {
         case .notFoundItem:
             return "Sorry, restart your app and try again🙏"
+        case .notValidData:
+            return "Check your input datas"
         }
     }
 }

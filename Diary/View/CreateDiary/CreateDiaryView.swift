@@ -13,12 +13,7 @@ struct CreateDiaryView: View {
     @EnvironmentObject private var weatherData: WeatherData
     @EnvironmentObject private var bannerState: BannerState
 
-    // modelに置き換える
-    @State private var selectedDate = Date()
-    @State private var title = ""
-    @State private var bodyText = ""
-    @State private var selectedWeather: WeatherSymbol = .sun
-    @State private var selectedImage: UIImage?
+    @StateObject private var diaryDataStore: DiaryDataStore = DiaryDataStore()
 
     @State var isPresentedDatePicker: Bool = false
 
@@ -35,13 +30,13 @@ struct CreateDiaryView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    AddPhoto(selectedImage: $selectedImage)
+                    AddPhoto(selectedImage: $diaryDataStore.selectedImage)
 
                     VStack(spacing: 20) {
                         date
                         weather
-                        InputTitle(title: $title, focusedField: _focusedField)
-                        InputBody(bodyText: $bodyText, focusedField: _focusedField)
+                        InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
+                        InputBody(bodyText: $diaryDataStore.bodyText, focusedField: _focusedField)
                         createButton
                     }
                     .padding(.horizontal, 20)
@@ -58,7 +53,7 @@ struct CreateDiaryView: View {
         }
         .onReceive(weatherData.$todayWeather , perform: { todayWeather in
             guard let todayWeather else { return }
-            selectedWeather = .make(from: todayWeather.symbolName)
+            diaryDataStore.selectedWeather = .make(from: todayWeather.symbolName)
         })
         .onAppear{
             // TODO: 移動させてもいいかも
@@ -69,18 +64,6 @@ struct CreateDiaryView: View {
 
 private extension CreateDiaryView {
 
-    // MARK: Validation
-
-    var validTitle: Bool {
-        title.count >= InputTitle.titleCount.min &&
-        title.count <= InputTitle.titleCount.max
-    }
-
-    var validBody: Bool {
-        bodyText.count >= InputBody.bodyCount.min &&
-        bodyText.count <= InputBody.bodyCount.max
-    }
-
     // MARK: View
 
     var date: some View {
@@ -88,7 +71,7 @@ private extension CreateDiaryView {
             isPresentedDatePicker.toggle()
         }, label: {
             HStack {
-                Text(selectedDate, style: .date)
+                Text(diaryDataStore.selectedDate, style: .date)
                 Image(systemName: "pencil")
             }
             .font(.system(size: 20))
@@ -102,8 +85,7 @@ private extension CreateDiaryView {
              以降Viewが再生成？されるまでSheetは表示されない。（iOS 16.4.1(a)実機で検証）
              そのため、DatePickerをそのまま利用するのではなくsheetで表示している。
              */
-
-            DatePicker("", selection: $selectedDate, displayedComponents: [.date])
+            DatePicker("", selection: $diaryDataStore.selectedDate, displayedComponents: [.date])
                 .padding(.horizontal)
                 .datePickerStyle(GraphicalDatePickerStyle())
                 .presentationDetents([.medium])
@@ -112,42 +94,23 @@ private extension CreateDiaryView {
 
     @ViewBuilder
     var weather: some View {
-        WeatherSelectButton(selectedWeather: $selectedWeather)
+        WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
             .asyncState(weatherData.phase)
     }
 
     var createButton: some View {
-        Button("作成する🎉") {
+        Button("Create") {
             createItemFromInput()
         }
-        .buttonStyle(ActionButtonStyle(isActive: (validTitle && validBody))) // TODO: activeとdisable連動させる？
+        .buttonStyle(ActionButtonStyle(isActive: (diaryDataStore.canCreate)))
+        .disabled(!diaryDataStore.canCreate)
     }
 
     // MARK: Action
 
     func createItemFromInput() {
-        var weather: String
-        if Calendar.current.isDateInToday(selectedDate),
-           let todayWeather = weatherData.todayWeather {
-            // 位置情報から取得した天気のsymbolは必ずしもWeatherSelectより選択可能なものではないので、その際はsymbolNameをそのまま利用する
-            weather = todayWeather.symbolName
-        } else {
-            weather = selectedWeather.symbol
-        }
-
-        var imageData: Data?
-        if let selectedImage {
-            imageData = selectedImage.jpegData(compressionQuality: 0.5)
-        }
-
         do {
-            try Item.create(
-                date: Calendar.current.startOfDay(for: selectedDate),
-                title: title,
-                body: bodyText,
-                weather: weather,
-                imageData: imageData
-            )
+            try diaryDataStore.create()
             bannerState.show(of: .success(message: "Add diary🎉"))
             dismiss()
         } catch {

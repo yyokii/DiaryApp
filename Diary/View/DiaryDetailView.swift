@@ -58,14 +58,10 @@ struct DiaryDetailView: View {
 private extension DiaryDetailView {
 
     var date: String {
-        if let date = diaryDataStore.selectedDate {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .full
-            formatter.locale = .current
-            return formatter.string(from: date)
-        } else {
-            return "no date"
-        }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.locale = .current
+        return formatter.string(from: diaryDataStore.selectedDate)
     }
 
     var paddingTopToImage: CGFloat {
