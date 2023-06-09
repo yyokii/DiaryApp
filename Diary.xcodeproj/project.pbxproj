@@ -62,6 +62,8 @@
 		F5737D3C2A288B4000D706E8 /* OffsetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */; };
 		F5737D412A28D92800D706E8 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F5737D402A28D92800D706E8 /* ScalingHeaderScrollView */; };
 		F5737D472A2D0C8600D706E8 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D462A2D0C8600D706E8 /* UIScreen.swift */; };
+		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
+		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +135,8 @@
 		F5737D392A28882000D706E8 /* HomeTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTop.swift; sourceTree = "<group>"; };
 		F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetViewModifier.swift; sourceTree = "<group>"; };
 		F5737D462A2D0C8600D706E8 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
+		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
+		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,11 +286,12 @@
 		F5358D432A03AB8C005FD6C8 /* CreateDiary */ = {
 			isa = PBXGroup;
 			children = (
-				F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */,
-				F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */,
 				F53E3A722A087ADE0064CB62 /* AddPhoto.swift */,
+				F5737D482A303EBA00D706E8 /* CheckList.swift */,
+				F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */,
 				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
 				F5358D562A069C90005FD6C8 /* InputBody.swift */,
+				F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */,
 			);
 			path = CreateDiary;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 			children = (
 				F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */,
 				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
+				F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */,
 				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
 				F5358D372A00B621005FD6C8 /* Direction.swift */,
 				F53CE9622A153CB400E63078 /* WeatherSymbol.swift */,
@@ -474,8 +480,10 @@
 				F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */,
 				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
 				F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */,
+				F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
+				F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */,
 				F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
