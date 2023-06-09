@@ -90,6 +90,7 @@ private extension DiaryItem {
         }
         .foregroundColor(Color.white)
         .padding(.horizontal, 28)
+        .frame(width: 100)
         .background {
             FluidGradient(
                 blobs: [.blue, .green, .yellow, .orange, .red, .pink, .teal],
