@@ -26,6 +26,7 @@ struct DiaryDetailView: View {
                     VStack(spacing: 20) {
                         header
                         diaryBody
+                        checkList
                         if isEditing {
                             deleteButton
                                 .padding(.top, 80)
@@ -71,12 +72,16 @@ private extension DiaryDetailView {
         : 40
     }
 
+    var checkList: some View {
+        CheckList(diaryDataStore: diaryDataStore)
+    }
+
     // MARK: View
 
     var navigationToolBar: some View {
         HStack {
             Button(actionWithHapticFB: {
-                update()
+                updateBookmarkState()
             }, label: {
                 Image(systemName: diaryDataStore.isBookmarked ? "bookmark.fill" : "bookmark")
                     .resizable()
@@ -185,7 +190,7 @@ private extension DiaryDetailView {
 
     // MARK: Action
 
-    func update() {
+    func updateBookmarkState() {
         diaryDataStore.isBookmarked.toggle()
         do {
             try diaryDataStore.update()

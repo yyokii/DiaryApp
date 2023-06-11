@@ -35,6 +35,7 @@ struct CreateDiaryView: View {
                     VStack(spacing: 20) {
                         date
                         weather
+                        checkList
                         InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
                         InputBody(bodyText: $diaryDataStore.bodyText, focusedField: _focusedField)
                         createButton
@@ -104,6 +105,10 @@ private extension CreateDiaryView {
         }
         .buttonStyle(ActionButtonStyle(isActive: (diaryDataStore.canCreate)))
         .disabled(!diaryDataStore.canCreate)
+    }
+
+    var checkList: some View {
+        CheckList(diaryDataStore: diaryDataStore)
     }
 
     // MARK: Action

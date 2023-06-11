@@ -59,6 +59,12 @@ extension Item: BaseModel {
     }
 #endif
 
+    static var allSortedByDate: NSFetchRequest<Item> {
+        let request = NSFetchRequest<Item>(entityName: String(describing: self))
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        return request
+    }
+
     static var thisMonth: NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         let now = Date()
@@ -97,7 +103,7 @@ extension Item: BaseModel {
      今日未作成の場合は昨日までの継続日数を出力
      */
     static func calculateConsecutiveDays(_ context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext) throws -> Int {
-        let request = all
+        let request = allSortedByDate
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         var items = try context.fetch(request)
         guard !items.isEmpty,
@@ -145,7 +151,8 @@ extension Item: BaseModel {
         body: String,
         isBookmarked: Bool = false,
         weather: String,
-        imageData: Data?
+        imageData: Data?,
+        checkListItems: [CheckListItem]
     ) throws {
         let now = Date()
         let diaryItem = Item(context: CoreDataProvider.shared.container.viewContext)
@@ -157,11 +164,19 @@ extension Item: BaseModel {
         diaryItem.updatedAt = now
         diaryItem.isBookmarked = isBookmarked
         diaryItem.weather = weather
+        diaryItem.checkListItems = NSSet(array: checkListItems)
 
         if let imageData {
             diaryItem.imageData = imageData
         }
 
         try diaryItem.save()
+    }
+
+    var checkListItemsArray: [CheckListItem] {
+        let set = checkListItems as? Set<CheckListItem> ?? []
+        return set.sorted {
+            $0.createdAt! < $1.createdAt!
+        }
     }
 }

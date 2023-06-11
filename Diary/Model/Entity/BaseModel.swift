@@ -34,7 +34,7 @@ extension BaseModel where Self: NSManagedObject {
 
     static var all: NSFetchRequest<Self> {
         let request = NSFetchRequest<Self>(entityName: String(describing: self))
-        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         return request
     }
 

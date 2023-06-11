@@ -28,20 +28,25 @@ public class DiaryDataStore: ObservableObject {
     /*
      Publishedの利用について
      title, bodyTextはValidation結果を伝達するために利用
-     selectedDateはPickerの選択結果を伝達するために利用
+     selectedDate, selectedImageはpickerの選択結果を伝達するために利用
      */
     @Published var title = ""
     @Published var bodyText = ""
     @Published var selectedDate: Date = Date()
+    @Published var selectedImage: UIImage?
+    @Published var checkListItems: [CheckListItem] = []
 
     var isBookmarked = false
     var selectedWeather: WeatherSymbol = .sun
     var selectedPickerItem: PhotosPickerItem?
-    var selectedImage: UIImage?
 
     private let originalItem: Item?
     private var originalItemImage: UIImage?
 
+    /*
+     新規作成の場合はまだItemを生成していないのでnil。
+     編集などの場合は対象のItemを渡すことで更新可能。
+     */
     init(item: Item? = nil) {
         originalItem = item
         updateValuesWithOriginalData()
@@ -102,6 +107,10 @@ public class DiaryDataStore: ObservableObject {
             originalItemImage = nil
         }
 
+        if !item.checkListItemsArray.isEmpty {
+            self.checkListItems = item.checkListItemsArray
+        }
+
         return  true
     }
 
@@ -120,7 +129,8 @@ public class DiaryDataStore: ObservableObject {
             title: title,
             body: bodyText,
             weather: selectedWeather.symbol,
-            imageData: imageData
+            imageData: imageData,
+            checkListItems: checkListItems
         )
     }
 
@@ -153,16 +163,50 @@ public class DiaryDataStore: ObservableObject {
             originalItem.body = bodyText
         }
 
-        if originalItem.isBookmarked != isBookmarked {
-            originalItem.isBookmarked = isBookmarked
-        }
-
         if originalItem.weather != selectedWeather.symbol {
             originalItem.weather = selectedWeather.symbol
         }
 
         if originalItemImage != selectedImage {
             originalItem.imageData = selectedImage?.jpegData(compressionQuality: 0.5)
+        }
+
+        originalItem.checkListItems = NSSet(array: checkListItems)
+
+        try saveItem()
+    }
+
+    /**
+     Update bookmark state(on/off)
+
+     This is modified only after creating item.
+     */
+    func updateBookmarkState() throws {
+        guard let originalItem else {
+            throw DiaryDataStoreError.notFoundItem
+        }
+
+        if originalItem.isBookmarked != isBookmarked {
+            originalItem.isBookmarked = isBookmarked
+        }
+
+        try saveItem()
+    }
+
+    func updateCheckListItemState(of item: CheckListItem) {
+        if let foundItem = checkListItems.first(where: { $0.objectID == item.objectID
+        }) {
+            checkListItems.removeAll(where: {
+                $0.objectID == foundItem.objectID
+            })
+        } else {
+            checkListItems.append(item)
+        }
+    }
+
+    private func saveItem() throws {
+        guard let originalItem else {
+            throw DiaryDataStoreError.notFoundItem
         }
 
         originalItem.updatedAt = Date()
