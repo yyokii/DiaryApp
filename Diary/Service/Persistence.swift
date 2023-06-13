@@ -40,10 +40,12 @@ extension CoreDataProvider {
     static var preview: CoreDataProvider = {
         let result = CoreDataProvider()
         let viewContext = result.container.viewContext
+
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.date = Date()
         }
+
         do {
             try viewContext.save()
         } catch {

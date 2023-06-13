@@ -5,9 +5,28 @@
 //  Created by Higashihara Yoki on 2023/06/07.
 //
 
-import Foundation
+import CoreData
 
 extension CheckListItem: BaseModel {
+
+    #if DEBUG
+    static func makeRandom(
+        context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext
+    ) -> CheckListItem {
+        let titleSourceString = "あ漢1"
+        var title = ""
+        let repeatCountForTitle = Int.random(in: 1...3)
+        for _ in 1...repeatCountForTitle {
+            title += titleSourceString
+        }
+
+        let newItem = CheckListItem(context: context)
+        newItem.title = title
+
+        return newItem
+    }
+    #endif
+
     static func create(title: String) throws {
         let now = Date()
         let checkListItem = CheckListItem(context: CoreDataProvider.shared.container.viewContext)
