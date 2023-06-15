@@ -16,6 +16,8 @@ struct DiaryDetailView: View {
     @ObservedObject var diaryDataStore: DiaryDataStore
 
     @State private var isEditing: Bool = false
+    @State private var selectedContentType: DiaryContentType = .text
+
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
@@ -25,8 +27,8 @@ struct DiaryDetailView: View {
                     image
                     VStack(spacing: 20) {
                         header
-                        diaryBody
-                        checkList
+                        contentTypeSegmentedPicker
+                        diaryContent
                         if isEditing {
                             deleteButton
                                 .padding(.top, 80)
@@ -58,6 +60,20 @@ struct DiaryDetailView: View {
 
 private extension DiaryDetailView {
 
+    enum DiaryContentType: CaseIterable {
+        case text
+        case checkList
+
+        var name: String {
+            switch self {
+            case .text:
+                return "Text"
+            case .checkList:
+                return "Check List"
+            }
+        }
+    }
+
     var date: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .full
@@ -70,10 +86,6 @@ private extension DiaryDetailView {
         isEditing || diaryDataStore.selectedImage != nil
         ? 0
         : 40
-    }
-
-    var checkList: some View {
-        CheckList(diaryDataStore: diaryDataStore)
     }
 
     // MARK: View
@@ -154,6 +166,25 @@ private extension DiaryDetailView {
                 .resizable()
                 .scaledToFit()
                 .frame(width:24)
+        }
+    }
+
+    var contentTypeSegmentedPicker: some View {
+        Picker("", selection: $selectedContentType) {
+            ForEach(DiaryContentType.allCases, id: \.self) { option in
+                Text(option.name)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+
+    @ViewBuilder
+    var diaryContent: some View {
+        switch selectedContentType {
+        case .text:
+            diaryBody
+        case .checkList:
+            CheckList(diaryDataStore: diaryDataStore)
         }
     }
 

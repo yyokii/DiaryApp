@@ -18,8 +18,8 @@ struct CheckList: View {
     @State private var newItemTitle = ""
 
     var body: some View {
-        VStack {
-            ForEach(checkListItems) { item in
+        VStack(spacing: 12) {
+            ForEach(checkListItems, id: \.objectID) { item in
                 checkListItem(item)
             }
             addNewItem
@@ -27,11 +27,13 @@ struct CheckList: View {
     }
 }
 
-extension CheckList {
+private extension CheckList {
     var addNewItem: some View {
         HStack {
             TextField("チェックリスト", text: $newItemTitle)
-                .font(.system(size: 16))
+                .font(.system(size: 20))
+
+            Spacer()
 
             Button (actionWithHapticFB: {
                 addNewItem(title: newItemTitle)
@@ -54,7 +56,11 @@ extension CheckList {
         }) {
             HStack {
                 Text(item.title ?? "no title")
+                    .font(.system(size: 20))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Image(systemName: isChecked(item) ? "checkmark.square" : "square")
+                    .font(.system(size: 28))
+                    .foregroundColor(.green)
 
             }
         }
@@ -72,6 +78,7 @@ extension CheckList {
     func addNewItem(title: String) {
         do {
             try CheckListItem.create(title: title)
+            newItemTitle = ""
         } catch {
             print(error.localizedDescription)
             bannerState.show(with: error)
