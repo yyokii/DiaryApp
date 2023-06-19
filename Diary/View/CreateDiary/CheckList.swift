@@ -17,12 +17,22 @@ struct CheckList: View {
 
     @State private var newItemTitle = ""
 
+    /*
+     チェックリストにおいて、常に（編集モード以外でも）編集可能にする仕様も検討したが、
+     その場合は編集モード中は逐次保存ではないようにしないと、保存タイミングが増えてしまい混乱する。
+     現状は、仕様のシンプルさを優先し編集モードのみで編集可能であり、保存ボタン押下のタイミングでデータ更新するようにしている。
+     */
+    @Binding var isEditable: Bool
+
     var body: some View {
         VStack(spacing: 12) {
             ForEach(checkListItems, id: \.objectID) { item in
                 checkListItem(item)
             }
-            addNewItem
+
+            if isEditable {
+                addNewItem
+            }
         }
     }
 }
@@ -50,21 +60,30 @@ private extension CheckList {
         }
     }
 
+    @ViewBuilder
     func checkListItem(_ item: CheckListItem) -> some View {
-        Button (actionWithHapticFB: {
-            diaryDataStore.updateCheckListItemState(of: item)
-        }) {
-            HStack {
-                Text(item.title ?? "no title")
-                    .font(.system(size: 20))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Image(systemName: isChecked(item) ? "checkmark.square" : "square")
-                    .font(.system(size: 28))
-                    .foregroundColor(.green)
-
+        if isEditable {
+            Button (actionWithHapticFB: {
+                diaryDataStore.updateCheckListItemState(of: item)
+            }) {
+                checkListContent(item)
             }
+            .buttonStyle(PlainButtonStyle())
+        } else {
+            checkListContent(item)
         }
-        .buttonStyle(PlainButtonStyle())
+    }
+
+    func checkListContent(_ item: CheckListItem) -> some View {
+        HStack {
+            Text(item.title ?? "no title")
+                .font(.system(size: 20))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Image(systemName: isChecked(item) ? "checkmark.square" : "square")
+                .font(.system(size: 28))
+                .foregroundColor(.green)
+
+        }
     }
 
     func isChecked(_ item: CheckListItem) -> Bool {
@@ -93,7 +112,7 @@ struct CheckList_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             VStack {
-                CheckList(diaryDataStore: DiaryDataStore())
+                CheckList(diaryDataStore: DiaryDataStore(), isEditable: .constant(true))
             }
         }
     }

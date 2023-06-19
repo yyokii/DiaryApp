@@ -27,7 +27,7 @@ struct DiaryDetailView: View {
                     image
                     VStack(spacing: 20) {
                         header
-                        contentTypeSegmentedPicker
+                        ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
                         diaryContent
                         if isEditing {
                             deleteButton
@@ -59,20 +59,6 @@ struct DiaryDetailView: View {
 }
 
 private extension DiaryDetailView {
-
-    enum DiaryContentType: CaseIterable {
-        case text
-        case checkList
-
-        var name: String {
-            switch self {
-            case .text:
-                return "Text"
-            case .checkList:
-                return "Check List"
-            }
-        }
-    }
 
     var date: String {
         let formatter = DateFormatter()
@@ -169,22 +155,13 @@ private extension DiaryDetailView {
         }
     }
 
-    var contentTypeSegmentedPicker: some View {
-        Picker("", selection: $selectedContentType) {
-            ForEach(DiaryContentType.allCases, id: \.self) { option in
-                Text(option.name)
-            }
-        }
-        .pickerStyle(SegmentedPickerStyle())
-    }
-
     @ViewBuilder
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
             diaryBody
         case .checkList:
-            CheckList(diaryDataStore: diaryDataStore)
+            CheckList(diaryDataStore: diaryDataStore, isEditable: $isEditing)
         }
     }
 

@@ -16,6 +16,7 @@ struct CreateDiaryView: View {
     @StateObject private var diaryDataStore: DiaryDataStore = DiaryDataStore()
 
     @State var isPresentedDatePicker: Bool = false
+    @State private var selectedContentType: DiaryContentType = .text
 
     @FocusState private var focusedField: FocusedField?
 
@@ -35,9 +36,9 @@ struct CreateDiaryView: View {
                     VStack(spacing: 20) {
                         date
                         weather
-                        checkList
                         InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
-                        InputBody(bodyText: $diaryDataStore.bodyText, focusedField: _focusedField)
+                        ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
+                        diaryContent
                         createButton
                     }
                     .padding(.horizontal, 20)
@@ -99,16 +100,22 @@ private extension CreateDiaryView {
             .asyncState(weatherData.phase)
     }
 
+    @ViewBuilder
+    var diaryContent: some View {
+        switch selectedContentType {
+        case .text:
+            InputBody(bodyText: $diaryDataStore.bodyText, focusedField: _focusedField)
+        case .checkList:
+            CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true))
+        }
+    }
+
     var createButton: some View {
         Button("Create") {
             createItemFromInput()
         }
         .buttonStyle(ActionButtonStyle(isActive: (diaryDataStore.canCreate)))
         .disabled(!diaryDataStore.canCreate)
-    }
-
-    var checkList: some View {
-        CheckList(diaryDataStore: diaryDataStore)
     }
 
     // MARK: Action
