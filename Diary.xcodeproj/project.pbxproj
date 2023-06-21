@@ -66,6 +66,8 @@
 		F5737D472A2D0C8600D706E8 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D462A2D0C8600D706E8 /* UIScreen.swift */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
+		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
+		F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		F5737D462A2D0C8600D706E8 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
+		F576D37D2A433CCC0062650A /* iCloudSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudSetupView.swift; sourceTree = "<group>"; };
+		F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundedBackground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +234,7 @@
 				F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */,
 				F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */,
 				F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */,
+				F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */,
 				F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */,
+				F576D37D2A433CCC0062650A /* iCloudSetupView.swift */,
 			);
 			path = AppInfo;
 			sourceTree = "<group>";
@@ -467,6 +473,7 @@
 				F5358D1429FAADAC005FD6C8 /* UIImage+Extension.swift in Sources */,
 				F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */,
 				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
+				F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */,
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
@@ -495,6 +502,7 @@
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
 				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
+				F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
 				F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,

@@ -31,14 +31,10 @@ private extension BannerView {
     var banner: some View {
         GeometryReader { geometry in
             HStack(alignment: .center, spacing: 12) {
-                Image(systemName: bannerState.mode.imageName)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.adaptiveWhite)
-                    .bold()
-                    .background {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundColor(bannerState.mode.mainColor)
-                    }
+                IconWithRoundedBackground(
+                    systemName: bannerState.mode.imageName,
+                    backgroundColor: bannerState.mode.mainColor
+                )
 
                 Text(bannerState.mode.message)
                     .bold()

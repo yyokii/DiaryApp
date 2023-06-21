@@ -57,17 +57,6 @@ extension BannerState {
             }
         }
 
-        var imageBackgroundCol: String {
-            switch self {
-            case .warning:
-                return "exclamationmark"
-            case .error:
-                return "xmark"
-            case .success:
-                return "checkmark"
-            }
-        }
-
         var message: String {
             switch self {
             case .warning(let message):

@@ -64,9 +64,15 @@ private extension HomeTop {
 
     /*
      TODO: create content
+
+     * today diary
      今日の投稿がまだの場合: 今日のを書くような表示
-     今日の投稿がありで且つ他のエラーがある場合: 褒める + エラー共有
-     今日の投稿がありで且つ他のエラーがない場合: 褒める + 継続日数表示
+     今日の投稿があり: 褒める + 継続日数表示
+
+     * last month today dairy
+
+     * アップデート情報
+
      */
     var callToActionView: some View {
         VStack(alignment: .leading) {

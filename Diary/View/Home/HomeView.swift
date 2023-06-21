@@ -84,6 +84,7 @@ struct HomeView: View {
 }
 
 private extension HomeView {
+
     var isDisplayingThisMonth: Bool {
         guard let firstDateOfThisMonth = Date().startOfMonth else { return false }
         return firstDateOfDisplayedMonth == firstDateOfThisMonth
