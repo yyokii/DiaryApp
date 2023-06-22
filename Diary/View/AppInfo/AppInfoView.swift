@@ -24,23 +24,23 @@ struct AppInfoView: View {
     var body: some View {
         NavigationStack {
 
-                warning
-                    .padding(.horizontal)
-                    .padding(.vertical)
+            attention
+                .padding(.horizontal)
+                .padding(.vertical)
 
-                Form {
-                    Section("日記") {
-                        streak
-                        totalCount
-                        bookMark
-                        textOption
-                        reminder
-                    }
-
-                    Section("サポート") {
-
-                    }
+            Form {
+                Section("日記") {
+                    streak
+                    totalCount
+                    bookMark
+                    textOption
+                    reminder
                 }
+
+                Section("サポート") {
+
+                }
+            }
             .navigationTitle("アプリについて")
         }
         .onAppear {
@@ -59,12 +59,46 @@ private extension AppInfoView {
     // MARK: View
 
     @ViewBuilder
-    var warning: some View {
+    var attention: some View {
         if !isiCloudEnabled {
             warning(
                 title: "iCloudがオフです",
                 message: "iCloudがオフのため、アプリを削除したり機種変更するとデータがなくなります。データを引き継げるようにオンにしましょう👋"
             )
+        } else {
+            connectedToiCloud
+        }
+    }
+
+    var connectedToiCloud: some View {
+        HStack(spacing: 20) {
+            IconWithRoundedBackground(
+                systemName: "checkmark",
+                backgroundColor: .green
+            )
+            .padding(.leading)
+
+            HStack(spacing: 6) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("iCloud連携済み")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .bold()
+                    Text("iCloudにデータが保存されています。アプリを削除したたり機種変更の際は同じApple IDをご利用下さい。")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding(.trailing, 8)
+            .padding(.vertical, 4)
+
+        }
+        .padding(.vertical, 4)
+        .frame(height: 110)
+        .background {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.adaptiveWhite)
+                .adaptiveShadow()
         }
     }
 
@@ -101,7 +135,6 @@ private extension AppInfoView {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.adaptiveWhite)
                 .adaptiveShadow()
-
         }
     }
 

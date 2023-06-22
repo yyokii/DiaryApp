@@ -5,7 +5,7 @@
 //  Created by Higashihara Yoki on 2023/04/24.
 //
 
-import Foundation
+import CloudKit
 import CoreData
 
 protocol BaseModel {
@@ -20,7 +20,14 @@ extension BaseModel where Self: NSManagedObject {
         do {
             try save()
         } catch {
-            throw BaseModelError.databaseOperationError(error: error)
+            if let ckError = error as? CKError {
+                if ckError.code == CKError.Code.serverRejectedRequest {
+                    throw BaseModelError.needToCheckSpace(error: error)
+                }
+                throw BaseModelError.databaseOperationError(error: error)
+            } else {
+                throw BaseModelError.databaseOperationError(error: error)
+            }
         }
     }
 
@@ -52,18 +59,23 @@ extension BaseModel where Self: NSManagedObject {
 
 public enum BaseModelError: Error, LocalizedError {
     case databaseOperationError(error: Error?)
+    case needToCheckSpace(error: Error?)
 
     public var errorDescription: String? {
         switch self {
         case .databaseOperationError:
-            return "Failed to fetch data"
+            return "動作が正常に完了しませんでした"
+        case .needToCheckSpace:
+            return "動作が正常に完了しませんでした"
         }
     }
 
     public var recoverySuggestion: String? {
         switch self {
         case .databaseOperationError(let error):
-            return "Sorry, please check message👇\n\(error?.localizedDescription ?? "")"
+            return "\(error?.localizedDescription ?? "")"
+        case .needToCheckSpace:
+            return "iCloud連携ができませんでした。設定やiCloudの容量をご確認ください。"
         }
     }
 }
