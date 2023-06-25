@@ -13,7 +13,7 @@ struct AddPhoto: View {
 
     @State private var selectedPickerItem: PhotosPickerItem?
 
-    private let imageSize: CGSize = .init(width: 300, height: 300)
+    private let resizeImageSize: CGSize = .init(width: 300, height: 300)
 
     var body: some View {
         if let selectedImage {
@@ -31,7 +31,9 @@ private extension AddPhoto {
     func imageViewer(_ image: UIImage) -> some View {
         Image(uiImage: image)
             .resizable()
-            .scaledToFit()
+            .scaledToFill()
+            .frame(height: 200)
+            .clipped()
             .overlay(alignment: .topTrailing, content: {
                 Button(action: {
                     self.selectedImage = nil
@@ -50,15 +52,19 @@ private extension AddPhoto {
 
     var imagePicker: some View {
         PhotosPicker(selection: $selectedPickerItem) {
-            ZStack() {
-                Rectangle()
-                    .foregroundColor(.gray.opacity(0.2))
-                    .frame(height: 300)
-                Image(systemName: "camera")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
+            HStack {
+                Image(systemName: "photo")
+                    .font(.system(size: 16))
                     .foregroundColor(.primary)
+                Text("画像を設定")
+                    .font(.system(size: 14))
+                    .foregroundColor(.adaptiveBlack)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal)
+            .background {
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(.gray.opacity(0.2))
             }
         }
         .onChange(of: selectedPickerItem) { pickerItem in
@@ -72,7 +78,7 @@ private extension AddPhoto {
         Task {
             if let data = try? await pickerItem?.loadTransferable(type: Data.self),
                let uiImage = UIImage(data: data),
-               let resizedImage = uiImage.resizeImage(to: imageSize),
+               let resizedImage = uiImage.resizeImage(to: resizeImageSize),
                let rotatedImage = resizedImage.reorientToUp() {
                 await MainActor.run(body: {
                     selectedImage = rotatedImage

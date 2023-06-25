@@ -59,7 +59,7 @@ struct HomeView: View {
                     .collapseProgress($headerScrollProgress)
                     .ignoresSafeArea()
                 }
-                
+
                 appInfo
                     .padding(.trailing)
                     .padding(.top, 4)
@@ -112,7 +112,6 @@ private extension HomeView {
                         .frame(width: 28)
                         .bold()
                 }
-                .buttonStyle(PlainButtonStyle())
             }
 
             Spacer()

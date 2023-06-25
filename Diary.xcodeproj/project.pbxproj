@@ -33,11 +33,10 @@
 		F5358D382A00B621005FD6C8 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D372A00B621005FD6C8 /* Direction.swift */; };
 		F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */; };
 		F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */; };
-		F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */; };
 		F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */; };
 		F5358D532A0698BE005FD6C8 /* WeatherSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */; };
 		F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D542A069BB2005FD6C8 /* InputTitle.swift */; };
-		F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBody.swift */; };
+		F5358D572A069C90005FD6C8 /* InputBodyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBodyButton.swift */; };
 		F53CE9632A153CB400E63078 /* WeatherSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9622A153CB400E63078 /* WeatherSymbol.swift */; };
 		F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9672A1B7C4F00E63078 /* CalendarView.swift */; };
 		F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* AddPhoto.swift */; };
@@ -51,6 +50,8 @@
 		F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */; };
 		F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8D2A0C07680064CB62 /* TextOptions.swift */; };
 		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
+		F54395E22A45C40600C74D59 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E12A45C40600C74D59 /* CreateDiaryView.swift */; };
+		F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */; };
 		F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */; };
 		F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */; };
 		F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */; };
@@ -111,11 +112,10 @@
 		F5358D372A00B621005FD6C8 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonStyle.swift; sourceTree = "<group>"; };
-		F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
 		F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailView.swift; sourceTree = "<group>"; };
 		F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSelectButton.swift; sourceTree = "<group>"; };
 		F5358D542A069BB2005FD6C8 /* InputTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTitle.swift; sourceTree = "<group>"; };
-		F5358D562A069C90005FD6C8 /* InputBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBody.swift; sourceTree = "<group>"; };
+		F5358D562A069C90005FD6C8 /* InputBodyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBodyButton.swift; sourceTree = "<group>"; };
 		F53CE9622A153CB400E63078 /* WeatherSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSymbol.swift; sourceTree = "<group>"; };
 		F53CE9672A1B7C4F00E63078 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F53E3A722A087ADE0064CB62 /* AddPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoto.swift; sourceTree = "<group>"; };
@@ -129,6 +129,8 @@
 		F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		F53E3A8D2A0C07680064CB62 /* TextOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptions.swift; sourceTree = "<group>"; };
 		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		F54395E12A45C40600C74D59 /* CreateDiaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
+		F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTextEditor.swift; sourceTree = "<group>"; };
 		F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingView.swift; sourceTree = "<group>"; };
 		F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Haptic.swift"; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
+				F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
 				F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */,
@@ -299,9 +302,9 @@
 			children = (
 				F53E3A722A087ADE0064CB62 /* AddPhoto.swift */,
 				F5737D482A303EBA00D706E8 /* CheckList.swift */,
-				F5358D3D2A00D8AD005FD6C8 /* CreateDiaryView.swift */,
+				F54395E12A45C40600C74D59 /* CreateDiaryView.swift */,
 				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
-				F5358D562A069C90005FD6C8 /* InputBody.swift */,
+				F5358D562A069C90005FD6C8 /* InputBodyButton.swift */,
 				F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */,
 			);
 			path = CreateDiary;
@@ -490,9 +493,9 @@
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
+				F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */,
 				F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */,
 				F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */,
-				F5358D3E2A00D8AD005FD6C8 /* CreateDiaryView.swift in Sources */,
 				F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */,
 				F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
@@ -500,7 +503,7 @@
 				F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */,
 				F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */,
 				F5358D1029F8BC5B005FD6C8 /* LocationService.swift in Sources */,
-				F5358D572A069C90005FD6C8 /* InputBody.swift in Sources */,
+				F5358D572A069C90005FD6C8 /* InputBodyButton.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
@@ -511,6 +514,7 @@
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F550BCA92A1281EC00BCB0F2 /* ResizableLayer.swift in Sources */,
 				F5358D2E29FF53E6005FD6C8 /* DiaryDataStore.swift in Sources */,
+				F54395E22A45C40600C74D59 /* CreateDiaryView.swift in Sources */,
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
 				F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */,
 				F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */,

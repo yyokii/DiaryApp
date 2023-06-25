@@ -18,7 +18,7 @@ struct InputTitle: View {
     @FocusState var focusedField: FocusedField?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 4) {
+        VStack(alignment: .leading, spacing: 4) {
             if !title.isEmpty {
                 Text("タイトル")
                     .foregroundColor(.placeholderGray)
@@ -26,8 +26,8 @@ struct InputTitle: View {
             }
 
             TextField("タイトル（1~10文字）", text: $title)
-                .font(.system(size: 24))
-                .multilineTextAlignment(.center)
+                .font(.system(size: 20))
+                .multilineTextAlignment(.leading)
                 .focused($focusedField, equals: .title)
 
             if title.count > InputTitle.titleCount.max {

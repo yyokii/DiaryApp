@@ -68,7 +68,7 @@ private extension CheckList {
             }) {
                 checkListContent(item)
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(.plain)
         } else {
             checkListContent(item)
         }
