@@ -10,6 +10,8 @@ import SwiftUI
 struct DiaryTextEditor: View {
     static let textRange = 0...1000
 
+    @FocusState var focused: Bool
+
     @Binding var bodyText: String
     @Binding var isPresented: Bool
 
@@ -17,10 +19,16 @@ struct DiaryTextEditor: View {
         ZStack {
             Color.gray.opacity(0.5)
                 .blur(radius: 10)
+                .onTapGesture {
+                    withAnimation {
+                        isPresented = false
+                    }
+                }
 
             VStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 12) {
                     TextEditor(text: $bodyText)
+                        .focused($focused)
                         .scrollContentBackground(.hidden)
                         .background(Color.adaptiveWhite)
                         .cornerRadius(12)
@@ -40,7 +48,6 @@ struct DiaryTextEditor: View {
                 .background(Color.adaptiveWhite)
                 .cornerRadius(12)
                 .padding()
-                .border(.red)
 
                 Button(actionWithHapticFB: {
                     withAnimation {
@@ -56,6 +63,9 @@ struct DiaryTextEditor: View {
             .padding(.bottom)
         }
         .ignoresSafeArea(.container, edges: [.bottom]) // .container を指定しキーボードを回避
+        .onAppear {
+            focused = true
+        }
     }
 }
 
