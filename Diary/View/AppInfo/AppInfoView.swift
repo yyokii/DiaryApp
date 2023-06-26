@@ -76,6 +76,7 @@ private extension AppInfoView {
                 systemName: "checkmark",
                 backgroundColor: .green
             )
+            .foregroundColor(.adaptiveWhite)
             .padding(.leading)
 
             HStack(spacing: 6) {
@@ -108,6 +109,7 @@ private extension AppInfoView {
                 systemName: "exclamationmark",
                 backgroundColor: .yellow
             )
+            .foregroundColor(.adaptiveWhite)
             .padding(.leading)
 
             HStack(spacing: 6) {
@@ -207,6 +209,7 @@ private extension AppInfoView {
                 systemName: symbolName,
                 backgroundColor: iconColor
             )
+            .foregroundColor(.adaptiveWhite)
             Text(title)
                 .font(.system(size: 14))
         }

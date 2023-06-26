@@ -56,7 +56,7 @@ struct DiaryTextEditor: View {
                 }) {
                     Text("OK")
                 }
-                .buttonStyle(ActionButtonStyle(backgroundColor: .appRed, isActive: isValidText, size: .small))
+                .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
                 .disabled(!isValidText)
 
             }

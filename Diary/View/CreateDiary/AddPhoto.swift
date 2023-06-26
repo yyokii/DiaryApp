@@ -55,16 +55,16 @@ private extension AddPhoto {
             HStack {
                 Image(systemName: "photo")
                     .font(.system(size: 16))
-                    .foregroundColor(.primary)
+                    .foregroundColor(.appBlack)
                 Text("画像を設定")
                     .font(.system(size: 14))
-                    .foregroundColor(.adaptiveBlack)
+                    .foregroundColor(.appBlack)
             }
             .padding(.vertical, 12)
             .padding(.horizontal)
             .background {
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.gray.opacity(0.2))
+                    .foregroundColor(.appSecondary_100)
             }
         }
         .onChange(of: selectedPickerItem) { pickerItem in

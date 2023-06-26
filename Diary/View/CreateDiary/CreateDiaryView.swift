@@ -110,13 +110,13 @@ private extension CreateDiaryView {
                 .padding(.horizontal)
                 .background {
                     RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.gray.opacity(0.2))
+                        .foregroundColor(.appSecondary_100)
                 }
                 Text("の日記")
             }
             .font(.system(size: 20))
         })
-        .foregroundColor(.adaptiveBlack)
+        .foregroundColor(.appBlack)
         .sheet(isPresented: $isPresentedDatePicker) {
             /*
              https://developer.apple.com/forums/thread/725965
@@ -166,7 +166,7 @@ private extension CreateDiaryView {
                             cornerRadius: 20,
                             style: .continuous
                         )
-                        .fill(Color.appRed)
+                        .fill(Color.appPrimary)
                     )
             }
         }
@@ -191,9 +191,11 @@ private extension CreateDiaryView {
 struct CreateDiaryView_Previews: PreviewProvider {
 
     static var content: some View {
-        CreateDiaryView()
-            .environmentObject(TextOptions.preview)
-            .environmentObject(WeatherData())
+        NavigationStack {
+            CreateDiaryView()
+                .environmentObject(TextOptions.preview)
+                .environmentObject(WeatherData())
+        }
     }
 
     static var previews: some View {

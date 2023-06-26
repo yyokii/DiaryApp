@@ -26,9 +26,17 @@ struct InputBodyButton: View {
                     .frame(height: bodyText.isEmpty ? 300 : 0) // テキストがからの場合でのボタンのタップ領域を確保するために設定
 
                 VStack(alignment: .leading) {
-                    Text("📝 日記")
-                        .textOption(textOptions)
-                        .foregroundColor(.placeholderGray)
+                    HStack {
+                        IconWithRoundedBackground(
+                            systemName: "note",
+                            backgroundColor: .appPrimary
+                        )
+                        .foregroundColor(.white)
+
+                        Text("日記")
+                            .bold()
+                            .foregroundColor(.placeholderGray)
+                    }
 
                     Text(bodyText)                        .foregroundColor(.adaptiveBlack)
                         .frame(

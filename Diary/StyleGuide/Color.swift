@@ -25,8 +25,16 @@ extension Color {
     }
 
     public static let appBlack = hex(0x2C2C2E)
-//    public static let appMain = hex(0x7ed957)
-//    public static let appAccent = hex(0x5ce1e6)
+
+    /*
+     primary: 頻繁に仕様される、アプリの基調となる色。
+     secondary: 強調したり他と区別するために仕様する色。多様してこの色が目立ちすぎないように注意。
+     primary/secondary valiant: dark/light 同系統の色にしたいが、UI要素の違いがある場合にvaliantを作成し色の差異をつける。
+     */
+    public static let appPrimary = hex(0xda3167)
+    public static let appPrimary_100 = hex(0xf9bed3)
+    public static let appSecondary = hex(0x31daa4)
+    public static let appSecondary_100 = hex(0xe1f9ef)
 
     public static func hex(_ hex: UInt) -> Self {
         Self(
@@ -60,25 +68,47 @@ struct DemoColorView_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             VStack {
-                Text("adaptiveBlack")
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.adaptiveBlack)
+                HStack {
+                    VStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.adaptiveBlack)
+                        Text("adaptiveBlack")
+                    }
 
-                Text("adaptiveWhite")
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.adaptiveWhite)
+                    VStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.adaptiveWhite)
+                        Text("adaptiveWhite")
+                    }
+                }
 
-                Text("adaptiveBackground")
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.adaptiveBackground)
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.adaptiveBackground)
+                    Text("adaptiveBackground")
+                }
 
-                Text("appBlack")
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.appBlack)
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.placeholderGray)
+                    Text("placeholderGray")
+                }
 
-                Text("placeholderGray")
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.placeholderGray)
+                HStack {
+                    VStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.appPrimary)
+                        Text("adaptiveBlack")
+                    }
+
+                    VStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.appSecondary)
+                        Text("adaptiveWhite")
+                    }
+                }
+
+
             }
             .shadow(radius: 10)
             .padding(.horizontal)
