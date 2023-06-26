@@ -86,6 +86,18 @@ extension Item: BaseModel {
         return request
     }
 
+    static var thisMonthItemsCount: Int {
+        let fetchRequest = Item.thisMonth
+        do {
+            let context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext
+            let thisMonthItemCount = try context.count(for: fetchRequest)
+            return thisMonthItemCount
+        } catch {
+            print("⚠️ Failed to fetch item count: \(error)")
+            return 0
+        }
+    }
+
     static func items(of dateInterval: DateInterval) -> NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.predicate = NSPredicate(
@@ -95,6 +107,31 @@ extension Item: BaseModel {
         )
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         return request
+    }
+
+    static var hasTodayItem: Bool {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.fetchLimit = 1
+
+        let context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext
+
+        // Get today's date at start of day
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: Date())
+
+        // Set predicate to fetch items created today
+        fetchRequest.predicate = NSPredicate(
+            format: "(createdAt >= %@ ) AND (createdAt < %@)",
+            argumentArray: [startOfDay, calendar.date(byAdding: .day, value: 1, to: startOfDay)!]
+        )
+
+        do {
+            let items = try context.fetch(fetchRequest)
+            return !items.isEmpty
+        } catch {
+            print("Failed to fetch items: \(error)")
+            return false
+        }
     }
 
     /**

@@ -62,39 +62,67 @@ private extension HomeTop {
         return firstDateOfDisplayedMonth == firstDateOfThisMonth
     }
 
+    var consecutiveDays: Int {
+        do {
+            let consecutiveDays = try Item.calculateConsecutiveDays()
+            return consecutiveDays
+        } catch {
+            return 0
+        }
+    }
+
+    // MARK: View
+
     /*
-     TODO: create content
+     Patterns
 
      * today diary
-     今日の投稿がまだの場合: 今日のを書くような表示
-     今日の投稿があり: 褒める + 継続日数表示
+     今日何らかのItemを作成した: 褒める
+     今日何も作成していない場合: 日記を書くような訴求　+ 継続日数表示
 
-     * last month today dairy
-
-     * アップデート情報
-
+     (other pattern will be implemented ...)
      */
+    @ViewBuilder
     var callToActionView: some View {
-        VStack(alignment: .leading) {
-            Group {
-                Text("Hi!")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .bold()
-                Text("lets write today diary")
-                    .foregroundColor(.gray)
-                Text("diary make you happy")
-                    .padding(.top, 4)
+        Group {
+            if Item.hasTodayItem {
+                callToActionContent(
+                    title: "Nice！",
+                    subTitle: "今日は日記を記録できましたね",
+                    bottomMessage: "今月の日記数: \(Item.thisMonthItemsCount) 件"
+                )
+            } else {
+                callToActionContent(
+                    title: "出来事を振り返ってみませんか？",
+                    subTitle: "日記はあなたの生活を彩ります",
+                    bottomMessage: "現在の継続日数: \(consecutiveDays) 日"
+                )
             }
-            .padding(.horizontal)
         }
+        .padding(.horizontal)
         .frame(height: 100)
         .background {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.adaptiveWhite)
                 .adaptiveShadow()
-
         }
         .opacity(1 - headerScrollProgress)
+    }
+
+    func callToActionContent(title: String, subTitle: String, bottomMessage: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                    .font(.system(size: 16))
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .bold()
+                Text(subTitle)
+                    .font(.system(size: 14))
+                    .foregroundColor(.gray)
+                Text(bottomMessage)
+                    .font(.system(size: 16))
+                    .padding(.top, 4)
+        }
     }
 
     var displayingMonth: some View {

@@ -116,6 +116,7 @@ private extension CreateDiaryView {
                         .foregroundColor(.appSecondary_100)
                 }
                 Text("の日記")
+                    .foregroundColor(.adaptiveBlack)
             }
             .font(.system(size: 20))
         })
