@@ -39,7 +39,7 @@
 		F5358D572A069C90005FD6C8 /* InputBodyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358D562A069C90005FD6C8 /* InputBodyButton.swift */; };
 		F53CE9632A153CB400E63078 /* WeatherSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9622A153CB400E63078 /* WeatherSymbol.swift */; };
 		F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53CE9672A1B7C4F00E63078 /* CalendarView.swift */; };
-		F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* AddPhoto.swift */; };
+		F53E3A732A087ADE0064CB62 /* DiaryImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */; };
 		F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */; };
 		F53E3A782A0941850064CB62 /* DiaryAppSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */; };
 		F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A792A0941F20064CB62 /* BannerState.swift */; };
@@ -118,7 +118,7 @@
 		F5358D562A069C90005FD6C8 /* InputBodyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBodyButton.swift; sourceTree = "<group>"; };
 		F53CE9622A153CB400E63078 /* WeatherSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSymbol.swift; sourceTree = "<group>"; };
 		F53CE9672A1B7C4F00E63078 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		F53E3A722A087ADE0064CB62 /* AddPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoto.swift; sourceTree = "<group>"; };
+		F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageView.swift; sourceTree = "<group>"; };
 		F53E3A752A09413F0064CB62 /* DiaryAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppDelegate.swift; sourceTree = "<group>"; };
 		F53E3A772A0941850064CB62 /* DiaryAppSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAppSceneDelegate.swift; sourceTree = "<group>"; };
 		F53E3A792A0941F20064CB62 /* BannerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerState.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 		F5358D432A03AB8C005FD6C8 /* CreateDiary */ = {
 			isa = PBXGroup;
 			children = (
-				F53E3A722A087ADE0064CB62 /* AddPhoto.swift */,
+				F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */,
 				F5737D482A303EBA00D706E8 /* CheckList.swift */,
 				F54395E12A45C40600C74D59 /* CreateDiaryView.swift */,
 				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
@@ -507,7 +507,7 @@
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
-				F53E3A732A087ADE0064CB62 /* AddPhoto.swift in Sources */,
+				F53E3A732A087ADE0064CB62 /* DiaryImageView.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,
 				F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */,
 				F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */,

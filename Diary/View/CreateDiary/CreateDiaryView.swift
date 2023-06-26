@@ -37,7 +37,10 @@ struct CreateDiaryView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        AddPhoto(selectedImage: $diaryDataStore.selectedImage)
+                        DiaryImageView(
+                            selectedImage: $diaryDataStore.selectedImage,
+                            isEditing: true
+                        )
                             .padding(.horizontal, diaryDataStore.selectedImage == nil ? 20 : 0)
 
                         VStack(alignment: .leading, spacing: 20) {

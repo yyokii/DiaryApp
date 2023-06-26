@@ -17,27 +17,31 @@ struct DiaryDetailView: View {
 
     @State private var isEditing: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
-
-    @FocusState private var focusedField: FocusedField?
+    @State private var isPresentedTextEditor: Bool = false
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    image
-                    VStack(spacing: 20) {
-                        header
-                        ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
-                        diaryContent
-                        if isEditing {
-                            deleteButton
-                                .padding(.top, 80)
+            ZStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        image
+                        VStack(spacing: 20) {
+                            header
+                            ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
+                            diaryContent
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.top, paddingTopToImage)
                     }
-                    .padding(.horizontal, 40)
-                    .padding(.top, paddingTopToImage)
+                    .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
                 }
-                .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
+
+                if isPresentedTextEditor {
+                    DiaryTextEditor(
+                        bodyText: $diaryDataStore.bodyText,
+                        isPresented: $isPresentedTextEditor
+                    )
+                }
             }
             .navigationTitle(date)
             .navigationBarTitleDisplayMode(.inline)
@@ -47,13 +51,6 @@ struct DiaryDetailView: View {
         }
         .onAppear {
             diaryDataStore.updateValuesWithOriginalData()
-        }
-        .onSubmit {
-            if focusedField == .title {
-                focusedField = .body
-            } else {
-                focusedField = nil
-            }
         }
     }
 }
@@ -77,18 +74,24 @@ private extension DiaryDetailView {
     // MARK: View
 
     var navigationToolBar: some View {
-        HStack {
+        HStack(spacing: 12) {
             Button(actionWithHapticFB: {
                 updateBookmarkState()
             }, label: {
                 Image(systemName: diaryDataStore.isBookmarked ? "bookmark.fill" : "bookmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 14)
+                    .font(.system(size: 16))
                     .foregroundColor(.primary)
             })
 
             if isEditing {
+                Button(actionWithHapticFB: {
+                    delete()
+                }, label: {
+                    Image(systemName: "trash")
+                        .font(.system(size: 16))
+                        .foregroundColor(.primary)
+                })
+
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = false
@@ -104,10 +107,8 @@ private extension DiaryDetailView {
                     }
                 }, label: {
                     Image(systemName: "pencil")
-                        .resizable()
-                        .scaledToFit()
+                        .font(.system(size: 20))
                         .foregroundColor(.primary)
-                        .frame(width: 22)
                 })
             }
         }
@@ -115,16 +116,10 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var image: some View {
-        Group {
-            if isEditing {
-                AddPhoto(selectedImage: $diaryDataStore.selectedImage)
-            } else if let uiImage = diaryDataStore.selectedImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-            }
-        }
-        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+        DiaryImageView(
+            selectedImage: $diaryDataStore.selectedImage,
+            isEditing: isEditing
+        )
     }
 
     @ViewBuilder
@@ -180,20 +175,16 @@ private extension DiaryDetailView {
     @ViewBuilder
     var diaryBody: some View {
         if isEditing {
-            InputBody(bodyText: $diaryDataStore.bodyText)
+            InputBodyButton(
+                bodyText: $diaryDataStore.bodyText) {
+                    isPresentedTextEditor = true
+                }
         } else if !diaryDataStore.bodyText.isEmpty {
             Text(diaryDataStore.bodyText)
                 .textOption(textOptions)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .multilineTextAlignment(.leading)
         }
-    }
-
-    var deleteButton: some View {
-        Button("削除する🗑️") {
-            delete()
-        }
-        .buttonStyle(ActionButtonStyle(backgroundColor: .red))
     }
 
     // MARK: Action
@@ -241,15 +232,19 @@ struct DiaryDetailView_Previews: PreviewProvider {
         Group {
             content(withImage: true)
                 .environment(\.colorScheme, .light)
+                .previewDisplayName("light, 画像あり")
             content(withImage: true)
                 .environment(\.colorScheme, .dark)
+                .previewDisplayName("dark, 画像あり")
         }
 
         Group {
             content(withImage: false)
                 .environment(\.colorScheme, .light)
+                .previewDisplayName("light, 画像なし")
             content(withImage: false)
                 .environment(\.colorScheme, .dark)
+                .previewDisplayName("dark, 画像なし")
         }
     }
 }
