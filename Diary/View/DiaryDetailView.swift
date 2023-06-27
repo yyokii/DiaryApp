@@ -35,6 +35,7 @@ struct DiaryDetailView: View {
                     }
                     .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
                 }
+                .scrollIndicators(.hidden)
 
                 if isPresentedTextEditor {
                     DiaryTextEditor(

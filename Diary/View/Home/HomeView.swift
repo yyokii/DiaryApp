@@ -58,6 +58,7 @@ struct HomeView: View {
                     .height(min: 200)
                     .collapseProgress($headerScrollProgress)
                     .ignoresSafeArea()
+                    .scrollIndicators(.hidden)
                 }
 
                 appInfo

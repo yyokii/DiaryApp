@@ -59,6 +59,7 @@
 		F550BCAB2A1284AC00BCB0F2 /* FluidGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAA2A1284AC00BCB0F2 /* FluidGradientView.swift */; };
 		F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */; };
 		F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */; };
+		F5578E6E2A4AE21800562FCB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5578E6D2A4AE21800562FCB /* Image.swift */; };
 		F568BB6B2A3B88E2000330E1 /* DiaryContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */; };
 		F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */; };
 		F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTop.swift */; };
@@ -138,6 +139,7 @@
 		F550BCAA2A1284AC00BCB0F2 /* FluidGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradientView.swift; sourceTree = "<group>"; };
 		F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradient.swift; sourceTree = "<group>"; };
 		F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobLayer.swift; sourceTree = "<group>"; };
+		F5578E6D2A4AE21800562FCB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryContentType.swift; sourceTree = "<group>"; };
 		F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypeSegmentedPicker.swift; sourceTree = "<group>"; };
 		F5737D392A28882000D706E8 /* HomeTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTop.swift; sourceTree = "<group>"; };
@@ -279,9 +281,10 @@
 		F5358D2229FEAB46005FD6C8 /* StyleGuide */ = {
 			isa = PBXGroup;
 			children = (
-				F5358D312A000E5D005FD6C8 /* Color.swift */,
-				F5358D332A000E9B005FD6C8 /* Shadow.swift */,
 				F5358D3B2A00D5CF005FD6C8 /* ActionButtonStyle.swift */,
+				F5358D312A000E5D005FD6C8 /* Color.swift */,
+				F5578E6D2A4AE21800562FCB /* Image.swift */,
+				F5358D332A000E9B005FD6C8 /* Shadow.swift */,
 			);
 			path = StyleGuide;
 			sourceTree = "<group>";
@@ -300,9 +303,9 @@
 		F5358D432A03AB8C005FD6C8 /* CreateDiary */ = {
 			isa = PBXGroup;
 			children = (
-				F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */,
 				F5737D482A303EBA00D706E8 /* CheckList.swift */,
 				F54395E12A45C40600C74D59 /* CreateDiaryView.swift */,
+				F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */,
 				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
 				F5358D562A069C90005FD6C8 /* InputBodyButton.swift */,
 				F5358D522A0698BE005FD6C8 /* WeatherSelectButton.swift */,
@@ -506,6 +509,7 @@
 				F5358D572A069C90005FD6C8 /* InputBodyButton.swift in Sources */,
 				F5358CC229F6DFE5005FD6C8 /* Date+Extension.swift in Sources */,
 				F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */,
+				F5578E6E2A4AE21800562FCB /* Image.swift in Sources */,
 				F53E3A762A09413F0064CB62 /* DiaryAppDelegate.swift in Sources */,
 				F53E3A732A087ADE0064CB62 /* DiaryImageView.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,

@@ -21,6 +21,7 @@ struct DiaryList: View {
     @Binding var isPresentedCalendar: Bool
 
     let scrollViewProxy: ScrollViewProxy
+    let illustName = Image.randomIllustName
 
     init(
         dateInterval: DateInterval,
@@ -88,16 +89,23 @@ struct DiaryList: View {
 
 private extension DiaryList {
     var empty: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "drop")
-                .font(.system(size: 24))
+        VStack {
+            Image(illustName)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 100)
+                .padding(28)
+                .background{
+                    Circle()
+                        .foregroundColor(.white)
+                        .blur(radius: 3)
+                }
 
             Text("「+」ボタンから日記を作成して、\nあなたの経験を振り返りましょう")
                 .foregroundColor(.gray)
                 .font(.system(size: 16))
+                .frame(height: 100)
         }
-        .multilineTextAlignment(.center)
-//        .frame(height: 200)
     }
 
     func fetchFirstItem(on date: Date) -> Item? {
