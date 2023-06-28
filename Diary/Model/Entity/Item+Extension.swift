@@ -57,6 +57,37 @@ extension Item: BaseModel {
         }
         return newItem
     }
+
+    static func makeWithOnlyCheckList(
+        context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext,
+        date: Date = Date(),
+        withImage: Bool = false
+    ) -> Item {
+        let newItem = Item(context: context)
+        newItem.title = "Hi🦄"
+        newItem.body = ""
+        newItem.date = date
+        newItem.createdAt = Date()
+        newItem.isBookmarked = Bool.random()
+        newItem.updatedAt = Date()
+        newItem.weather = "sun.max"
+
+        if withImage {
+            let image: Data = UIImage(named: "sample")!.jpegData(compressionQuality: 0.5)!
+            newItem.imageData = image
+        } else {
+            newItem.imageData = nil
+        }
+
+        let checkListCount = Int.random(in: 1...10)
+        var checkListItems: [CheckListItem] = []
+        for _ in 0...checkListCount {
+            checkListItems.append(.makeRandom())
+        }
+        newItem.checkListItems = NSSet(array: checkListItems)
+
+        return newItem
+    }
 #endif
 
     static var allSortedByDate: NSFetchRequest<Item> {

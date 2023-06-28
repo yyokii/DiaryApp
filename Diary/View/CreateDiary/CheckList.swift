@@ -40,7 +40,7 @@ struct CheckList: View {
 private extension CheckList {
     var addNewItem: some View {
         HStack {
-            TextField("チェックリスト", text: $newItemTitle)
+            TextField("チェックリストを追加する", text: $newItemTitle)
                 .font(.system(size: 20))
 
             Spacer()
@@ -66,23 +66,11 @@ private extension CheckList {
             Button (actionWithHapticFB: {
                 diaryDataStore.updateCheckListItemState(of: item)
             }) {
-                checkListContent(item)
+                CheckListContent(item: item, isChecked: isChecked(item))
             }
             .buttonStyle(.plain)
         } else {
-            checkListContent(item)
-        }
-    }
-
-    func checkListContent(_ item: CheckListItem) -> some View {
-        HStack {
-            Text(item.title ?? "no title")
-                .font(.system(size: 20))
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Image(systemName: isChecked(item) ? "checkmark.square" : "square")
-                .font(.system(size: 28))
-                .foregroundColor(.green)
-
+            CheckListContent(item: item, isChecked: isChecked(item))
         }
     }
 

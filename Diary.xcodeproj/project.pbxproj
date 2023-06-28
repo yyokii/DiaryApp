@@ -70,6 +70,7 @@
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
 		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
 		F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */; };
+		F5BF44342A4C2CAE00217119 /* CheckListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44332A4C2CAE00217119 /* CheckListContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +150,7 @@
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
 		F576D37D2A433CCC0062650A /* iCloudSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudSetupView.swift; sourceTree = "<group>"; };
 		F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundedBackground.swift; sourceTree = "<group>"; };
+		F5BF44332A4C2CAE00217119 /* CheckListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,13 +234,14 @@
 				F53E3A862A0BB6A60064CB62 /* AppInfo */,
 				F5358D432A03AB8C005FD6C8 /* CreateDiary */,
 				F5358D422A03AB72005FD6C8 /* Home */,
+				F5BF44332A4C2CAE00217119 /* CheckListContent.swift */,
+				F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */,
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
 				F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
 				F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */,
 				F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */,
-				F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */,
 				F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */,
 			);
 			path = View;
@@ -497,6 +500,7 @@
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
 				F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */,
+				F5BF44342A4C2CAE00217119 /* CheckListContent.swift in Sources */,
 				F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */,
 				F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */,
 				F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */,

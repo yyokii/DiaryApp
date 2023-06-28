@@ -107,8 +107,10 @@ private extension DiaryItem {
     }
 
     /**
-     画像が設定されていない場合：テキストコンテンツを表示
+     [表示パターン（優先順位が高い順）]
      画像が設定されている場合：画像を表示
+     画像が設定されていない場合：テキストコンテンツを表示
+     画像が設定されていない場合 && テキストが空：チェックリストの内容を表示
      */
     @ViewBuilder
     var diaryContent: some View {
@@ -121,7 +123,7 @@ private extension DiaryItem {
                 .clipped()
                 .cornerRadius(cornerRadius, corners: [.topRight, .bottomRight])
                 .allowsHitTesting(false) // clipはUI上のcropは起こるが内部では画像をそのままのサイズで保持しているため、予期せぬタップ判定をもたらす。それを回避するためのワークアラウンド。 https://stackoverflow.com/questions/63300411/clipped-not-actually-clips-the-image-in-swiftui
-        } else {
+        } else if let body = item.body, !body.isEmpty {
             VStack(alignment: .leading, spacing: 14) {
                 Text(item.title ?? "")
                     .bold()
@@ -134,6 +136,40 @@ private extension DiaryItem {
                     .textOption(textOptions)
                     .lineLimit(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.vertical, 10)
+            .padding(.trailing, 20)
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(item.title ?? "")
+                    .bold()
+                    .font(.system(size: 32))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .padding(.trailing, 40)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    // 最初の2つぐらい出してあとは省略にする
+                    ForEach(Array(item.checkListItemsArray.prefix(2)), id: \.self) { checkListItem in
+                        HStack {
+                            Image(systemName:"checkmark")
+                                .font(.system(size: 12))
+                                .foregroundColor(.green)
+
+                            Text(checkListItem.title ?? "no title")
+                                .font(.system(size: 16))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }
+                .padding(.trailing)
+
+                if let itemsCount = item.checkListItems?.count,
+                   itemsCount >= 2 {
+                    Text("合計\(itemsCount)個のチェックリストを達成しました")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray)
+                }
             }
             .padding(.vertical, 10)
             .padding(.trailing, 20)
@@ -160,6 +196,9 @@ struct DiaryItem_Previews: PreviewProvider {
                 .padding(.horizontal)
 
             DiaryItem(item: .makeRandom(withImage: true))
+                .padding(.horizontal)
+
+            DiaryItem(item: .makeWithOnlyCheckList())
                 .padding(.horizontal)
 
             DiaryItem(item: .makeRandom(), withYear: true)

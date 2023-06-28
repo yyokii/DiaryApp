@@ -11,7 +11,8 @@ extension CheckListItem: BaseModel {
 
     #if DEBUG
     static func makeRandom(
-        context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext
+        context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext,
+        date: Date = Date()
     ) -> CheckListItem {
         let titleSourceString = "あ漢1"
         var title = ""
@@ -22,6 +23,8 @@ extension CheckListItem: BaseModel {
 
         let newItem = CheckListItem(context: context)
         newItem.title = title
+        newItem.createdAt = date
+        newItem.updatedAt = date
 
         return newItem
     }
