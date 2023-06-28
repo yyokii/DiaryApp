@@ -98,13 +98,13 @@ struct DemoColorView_Previews: PreviewProvider {
                     VStack {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.appPrimary)
-                        Text("adaptiveBlack")
+                        Text("appPrimary")
                     }
 
                     VStack {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.appSecondary)
-                        Text("adaptiveWhite")
+                        Text("appSecondary")
                     }
                 }
 

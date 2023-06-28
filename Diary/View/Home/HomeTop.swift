@@ -111,17 +111,17 @@ private extension HomeTop {
 
     func callToActionContent(title: String, subTitle: String, bottomMessage: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-                Text(title)
-                    .font(.system(size: 16))
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .bold()
-                Text(subTitle)
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
-                Text(bottomMessage)
-                    .font(.system(size: 16))
-                    .padding(.top, 4)
+            Text(title)
+                .font(.system(size: 16))
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .bold()
+            Text(subTitle)
+                .font(.system(size: 14))
+                .foregroundColor(.gray)
+            Text(bottomMessage)
+                .font(.system(size: 16))
+                .padding(.top, 4)
         }
     }
 

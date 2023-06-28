@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Image {
-    static let illustNames = ["illust-dancing", "illust-float", "illust-iceCream", "illust-meditating", "illust-zombieing"]
+    static let illustNames = [
+        "illust-dancing", "illust-float", "illust-iceCream", "illust-levitate","illust-meditating", "illust-zombieing"
+    ]
     static let randomIllustName = illustNames.randomElement()!
 }

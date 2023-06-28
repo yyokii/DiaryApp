@@ -20,11 +20,23 @@ struct FloatingButton: View {
                 Spacer()
                 Button(actionWithHapticFB: action) {
                     Image(systemName: icon)
+                        .bold()
                         .font(.system(size: 40))
-                        .foregroundColor(.adaptiveBlack)
+                        .foregroundColor(.white)
+                        .padding(16)
+                        .background {
+                            ZStack {
+                                Circle()
+                                    .fill(.white)
+                                FluidGradient(
+                                    blobs: [.blue, .green, .yellow, .orange, .red, .pink, .teal],
+                                    highlights:  [.blue, .green, .yellow, .orange, .red, .pink, .purple, .teal, .indigo],
+                                    speed: 0.5
+                                )
+                            }
+                        }
                 }
                 .frame(width: size, height: size)
-                .background(Color.adaptiveWhite)
                 .cornerRadius(size/2)
                 .adaptiveShadow()
             }

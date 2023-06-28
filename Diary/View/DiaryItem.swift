@@ -81,25 +81,17 @@ private extension DiaryItem {
                         .font(.system(size: 18))
                 } else {
                     Text(date, formatter: dayFormatter)
+                        .bold()
                         .font(.system(size: 32))
                 }
                 Text(date, formatter: weekdayFormatter)
                     .font(.system(size: isYearDisplayed ? 18 : 20))
+                    .foregroundColor(.gray)
             }
             Spacer()
         }
-        .foregroundColor(Color.white)
         .padding(.horizontal, 28)
         .frame(width: 100)
-        .background {
-            FluidGradient(
-                blobs: [.blue, .green, .yellow, .orange, .red, .pink, .teal],
-                highlights:  [.blue, .green, .yellow, .orange, .red, .pink, .purple, .teal, .indigo],
-                speed: 0.5
-            )
-            .opacity(0.9)
-            .cornerRadius(cornerRadius, corners: [.topLeft, .bottomLeft])
-        }
     }
 
     var bookMarkButton: some View {
@@ -144,7 +136,7 @@ private extension DiaryItem {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 10)
-            .padding(.horizontal, 20)
+            .padding(.trailing, 20)
         }
     }
 
