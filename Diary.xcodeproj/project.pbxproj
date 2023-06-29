@@ -10,7 +10,7 @@
 		F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CA429F52467005FD6C8 /* DiaryApp.swift */; };
 		F5358CA929F52468005FD6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5358CA829F52468005FD6C8 /* Assets.xcassets */; };
 		F5358CAC29F52468005FD6C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5358CAB29F52468005FD6C8 /* Preview Assets.xcassets */; };
-		F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAD29F52468005FD6C8 /* Persistence.swift */; };
+		F5358CAE29F52468005FD6C8 /* CoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAD29F52468005FD6C8 /* CoreDataProvider.swift */; };
 		F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */; };
 		F5358CBE29F691E8005FD6C8 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CBD29F691E8005FD6C8 /* BaseModel.swift */; };
 		F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5358CBF29F69276005FD6C8 /* Item+Extension.swift */; };
@@ -71,6 +71,7 @@
 		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
 		F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */; };
 		F5BF44342A4C2CAE00217119 /* CheckListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44332A4C2CAE00217119 /* CheckListContent.swift */; };
+		F5BF44362A4C747900217119 /* CheckListEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44352A4C747900217119 /* CheckListEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,7 +89,7 @@
 		F5358CA429F52467005FD6C8 /* DiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryApp.swift; sourceTree = "<group>"; };
 		F5358CA829F52468005FD6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5358CAB29F52468005FD6C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F5358CAD29F52468005FD6C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		F5358CAD29F52468005FD6C8 /* CoreDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataProvider.swift; sourceTree = "<group>"; };
 		F5358CB029F52468005FD6C8 /* Diary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diary.xcdatamodel; sourceTree = "<group>"; };
 		F5358CB229F52468005FD6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5358CB829F53BB5005FD6C8 /* Diary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Diary.entitlements; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 		F576D37D2A433CCC0062650A /* iCloudSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudSetupView.swift; sourceTree = "<group>"; };
 		F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundedBackground.swift; sourceTree = "<group>"; };
 		F5BF44332A4C2CAE00217119 /* CheckListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListContent.swift; sourceTree = "<group>"; };
+		F5BF44352A4C747900217119 /* CheckListEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,7 +266,7 @@
 		F5358CBC29F602BD005FD6C8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				F5358CAD29F52468005FD6C8 /* Persistence.swift */,
+				F5358CAD29F52468005FD6C8 /* CoreDataProvider.swift */,
 				F5358D0F29F8BC5B005FD6C8 /* LocationService.swift */,
 				F5358D1129F92DDD005FD6C8 /* NotificationService.swift */,
 				F5358D2529FEB2E9005FD6C8 /* UserDefaults.swift */,
@@ -341,8 +343,9 @@
 			isa = PBXGroup;
 			children = (
 				F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */,
-				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */,
+				F5BF44352A4C747900217119 /* CheckListEditor.swift */,
+				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */,
 				F576D37D2A433CCC0062650A /* iCloudSetupView.swift */,
 			);
@@ -481,7 +484,7 @@
 			files = (
 				F5358D1429FAADAC005FD6C8 /* UIImage+Extension.swift in Sources */,
 				F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */,
-				F5358CAE29F52468005FD6C8 /* Persistence.swift in Sources */,
+				F5358CAE29F52468005FD6C8 /* CoreDataProvider.swift in Sources */,
 				F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */,
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */,
@@ -492,6 +495,7 @@
 				F568BB6B2A3B88E2000330E1 /* DiaryContentType.swift in Sources */,
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
 				F5737D3C2A288B4000D706E8 /* OffsetViewModifier.swift in Sources */,
+				F5BF44362A4C747900217119 /* CheckListEditor.swift in Sources */,
 				F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */,
 				F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,

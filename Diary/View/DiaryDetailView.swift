@@ -177,7 +177,7 @@ private extension DiaryDetailView {
     var diaryBody: some View {
         if isEditing {
             InputBodyButton(
-                bodyText: $diaryDataStore.bodyText) {
+                bodyText: diaryDataStore.bodyText) {
                     isPresentedTextEditor = true
                 }
         } else if !diaryDataStore.bodyText.isEmpty {

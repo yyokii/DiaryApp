@@ -15,30 +15,6 @@ protocol BaseModel {
 
 extension BaseModel where Self: NSManagedObject {
 
-    func delete() throws {
-        CoreDataProvider.shared.container.viewContext.delete(self)
-        do {
-            try save()
-        } catch {
-            if let ckError = error as? CKError {
-                if ckError.code == CKError.Code.serverRejectedRequest {
-                    throw BaseModelError.needToCheckSpace(error: error)
-                }
-                throw BaseModelError.databaseOperationError(error: error)
-            } else {
-                throw BaseModelError.databaseOperationError(error: error)
-            }
-        }
-    }
-
-    func save() throws {
-        do {
-            try CoreDataProvider.shared.container.viewContext.save()
-        } catch {
-            throw BaseModelError.databaseOperationError(error: error)
-        }
-    }
-
     static var all: NSFetchRequest<Self> {
         let request = NSFetchRequest<Self>(entityName: String(describing: self))
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
@@ -55,6 +31,34 @@ extension BaseModel where Self: NSManagedObject {
             throw BaseModelError.databaseOperationError(error: error)
         }
     }
+
+    func delete() throws {
+        CoreDataProvider.shared.container.viewContext.delete(self)
+        do {
+            try save()
+        } catch {
+            try handleOperationError(error)
+        }
+    }
+
+    func save() throws {
+        do {
+            try CoreDataProvider.shared.container.viewContext.save()
+        } catch {
+            try handleOperationError(error)
+        }
+    }
+
+    private func handleOperationError(_ error: Error) throws {
+        if let ckError = error as? CKError {
+            if ckError.code == CKError.Code.serverRejectedRequest {
+                throw BaseModelError.needToCheckSpace(error: error)
+            }
+            throw BaseModelError.databaseOperationError(error: error)
+        } else {
+            throw BaseModelError.databaseOperationError(error: error)
+        }
+    }
 }
 
 public enum BaseModelError: Error, LocalizedError {
@@ -64,9 +68,9 @@ public enum BaseModelError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .databaseOperationError:
-            return "動作が正常に完了しませんでした"
+            return "処理に失敗しました"
         case .needToCheckSpace:
-            return "動作が正常に完了しませんでした"
+            return "処理に失敗しました"
         }
     }
 

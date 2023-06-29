@@ -147,7 +147,7 @@ private extension CreateDiaryView {
         switch selectedContentType {
         case .text:
             InputBodyButton(
-                bodyText: $diaryDataStore.bodyText) {
+                bodyText: diaryDataStore.bodyText) {
                     isPresentedTextEditor = true
                 }
         case .checkList:

@@ -10,7 +10,7 @@ import SwiftUI
 struct InputBodyButton: View {
     @EnvironmentObject private var textOptions: TextOptions
 
-    @Binding var bodyText: String
+    let bodyText: String
     let action: () -> Void
 
     var body: some View {
@@ -61,8 +61,8 @@ struct InputBody_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             VStack {
-                InputBodyButton(bodyText: .constant("あいうえお123abd"), action: {})
-                InputBodyButton(bodyText: .constant(longText), action: {})
+                InputBodyButton(bodyText: "あいうえお123abd", action: {})
+                InputBodyButton(bodyText: longText, action: {})
             }
             .environmentObject(TextOptions.preview)
         }

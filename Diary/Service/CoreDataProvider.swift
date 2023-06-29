@@ -1,5 +1,5 @@
 //
-//  Persistence.swift
+//  CoreDataProvider.swift
 //  Diary
 //
 //  Created by Higashihara Yoki on 2023/04/23.
@@ -40,9 +40,15 @@ extension CoreDataProvider {
         let result = CoreDataProvider()
         let viewContext = result.container.viewContext
 
+        // previewでロードされるたびにここが発火し要素が増える。それを回避するために全て削除しています。
+        deleteAll(container: result.container)
+        
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.date = Date()
+            let newItem: Item = .makeRandom(context: viewContext)
+        }
+
+        for _ in 0..<5 {
+            let newCheckList: CheckListItem = .makeRandom(context: viewContext)
         }
 
         do {
@@ -53,6 +59,18 @@ extension CoreDataProvider {
         }
         return result
     }()
+
+    static func deleteAll(container: NSPersistentContainer) {
+        let itemFetchRequest: NSFetchRequest<NSFetchRequestResult> = Item.fetchRequest()
+        let batchDeleteRequestForItem = NSBatchDeleteRequest(fetchRequest: itemFetchRequest)
+
+        let checkListItemFetchRequest: NSFetchRequest<NSFetchRequestResult> = CheckListItem.fetchRequest()
+        let batchDeleteRequestForCheckListItem = NSBatchDeleteRequest(fetchRequest: checkListItemFetchRequest)
+
+        _ = try? container.viewContext.execute(batchDeleteRequestForItem)
+        _ = try? container.viewContext.execute(batchDeleteRequestForCheckListItem)
+
+    }
 }
 
 public enum CoreDataProviderError: Error, LocalizedError {
