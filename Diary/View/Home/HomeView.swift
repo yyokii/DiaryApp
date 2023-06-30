@@ -31,39 +31,29 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ScrollViewReader { scrollViewProxy in
-                    ScalingHeaderScrollView {
-                        ZStack(alignment: .bottom) {
-                            Color.adaptiveBackground
-                            HomeTop(
-                                firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
-                                selectedDate: $selectedDate,
-                                isPresentedCalendar: $isPresentedCalendar,
-                                headerScrollProgress: headerScrollProgress
-                            )
-                            .padding(.horizontal)
-                            .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
-                            .background(
-                                Color.adaptiveBackground
-                            )
-                        }
-                    } content: {
-                        DiaryList(
-                            dateInterval: displayDateInterval,
-                            selectedDate: $selectedDate,
-                            isPresentedCalendar: $isPresentedCalendar,
-                            scrollViewProxy: scrollViewProxy
-                        )
-                    }
-                    .height(min: 200)
-                    .collapseProgress($headerScrollProgress)
-                    .ignoresSafeArea()
-                    .scrollIndicators(.hidden)
+                VStack() {
+                    appInfo
+                        .padding(.trailing)
+                        .padding(.top, 20)
+
+                    HomeTop(
+                        firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
+                        selectedDate: $selectedDate,
+                        isPresentedCalendar: $isPresentedCalendar,
+                        headerScrollProgress: headerScrollProgress
+                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
+
+                    DiaryList(
+                        dateInterval: displayDateInterval,
+                        selectedDate: $selectedDate,
+                        isPresentedCalendar: $isPresentedCalendar
+                    )
+
+                    Spacer()
                 }
 
-                appInfo
-                    .padding(.trailing)
-                    .padding(.top, 4)
                 FloatingButton(
                     action: {
                         isPresentedCreateDiaryView = true
@@ -99,23 +89,19 @@ private extension HomeView {
     }
 
     var appInfo: some View {
-        VStack {
-            HStack {
-                Spacer()
-
-                NavigationLink {
-                    AppInfoView()
-                } label: {
-                    Image(systemName: "gearshape")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.primary)
-                        .frame(width: 28)
-                        .bold()
-                }
-            }
-
+        HStack {
             Spacer()
+
+            NavigationLink {
+                AppInfoView()
+            } label: {
+                Image(systemName: "gearshape")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.primary)
+                    .frame(width: 28)
+                    .bold()
+            }
         }
     }
 }

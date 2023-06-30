@@ -20,14 +20,12 @@ struct DiaryList: View {
     @Binding var selectedDate: Date?
     @Binding var isPresentedCalendar: Bool
 
-    let scrollViewProxy: ScrollViewProxy
     let illustName = Image.randomIllustName
 
     init(
         dateInterval: DateInterval,
         selectedDate: Binding<Date?>,
-        isPresentedCalendar: Binding<Bool>,
-        scrollViewProxy: ScrollViewProxy
+        isPresentedCalendar: Binding<Bool>
     ) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
@@ -37,53 +35,45 @@ struct DiaryList: View {
 
         self._selectedDate = selectedDate
         self._isPresentedCalendar = isPresentedCalendar
-        self.scrollViewProxy = scrollViewProxy
     }
 
     var body: some View {
-        if items.isEmpty {
-            /*
-             TODO: 修正したい
-
-             listのコンテンツがあり且つヘッダーがStickyになっている（十分に上にスクロールされている）状態から、emptyもしくはlistが1?に遷移した際に、
-             [SwiftUI] Modifying state during view update, this will cause undefined behavior.
-             が生じる。
-
-             ScalingHeaderScrollViewの
-             self.progress = getCollapseProgress()
-             の箇所。
-             */
-            empty
-                .padding(.top, 60)
-                .padding(.bottom, UIScreen.contentBottomSpace)
-        } else {
-            LazyVStack(spacing: 24) {
-                ForEach(items) { item in
-                    NavigationLink {
-                        DiaryDetailView(diaryDataStore: .init(item: item))
-                    } label: {
-                        DiaryItem(item: item)
+        ScrollViewReader { scrollViewProxy in
+            ScrollView {
+                if items.isEmpty {
+                    empty
+                        .padding(.top, 60)
+                } else {
+                    LazyVStack(spacing: 24) {
+                        ForEach(items) { item in
+                            NavigationLink {
+                                DiaryDetailView(diaryDataStore: .init(item: item))
+                            } label: {
+                                DiaryItem(item: item)
+                            }
+                            .id(item.objectID)
+                            .padding(.horizontal, 20)
+                        }
                     }
-                    .id(item.objectID)
-                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                    .padding(.bottom, UIScreen.contentBottomSpace)
+                    .onChange(of: selectedDate, perform: { newValue in
+                        guard let date = newValue else {
+                            return
+                        }
+
+                        if let firstItemOnDate = fetchFirstItem(on: date) {
+                            withAnimation {
+                                scrollViewProxy.scrollTo(firstItemOnDate.objectID, anchor: .center)
+                                isPresentedCalendar = false
+                            }
+                        } else {
+                            bannerState.show(of: .warning(message: "この日付の日記はありません"))
+                        }
+                    })
                 }
             }
-            .padding(.top, 12)
-            .padding(.bottom, UIScreen.contentBottomSpace)
-            .onChange(of: selectedDate, perform: { newValue in
-                guard let date = newValue else {
-                    return
-                }
-
-                if let firstItemOnDate = fetchFirstItem(on: date) {
-                    withAnimation {
-                        scrollViewProxy.scrollTo(firstItemOnDate.objectID, anchor: .center)
-                        isPresentedCalendar = false
-                    }
-                } else {
-                    bannerState.show(of: .warning(message: "No diary for this date"))
-                }
-            })
+            .scrollIndicators(.hidden)
         }
     }
 }
@@ -132,14 +122,11 @@ struct DiaryList_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            ScrollViewReader { proxy in
-                DiaryList(
+            DiaryList(
                     dateInterval: .init(start: Date(), end: Date()),
                     selectedDate: .constant(Date()),
-                    isPresentedCalendar: .constant(false),
-                    scrollViewProxy: proxy
+                    isPresentedCalendar: .constant(false)
                 )
-            }
         }
     }
 
