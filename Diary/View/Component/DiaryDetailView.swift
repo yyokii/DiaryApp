@@ -93,7 +93,7 @@ private extension DiaryDetailView {
                         .foregroundColor(.primary)
                 })
 
-                Button(action: {
+                Button(actionWithHapticFB: {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = false
                     }
@@ -102,7 +102,7 @@ private extension DiaryDetailView {
                     Text("保存")
                 })
             } else {
-                Button(action: {
+                Button(actionWithHapticFB: {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = true
                     }

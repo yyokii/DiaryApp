@@ -31,7 +31,9 @@ extension Color {
      secondary: 強調したり他と区別するために仕様する色。多様してこの色が目立ちすぎないように注意。
      primary/secondary valiant: dark/light 同系統の色にしたいが、UI要素の違いがある場合にvaliantを作成し色の差異をつける。
      */
-    public static let appPrimary = appBlack
+    public static let appPrimary = Self {
+        $0.userInterfaceStyle == .dark ? hex(0xf5f5f5) : appBlack
+    }
     public static let appSecondary = Self {
         $0.userInterfaceStyle == .dark ? hex(0x525252) : hex(0xefefef)
     }

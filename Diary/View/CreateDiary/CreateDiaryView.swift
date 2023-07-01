@@ -22,43 +22,22 @@ struct CreateDiaryView: View {
 
     @FocusState private var focusedField: FocusedField?
 
-    private var dateFormatter: DateFormatter {
+    private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter
-    }
+    }()
     private let dateRange: ClosedRange<Date> = Date(timeIntervalSince1970: 0)...Date()
 
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
+                    dismissButton
+                        .padding(.top)
                     header
                         .padding(.top)
-
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 10) {
-                            DiaryImageView(
-                                selectedImage: $diaryDataStore.selectedImage,
-                                isEditing: true
-                            )
-                            .padding(.horizontal, diaryDataStore.selectedImage == nil ? 20 : 0)
-
-                            VStack(alignment: .leading, spacing: 20) {
-                                // 画像以外に水平方向のpaddingを設定したいので別のStackで管理
-
-                                HStack {
-                                    InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
-                                    weather
-                                }
-                                ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
-                                diaryContent
-                            }
-                            .padding(.top, 20)
-                            .padding(.horizontal, 20)
-                        }
-                        .padding(.bottom, 100)
-                    }
+                    scrollContent
                 }
 
                 if isPresentedTextEditor {
@@ -70,6 +49,7 @@ struct CreateDiaryView: View {
             }
         }
         .tint(.adaptiveBlack)
+        .interactiveDismissDisabled()
         .onSubmit {
             if focusedField == .title {
                 focusedField = .body
@@ -92,18 +72,54 @@ private extension CreateDiaryView {
 
     // MARK: View
 
+    var dismissButton: some View {
+        HStack {
+            Spacer()
+            XButton(action: {
+                dismiss()
+            })
+            .padding(.trailing)
+        }
+    }
+
     var header: some View {
         HStack {
             date
                 .padding(.leading)
             Spacer()
             createButton
-                .padding(.trailing)
+                .padding(.trailing, 32)
+        }
+    }
+
+    var scrollContent: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                DiaryImageView(
+                    selectedImage: $diaryDataStore.selectedImage,
+                    isEditing: true
+                )
+                .padding(.horizontal, diaryDataStore.selectedImage == nil ? 20 : 0)
+
+                VStack(alignment: .leading, spacing: 20) {
+                    // 画像以外に水平方向のpaddingを設定したいので別のStackで管理
+
+                    HStack {
+                        InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
+                        weather
+                    }
+                    ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
+                    diaryContent
+                }
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
+            }
+            .padding(.bottom, 100)
         }
     }
 
     var date: some View {
-        Button(action: {
+        Button(actionWithHapticFB: {
             isPresentedDatePicker.toggle()
         }, label: {
             HStack {
@@ -191,22 +207,9 @@ private extension CreateDiaryView {
         Button(actionWithHapticFB: {
             createItemFromInput()
         }) {
-            HStack {
-                Text("作成")
-                    .bold()
-                    .padding(.vertical, 12)
-                    .padding(.horizontal)
-                    .foregroundColor(.white)
-                    .background(
-                        RoundedRectangle(
-                            cornerRadius: 20,
-                            style: .continuous
-                        )
-                        .fill(Color.appPrimary)
-                        .adaptiveShadow(size: .small)
-                    )
-            }
+            Text("作成")
         }
+        .buttonStyle(ActionButtonStyle(isActive: diaryDataStore.canCreate , size: .extraSmall))
         .disabled(!diaryDataStore.canCreate)
     }
 

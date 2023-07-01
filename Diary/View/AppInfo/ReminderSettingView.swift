@@ -66,7 +66,7 @@ private extension ReminderSettingView {
     }
 
     var saveButton: some View {
-        Button(action: {
+        Button(actionWithHapticFB: {
             save()
         }, label: {
             Text("設定する")
@@ -75,7 +75,7 @@ private extension ReminderSettingView {
     }
 
     var deleteButton: some View {
-        Button(action: {
+        Button(actionWithHapticFB: {
             Task {
                 await notificationSetting.delete()
             }

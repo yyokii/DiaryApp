@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Item {
     /*
-     NSManagedObjectはObservableObjectを継承しているが、Publishedなどでプロパティの変更通知はしていないので、bjectWillChange.send()を呼ぶようにあoverrideしている
+     NSManagedObjectはObservableObjectを継承しているが、Publishedなどでプロパティの変更通知はしていないので、objectWillChange.send()を呼ぶようにあoverrideしている
      https://developer.apple.com/forums/thread/121897
      */
     override public func willChangeValue(forKey key: String) {

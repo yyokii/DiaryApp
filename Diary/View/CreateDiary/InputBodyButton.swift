@@ -29,7 +29,7 @@ struct InputBodyButton: View {
                     HStack {
                         IconWithRoundedBackground(
                             systemName: "note",
-                            backgroundColor: .appPrimary
+                            backgroundColor: .appBlack
                         )
                         .foregroundColor(.white)
 

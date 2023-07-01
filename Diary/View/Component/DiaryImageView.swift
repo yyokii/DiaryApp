@@ -12,7 +12,7 @@ import SwiftUI
  日記用画像の閲覧、設定が可能なView
 
  編集、画像未設定 → ボタン
- 編集、画像設定あり　→ 画像 + xアイコン
+ 編集、画像設定あり　→ 画像  +  xアイコン
  閲覧、画像未設定 → 空
  閲覧、画像設定あり → 画像
  */
@@ -31,9 +31,11 @@ struct DiaryImageView: View {
             if let image = selectedImage {
                 imageViewer(image)
                     .overlay(alignment: .topTrailing, content: {
-                        xButton
-                            .padding(.top, 8)
-                            .padding(.trailing, 8)
+                        XButton {
+                            self.selectedImage = nil
+                        }
+                        .padding(.top, 8)
+                        .padding(.trailing, 8)
                     })
             } else {
                 imagePicker
@@ -80,22 +82,6 @@ private extension DiaryImageView {
         .onChange(of: selectedPickerItem) { pickerItem in
             updateSelectedImage(to: pickerItem)
         }
-    }
-
-    var xButton: some View {
-        Button(action: {
-            self.selectedImage = nil
-        }, label: {
-            Image(systemName: "xmark.circle.fill")
-                .symbolRenderingMode(.palette)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 30)
-                .foregroundStyle(
-                    Color.adaptiveWhite,
-                    Color.adaptiveBlack
-                )
-        })
     }
 
     // MARK: Action

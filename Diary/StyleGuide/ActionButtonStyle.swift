@@ -15,11 +15,13 @@ public struct ActionButtonStyle: ButtonStyle {
     let size: Size
 
     public enum Size {
+        case extraSmall
         case small
         case medium
 
         var fontSize: CGFloat {
             switch self {
+            case .extraSmall: return 12
             case .small: return 16
             case .medium: return 20
             }
@@ -27,6 +29,7 @@ public struct ActionButtonStyle: ButtonStyle {
 
         var buttonWidth: CGFloat {
             switch self {
+            case .extraSmall: return 80
             case .small: return 100
             case .medium: return 200
             }
@@ -34,7 +37,8 @@ public struct ActionButtonStyle: ButtonStyle {
 
         var verticalPadding: CGFloat {
             switch self {
-            case .small: return 15
+            case .extraSmall: return 10
+            case .small: return 12
             case .medium: return 15
             }
         }
@@ -92,11 +96,17 @@ struct Buttons_Previews: PreviewProvider {
                 }
                 .buttonStyle(ActionButtonStyle(backgroundColor: .orange))
 
-                Section(header: Text("Active, smal")) {
+                Section(header: Text("Active, small")) {
                     Button("ぼたん") {}
                     NavigationLink("りんく", destination: EmptyView())
                 }
                 .buttonStyle(ActionButtonStyle(size: .small))
+
+                Section(header: Text("Active, extra small")) {
+                    Button("ぼたん") {}
+                    NavigationLink("りんく", destination: EmptyView())
+                }
+                .buttonStyle(ActionButtonStyle(size: .extraSmall))
 
                 Section(header: Text("In-active")) {
                     Button("ぼたん") {}
