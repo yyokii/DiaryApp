@@ -15,49 +15,13 @@ struct DiaryTextEditor: View {
 
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.2)
-                .blur(radius: 10)
-                .onTapGesture {
-                    withAnimation {
-                        isPresented = false
-                    }
-                }
+            background
 
             VStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 12) {
-                    TextEditor(text: $bodyText)
-                        .focused($focused)
-                        .scrollContentBackground(.hidden)
-                        .background(Color.adaptiveWhite)
-                        .cornerRadius(12)
-                        .padding(.top)
-                        .padding(.horizontal)
+                textEditor
+                    .padding()
 
-                    ProgressView(
-                        "文字数: \(bodyText.count) / \(Item.textRange.upperBound)",
-                        value: Double(bodyText.count),
-                        total: Double(Item.textRange.upperBound)
-                    )
-                    .accentColor(progressColor)
-                    .foregroundColor(.gray)
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                }
-                .background(Color.adaptiveWhite)
-                .cornerRadius(12)
-                .padding()
-
-                Button(actionWithHapticFB: {
-                    withAnimation {
-                        isPresented = false
-                    }
-                }) {
-                    Text("OK")
-                        .foregroundColor(.white)
-                }
-                .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
-                .disabled(!isValidText)
-
+                okButton
             }
             .padding(.bottom)
         }
@@ -77,6 +41,53 @@ private extension DiaryTextEditor {
         bodyText.count > Item.textRange.upperBound
         ? .red
         : .adaptiveBlack
+    }
+
+    var background: some View {
+        Color.gray.opacity(0.2)
+            .blur(radius: 10)
+            .onTapGesture {
+                withAnimation {
+                    isPresented = false
+                }
+            }
+    }
+
+    var textEditor: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            TextEditor(text: $bodyText)
+                .focused($focused)
+                .scrollContentBackground(.hidden)
+                .background(Color.adaptiveWhite)
+                .cornerRadius(12)
+                .padding(.top)
+                .padding(.horizontal)
+
+            ProgressView(
+                "文字数: \(bodyText.count) / \(Item.textRange.upperBound)",
+                value: Double(bodyText.count),
+                total: Double(Item.textRange.upperBound)
+            )
+            .accentColor(progressColor)
+            .foregroundColor(.gray)
+            .padding(.horizontal)
+            .padding(.bottom)
+        }
+        .background(Color.adaptiveWhite)
+        .cornerRadius(12)
+    }
+
+    var okButton: some View {
+        Button(actionWithHapticFB: {
+            withAnimation {
+                isPresented = false
+            }
+        }) {
+            Text("OK")
+                .foregroundColor(.white)
+        }
+        .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
+        .disabled(!isValidText)
     }
 }
 

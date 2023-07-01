@@ -19,41 +19,11 @@ struct CheckListTextEditor: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color.gray.opacity(0.2)
-                .blur(radius: 10)
-                .onTapGesture {
-                    withAnimation {
-                        isPresented = false
-                    }
-                }
+            background
 
-            HStack(spacing: 16) {
-                if case let .editCurrentItem(item) = editState {
-                    Button(actionWithHapticFB: {
-                        delete(item)
-                    }) {
-                        circleIcon(imageName: "trash")
-                    }
-                }
-
-                TextField("", text: $title)
-                    .focused($focused)
-                    .foregroundColor(.appBlack)
-                    .padding()
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray.opacity(0.2))
-                    }
-                    .ignoresSafeArea(.container, edges: [.bottom]) // .container を指定しキーボードを回避
-                    .onAppear {
-                        focused = true
-                    }
-
-                Button(actionWithHapticFB: {
-                    send(with: editState)
-                }) {
-                    circleIcon(imageName: "paperplane")
-                }
+            VStack(spacing: 24) {
+                inputProgress
+                itemEditor
             }
             .padding()
             .padding(.bottom)
@@ -82,6 +52,57 @@ private extension CheckListTextEditor {
         title.count > Item.titleRange.upperBound
         ? .red
         : .adaptiveBlack
+    }
+
+    var background: some View {
+        Color.gray.opacity(0.2)
+            .blur(radius: 10)
+            .onTapGesture {
+                withAnimation {
+                    isPresented = false
+                }
+            }
+    }
+
+    var inputProgress: some View {
+        ProgressView(
+            "\(title.count) / \(Item.titleRange.upperBound)",
+            value: Double(title.count),
+            total: Double(Item.titleRange.upperBound)
+        )
+        .accentColor(progressColor)
+        .foregroundColor(.gray)
+    }
+
+    var itemEditor: some View {
+        HStack(spacing: 16) {
+            if case let .editCurrentItem(item) = editState {
+                Button(actionWithHapticFB: {
+                    delete(item)
+                }) {
+                    circleIcon(imageName: "trash")
+                }
+            }
+
+            TextField("", text: $title)
+                .focused($focused)
+                .foregroundColor(.appBlack)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.gray.opacity(0.2))
+                }
+                .ignoresSafeArea(.container, edges: [.bottom]) // .container を指定しキーボードを回避
+                .onAppear {
+                    focused = true
+                }
+
+            Button(actionWithHapticFB: {
+                send(with: editState)
+            }) {
+                circleIcon(imageName: "paperplane")
+            }
+        }
     }
 
     func circleIcon(imageName: String) -> some View {
@@ -118,6 +139,10 @@ private extension CheckListTextEditor {
     }
 
     func addNewItem(title: String) {
+        guard isValidTitle else {
+            return
+        }
+
         do {
             try CheckListItem.create(title: title)
             isPresented = false
@@ -129,6 +154,10 @@ private extension CheckListTextEditor {
     }
 
     func update(item: CheckListItem, title: String) {
+        guard isValidTitle else {
+            return
+        }
+
         do {
             try item.update(title: title)
             isPresented = false
