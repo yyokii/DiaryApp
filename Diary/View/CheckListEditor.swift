@@ -73,7 +73,7 @@ private extension CheckListEditor {
                     .foregroundColor(.adaptiveBlack)
                     .multilineTextAlignment(.leading)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
             .padding(.horizontal)
             .background {
                 RoundedRectangle(cornerRadius: 20)

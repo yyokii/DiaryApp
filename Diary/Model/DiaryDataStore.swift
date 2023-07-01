@@ -55,7 +55,7 @@ public class DiaryDataStore: ObservableObject {
     // MARK: Validation
 
     var canCreate: Bool {
-        validTitle && validBody
+        validTitle && (validBody || !checkListItems.isEmpty)
     }
 
     var validTitle: Bool {

@@ -29,7 +29,7 @@ struct CheckListTextEditor: View {
             .padding(.bottom)
             .background {
                 Rectangle()
-                    .fill(.white)
+                    .fill(Color.adaptiveBackground)
             }
 
         }
@@ -66,9 +66,9 @@ private extension CheckListTextEditor {
 
     var inputProgress: some View {
         ProgressView(
-            "\(title.count) / \(Item.titleRange.upperBound)",
+            "\(title.count) / \(CheckListItem.titleRange.upperBound)",
             value: Double(title.count),
-            total: Double(Item.titleRange.upperBound)
+            total: Double(CheckListItem.titleRange.upperBound)
         )
         .accentColor(progressColor)
         .foregroundColor(.gray)

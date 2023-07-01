@@ -221,10 +221,10 @@
 			isa = PBXGroup;
 			children = (
 				F550BC9A2A0E58C100BCB0F2 /* Entity */,
-				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
 				F5358D2D29FF53E6005FD6C8 /* DiaryDataStore.swift */,
-				F53E3A8D2A0C07680064CB62 /* TextOptions.swift */,
 				F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */,
+				F53E3A8D2A0C07680064CB62 /* TextOptions.swift */,
+				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
