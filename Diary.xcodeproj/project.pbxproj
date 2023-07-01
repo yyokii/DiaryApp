@@ -64,7 +64,6 @@
 		F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */; };
 		F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTop.swift */; };
 		F5737D3C2A288B4000D706E8 /* OffsetViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D3B2A288B4000D706E8 /* OffsetViewModifier.swift */; };
-		F5737D412A28D92800D706E8 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F5737D402A28D92800D706E8 /* ScalingHeaderScrollView */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
 		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
@@ -160,7 +159,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5737D412A28D92800D706E8 /* ScalingHeaderScrollView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,8 +307,8 @@
 		F5358D432A03AB8C005FD6C8 /* CreateDiary */ = {
 			isa = PBXGroup;
 			children = (
-				F5737D482A303EBA00D706E8 /* CheckList.swift */,
 				F54395E12A45C40600C74D59 /* CreateDiaryView.swift */,
+				F5737D482A303EBA00D706E8 /* CheckList.swift */,
 				F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */,
 				F5358D542A069BB2005FD6C8 /* InputTitle.swift */,
 				F5358D562A069C90005FD6C8 /* InputBodyButton.swift */,
@@ -393,7 +391,6 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
-				F5737D402A28D92800D706E8 /* ScalingHeaderScrollView */,
 			);
 			productName = Diary;
 			productReference = F5358CA129F52467005FD6C8 /* Diary.app */;
@@ -446,7 +443,6 @@
 			);
 			mainGroup = F5358C9829F52467005FD6C8;
 			packageReferences = (
-				F5737D3F2A28D92800D706E8 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
 			);
 			productRefGroup = F5358CA229F52467005FD6C8 /* Products */;
 			projectDirPath = "";
@@ -820,25 +816,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F5737D3F2A28D92800D706E8 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/ScalingHeaderScrollView";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F5737D402A28D92800D706E8 /* ScalingHeaderScrollView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5737D3F2A28D92800D706E8 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
-			productName = ScalingHeaderScrollView;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */ = {

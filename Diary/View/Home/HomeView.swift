@@ -7,7 +7,6 @@
 
 import CoreData
 import SwiftUI
-import ScalingHeaderScrollView
 
 struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
