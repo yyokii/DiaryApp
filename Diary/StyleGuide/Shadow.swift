@@ -13,6 +13,12 @@ extension View {
             AdaptiveShadow(radius: radius, positionX: positionX, positionY: positionY)
         )
     }
+
+    public func adaptiveShadow(size: AdaptiveShadowSize) -> some View {
+        self.modifier(
+            AdaptiveShadow(radius: size.radius, positionX: size.positionX, positionY: size.positionY)
+        )
+    }
 }
 
 struct AdaptiveShadow: ViewModifier {
@@ -32,16 +38,57 @@ struct AdaptiveShadow: ViewModifier {
     }
 }
 
+public enum AdaptiveShadowSize {
+    case small
+    case medium
+
+    public var radius: CGFloat {
+        switch self {
+        case .small:
+            return 4
+        case .medium:
+            return 8
+        }
+    }
+
+    public var positionX: CGFloat {
+        return 0
+    }
+
+    public var positionY: CGFloat {
+        switch self {
+        case .small:
+            return 2.5
+        case .medium:
+            return 5
+        }
+    }
+}
+
 #if DEBUG
 
 struct AdaptiveShadow_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            RoundedRectangle(cornerRadius: 20)
-                .frame(width: 300, height: 300)
-                .foregroundColor(.adaptiveWhite)
-                .adaptiveShadow()
+            VStack {
+
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 300, height: 300)
+                        .foregroundColor(.adaptiveWhite)
+                        .adaptiveShadow(size: .small)
+                    Text("size: small")
+                }
+
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 300, height: 300)
+                        .foregroundColor(.adaptiveWhite)
+                        .adaptiveShadow()
+                    Text("size: medium")
+                }
+            }
         }
     }
 

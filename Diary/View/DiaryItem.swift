@@ -75,14 +75,17 @@ private extension DiaryItem {
             Spacer()
             if let date = item.date {
                 if isYearDisplayed {
-                    Text(date, formatter: yearFormatter)
-                        .font(.system(size: 18))
-                    Text(date, formatter: dateFormatter)
-                        .font(.system(size: 18))
+                    Group {
+                        Text(date, formatter: yearFormatter)
+                        Text(date, formatter: dateFormatter)
+                    }
+                    .font(.system(size: 18))
+                    .foregroundColor(.adaptiveBlack)
                 } else {
                     Text(date, formatter: dayFormatter)
                         .bold()
                         .font(.system(size: 32))
+                        .foregroundColor(.adaptiveBlack)
                 }
                 Text(date, formatter: weekdayFormatter)
                     .font(.system(size: isYearDisplayed ? 18 : 20))
@@ -90,8 +93,11 @@ private extension DiaryItem {
             }
             Spacer()
         }
-        .padding(.horizontal, 28)
-        .frame(width: 100)
+        .frame(width: 90)
+        .background {
+            Color.appSecondary
+                .cornerRadius(cornerRadius, corners: [.topLeft, .bottomLeft])
+        }
     }
 
     var bookMarkButton: some View {
@@ -138,7 +144,7 @@ private extension DiaryItem {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 10)
-            .padding(.trailing, 20)
+            .padding(.horizontal, 20)
         } else {
             VStack(alignment: .leading, spacing: 10) {
                 Text(item.title ?? "")
@@ -172,7 +178,7 @@ private extension DiaryItem {
                 }
             }
             .padding(.vertical, 10)
-            .padding(.trailing, 20)
+            .padding(.horizontal, 20)
         }
     }
 

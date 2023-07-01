@@ -12,8 +12,6 @@ enum FocusedField {
 }
 
 struct InputTitle: View {
-    static let titleCount: (min: Int, max:Int) = (1, 10)
-
     @Binding var title: String
     @FocusState var focusedField: FocusedField?
 
@@ -30,7 +28,7 @@ struct InputTitle: View {
                 .multilineTextAlignment(.leading)
                 .focused($focusedField, equals: .title)
 
-            if title.count > InputTitle.titleCount.max {
+            if title.count > Item.titleRange.upperBound {
                 Text("タイトルは10文字以内で設定しましょう")
                     .invalidInput()
                     .font(.system(size: 12))

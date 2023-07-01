@@ -30,43 +30,46 @@ struct CreateDiaryView: View {
     private let dateRange: ClosedRange<Date> = Date(timeIntervalSince1970: 0)...Date()
 
     var body: some View {
-        ZStack {
-            VStack {
-                header
-                    .padding(.top)
+        NavigationStack {
+            ZStack {
+                VStack {
+                    header
+                        .padding(.top)
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        DiaryImageView(
-                            selectedImage: $diaryDataStore.selectedImage,
-                            isEditing: true
-                        )
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            DiaryImageView(
+                                selectedImage: $diaryDataStore.selectedImage,
+                                isEditing: true
+                            )
                             .padding(.horizontal, diaryDataStore.selectedImage == nil ? 20 : 0)
 
-                        VStack(alignment: .leading, spacing: 20) {
-                            // 画像以外に水平方向のpaddingを設定したいので別のStackで管理
+                            VStack(alignment: .leading, spacing: 20) {
+                                // 画像以外に水平方向のpaddingを設定したいので別のStackで管理
 
-                            HStack {
-                                InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
-                                weather
+                                HStack {
+                                    InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
+                                    weather
+                                }
+                                ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
+                                diaryContent
                             }
-                            ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
-                            diaryContent
+                            .padding(.top, 20)
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.top, 20)
-                        .padding(.horizontal, 20)
+                        .padding(.bottom, 100)
                     }
-                    .padding(.bottom, 100)
+                }
+
+                if isPresentedTextEditor {
+                    DiaryTextEditor(
+                        bodyText: $diaryDataStore.bodyText,
+                        isPresented: $isPresentedTextEditor
+                    )
                 }
             }
-
-            if isPresentedTextEditor {
-                DiaryTextEditor(
-                    bodyText: $diaryDataStore.bodyText,
-                    isPresented: $isPresentedTextEditor
-                )
-            }
         }
+        .tint(.adaptiveBlack)
         .onSubmit {
             if focusedField == .title {
                 focusedField = .body
@@ -106,14 +109,17 @@ private extension CreateDiaryView {
             HStack {
                 HStack {
                     Image(systemName: "calendar")
+                        .foregroundColor(.adaptiveBlack)
                     Text(diaryDataStore.selectedDate, style: .date)
                         .bold()
+                        .foregroundColor(.adaptiveBlack)
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal)
                 .background {
                     RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.appSecondary_100)
+                        .foregroundColor(.appSecondary)
+                        .adaptiveShadow(size: .small)
                 }
                 Text("の日記")
                     .foregroundColor(.adaptiveBlack)
@@ -151,7 +157,33 @@ private extension CreateDiaryView {
                     isPresentedTextEditor = true
                 }
         case .checkList:
-            CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true))
+            VStack(spacing: 24) {
+                CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true))
+
+                NavigationLink {
+                    CheckListEditor()
+                } label: {
+                    editCheckListButton
+                }
+            }
+        }
+    }
+
+    var editCheckListButton: some View {
+        HStack {
+            Image(systemName: "pencil")
+                .font(.system(size: 16))
+                .foregroundColor(.adaptiveBlack)
+            Text("チェックリストを編集する")
+                .font(.system(size: 14))
+                .foregroundColor(.adaptiveBlack)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal)
+        .background {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.appSecondary)
+                .adaptiveShadow(size: .small)
         }
     }
 
@@ -171,6 +203,7 @@ private extension CreateDiaryView {
                             style: .continuous
                         )
                         .fill(Color.appPrimary)
+                        .adaptiveShadow(size: .small)
                     )
             }
         }
@@ -182,7 +215,7 @@ private extension CreateDiaryView {
     func createItemFromInput() {
         do {
             try diaryDataStore.create()
-            bannerState.show(of: .success(message: "Add diary🎉"))
+            bannerState.show(of: .success(message: "新しい日記を追加しました🎉"))
             dismiss()
         } catch {
             bannerState.show(with: error)
@@ -197,9 +230,9 @@ struct CreateDiaryView_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             CreateDiaryView()
-                .environmentObject(TextOptions.preview)
-                .environmentObject(WeatherData())
         }
+        .environmentObject(TextOptions.preview)
+        .environmentObject(WeatherData())
     }
 
     static var previews: some View {

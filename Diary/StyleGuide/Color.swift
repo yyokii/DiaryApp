@@ -31,10 +31,10 @@ extension Color {
      secondary: 強調したり他と区別するために仕様する色。多様してこの色が目立ちすぎないように注意。
      primary/secondary valiant: dark/light 同系統の色にしたいが、UI要素の違いがある場合にvaliantを作成し色の差異をつける。
      */
-    public static let appPrimary = hex(0xda3167)
-    public static let appPrimary_100 = hex(0xf9bed3)
-    public static let appSecondary = hex(0x31daa4)
-    public static let appSecondary_100 = hex(0xe1f9ef)
+    public static let appPrimary = appBlack
+    public static let appSecondary = Self {
+        $0.userInterfaceStyle == .dark ? hex(0x525252) : hex(0xefefef)
+    }
 
     public static func hex(_ hex: UInt) -> Self {
         Self(

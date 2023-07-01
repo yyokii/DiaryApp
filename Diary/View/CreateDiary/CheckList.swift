@@ -30,35 +30,15 @@ struct CheckList: View {
                 checkListItem(item)
             }
 
-            if isEditable {
-                addNewItem
+            if checkListItems.count == 0 {
+                Text("現在チェックリストはありません。\n編集ボタンから追加してやってことを記録してみましょう！")
+                    .font(.system(size: 16))
             }
         }
     }
 }
 
 private extension CheckList {
-    var addNewItem: some View {
-        HStack {
-            TextField("チェックリストを追加する", text: $newItemTitle)
-                .font(.system(size: 20))
-
-            Spacer()
-
-            Button (actionWithHapticFB: {
-                addNewItem(title: newItemTitle)
-            }) {
-                Image(systemName:"plus")
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.adaptiveWhite)
-                    .bold()
-                    .background {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundColor(.green)
-                    }
-            }
-        }
-    }
 
     @ViewBuilder
     func checkListItem(_ item: CheckListItem) -> some View {
@@ -81,16 +61,6 @@ private extension CheckList {
     }
 
     // MARK: Action
-
-    func addNewItem(title: String) {
-        do {
-            try CheckListItem.create(title: title)
-            newItemTitle = ""
-        } catch {
-            print(error.localizedDescription)
-            bannerState.show(with: error)
-        }
-    }
 }
 
 #if DEBUG

@@ -64,16 +64,17 @@ private extension DiaryImageView {
             HStack {
                 Image(systemName: "photo")
                     .font(.system(size: 16))
-                    .foregroundColor(.appBlack)
+                    .foregroundColor(.adaptiveBlack)
                 Text("画像を設定")
                     .font(.system(size: 14))
-                    .foregroundColor(.appBlack)
+                    .foregroundColor(.adaptiveBlack)
             }
             .padding(.vertical, 12)
             .padding(.horizontal)
             .background {
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.appSecondary_100)
+                    .foregroundColor(.appSecondary)
+                    .adaptiveShadow(size: .small)
             }
         }
         .onChange(of: selectedPickerItem) { pickerItem in

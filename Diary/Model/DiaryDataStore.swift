@@ -59,13 +59,13 @@ public class DiaryDataStore: ObservableObject {
     }
 
     var validTitle: Bool {
-        title.count >= InputTitle.titleCount.min &&
-        title.count <= InputTitle.titleCount.max
+        title.count >= Item.titleRange.lowerBound &&
+        title.count <= Item.titleRange.upperBound
     }
 
     var validBody: Bool {
-        bodyText.count >= DiaryTextEditor.textRange.lowerBound &&
-        bodyText.count <= DiaryTextEditor.textRange.upperBound
+        bodyText.count >= Item.textRange.lowerBound &&
+        bodyText.count <= Item.textRange.upperBound
     }
 
     // MARK: func

@@ -56,7 +56,7 @@ struct DiaryList: View {
                         }
                     }
                     .padding(.top, 12)
-                    .padding(.bottom, UIScreen.contentBottomSpace)
+                    .padding(.bottom, 200)
                     .onChange(of: selectedDate, perform: { newValue in
                         guard let date = newValue else {
                             return

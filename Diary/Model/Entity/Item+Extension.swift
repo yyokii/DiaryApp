@@ -222,6 +222,7 @@ extension Item: BaseModel {
         imageData: Data?,
         checkListItems: [CheckListItem]
     ) throws {
+        // TODO: 独自エラーの追加
         let now = Date()
         let diaryItem = Item(context: CoreDataProvider.shared.container.viewContext)
 
@@ -247,4 +248,8 @@ extension Item: BaseModel {
             $0.createdAt! < $1.createdAt!
         }
     }
+
+    // Validation
+    static let titleRange = 0...10
+    static let textRange = 0...1000
 }

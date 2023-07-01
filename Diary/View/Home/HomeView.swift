@@ -31,10 +31,9 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack() {
+                VStack {
                     appInfo
                         .padding(.trailing)
-                        .padding(.top, 20)
 
                     HomeTop(
                         firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
@@ -43,7 +42,7 @@ struct HomeView: View {
                         headerScrollProgress: headerScrollProgress
                     )
                     .padding(.horizontal)
-                    .padding(.bottom, 16) // shadowが切れずに表示される分の領域を確保
+                    .padding(.top)
 
                     DiaryList(
                         dateInterval: displayDateInterval,

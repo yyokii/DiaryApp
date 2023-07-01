@@ -40,4 +40,14 @@ extension CheckListItem: BaseModel {
 
         try checkListItem.save()
     }
+
+    func update(title: String) throws {
+        self.title = title
+        self.updatedAt = Date()
+
+        try save()
+    }
+
+    // Validation
+    static let titleRange = 0...100
 }

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct DiaryTextEditor: View {
-    static let textRange = 0...1000
-
     @FocusState var focused: Bool
 
     @Binding var bodyText: String
@@ -17,7 +15,7 @@ struct DiaryTextEditor: View {
 
     var body: some View {
         ZStack {
-            Color.gray.opacity(0.5)
+            Color.gray.opacity(0.2)
                 .blur(radius: 10)
                 .onTapGesture {
                     withAnimation {
@@ -36,9 +34,9 @@ struct DiaryTextEditor: View {
                         .padding(.horizontal)
 
                     ProgressView(
-                        "文字数: \(bodyText.count) / \(DiaryTextEditor.textRange.upperBound)",
+                        "文字数: \(bodyText.count) / \(Item.textRange.upperBound)",
                         value: Double(bodyText.count),
-                        total: Double(DiaryTextEditor.textRange.upperBound)
+                        total: Double(Item.textRange.upperBound)
                     )
                     .accentColor(progressColor)
                     .foregroundColor(.gray)
@@ -55,6 +53,7 @@ struct DiaryTextEditor: View {
                     }
                 }) {
                     Text("OK")
+                        .foregroundColor(.white)
                 }
                 .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
                 .disabled(!isValidText)
@@ -71,11 +70,11 @@ struct DiaryTextEditor: View {
 
 private extension DiaryTextEditor {
     var isValidText: Bool {
-        DiaryTextEditor.textRange.contains(bodyText.count)
+        Item.textRange.contains(bodyText.count)
     }
 
     var progressColor: Color {
-        bodyText.count > DiaryTextEditor.textRange.upperBound
+        bodyText.count > Item.textRange.upperBound
         ? .red
         : .adaptiveBlack
     }
