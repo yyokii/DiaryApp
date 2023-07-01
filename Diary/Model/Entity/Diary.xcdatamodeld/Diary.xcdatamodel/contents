@@ -4,10 +4,10 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String" minValueString="1" maxValueString="100"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="diary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="checkListItems" inverseEntity="Item"/>
+        <relationship name="diary" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="checkListItems" inverseEntity="Item"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="body" optional="YES" attributeType="String" minValueString="1" maxValueString="1000"/>
+        <attribute name="body" optional="YES" attributeType="String" minValueString="0" maxValueString="1000"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="imageData" optional="YES" attributeType="Binary"/>

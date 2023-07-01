@@ -52,6 +52,9 @@ struct DiaryDetailView: View {
         }
         .onAppear {
             diaryDataStore.updateValuesWithOriginalData()
+            if diaryDataStore.bodyText.isEmpty {
+                selectedContentType = .checkList
+            }
         }
     }
 }
