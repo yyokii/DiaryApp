@@ -36,7 +36,7 @@ struct HomeView: View {
                     HomeTop(
                         firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
                         selectedDate: $selectedDate,
-                        isPresentedCalendar: $isPresentedCalendar
+                        isCalendarPresented: $isPresentedCalendar
                     )
                     .padding(.horizontal)
                     .padding(.top)

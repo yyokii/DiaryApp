@@ -71,6 +71,7 @@
 		F5BF44362A4C747900217119 /* CheckListEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44352A4C747900217119 /* CheckListEditor.swift */; };
 		F5BF44382A4F4B7B00217119 /* CheckListTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44372A4F4B7B00217119 /* CheckListTextEditor.swift */; };
 		F5BF443B2A5059F100217119 /* XButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF443A2A5059F100217119 /* XButton.swift */; };
+		F5BF443D2A52FE8000217119 /* FeedbackPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF443C2A52FE8000217119 /* FeedbackPhrase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		F5BF44352A4C747900217119 /* CheckListEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListEditor.swift; sourceTree = "<group>"; };
 		F5BF44372A4F4B7B00217119 /* CheckListTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListTextEditor.swift; sourceTree = "<group>"; };
 		F5BF443A2A5059F100217119 /* XButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XButton.swift; sourceTree = "<group>"; };
+		F5BF443C2A52FE8000217119 /* FeedbackPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPhrase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */,
 				F53E3A8D2A0C07680064CB62 /* TextOptions.swift */,
 				F5358D0929F8B8B9005FD6C8 /* WeatherDataStore.swift */,
+				F5BF443C2A52FE8000217119 /* FeedbackPhrase.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				F5358D3C2A00D5CF005FD6C8 /* ActionButtonStyle.swift in Sources */,
 				F5BF44362A4C747900217119 /* CheckListEditor.swift in Sources */,
 				F53E3A882A0BB6D50064CB62 /* TextOptionsView.swift in Sources */,
+				F5BF443D2A52FE8000217119 /* FeedbackPhrase.swift in Sources */,
 				F53E3A7D2A0942710064CB62 /* BannerView.swift in Sources */,
 				F5358D1229F92DDD005FD6C8 /* NotificationService.swift in Sources */,
 				F5358D532A0698BE005FD6C8 /* WeatherSelectButton.swift in Sources */,
