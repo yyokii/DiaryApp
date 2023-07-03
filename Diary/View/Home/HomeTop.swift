@@ -13,8 +13,24 @@ struct HomeTop: View {
     @Binding var isPresentedCalendar: Bool
 
     private let calendar = Calendar.current
-
-    var headerScrollProgress: CGFloat
+    let motivationalPhrases: [String] = [
+        "一日一日を、文字にしてみましょう",
+        "日々を描く、それはあなただけの物語",
+        "日記は自分との対話",
+        "過去を振り返ることは、未来につながります",
+        "あなたの日々は、宝物です",
+        "今日を記録することは、明日への一歩",
+        "感じたこと、すべて大切に",
+        "日記はあなたの生活を彩ります"
+    ]
+    let praisePhrases: [String] = [
+        "日々の記録はあなたの成長です",
+        "一日を振り返るのは素敵な習慣です",
+        "あなたの言葉が日々を彩ります",
+        "今日も、あなたの物語が進みましたね",
+        "素晴らしい！あなたの一日を祝いましょう",
+        "日々を綴るあなたが素晴らしいです"
+    ]
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -87,14 +103,14 @@ private extension HomeTop {
         Group {
             if Item.hasTodayItem {
                 callToActionContent(
-                    title: "Nice！",
-                    subTitle: "今日は日記を記録できましたね",
+                    title: "Nice！今日は日記を記録できました",
+                    subTitle: praisePhrases.randomElement()!,
                     bottomMessage: "今月の日記数: \(Item.thisMonthItemsCount) 件"
                 )
             } else {
                 callToActionContent(
                     title: "出来事を振り返ってみませんか？",
-                    subTitle: "日記はあなたの生活を彩ります",
+                    subTitle: motivationalPhrases.randomElement()!,
                     bottomMessage: "現在の継続日数: \(consecutiveDays) 日"
                 )
             }
@@ -106,7 +122,6 @@ private extension HomeTop {
                 .fill(Color.adaptiveWhite)
                 .adaptiveShadow()
         }
-        .opacity(1 - headerScrollProgress)
     }
 
     func callToActionContent(title: String, subTitle: String, bottomMessage: String) -> some View {
@@ -226,8 +241,7 @@ struct HomeTop_Previews: PreviewProvider {
         HomeTop(
             firstDateOfDisplayedMonth: .constant(Date()),
             selectedDate: .constant(Date()),
-            isPresentedCalendar: .constant(false),
-            headerScrollProgress: 0
+            isPresentedCalendar: .constant(false)
         )
     }
 

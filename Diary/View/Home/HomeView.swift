@@ -18,7 +18,6 @@ struct HomeView: View {
     @State private var isPresentedCreateDiaryView = false
     @State private var isPresentedCalendar = false
     @State private var selectedDate: Date? = Date()
-    @State private var headerScrollProgress: CGFloat = 0
 
     private let calendar = Calendar.current
     private var dateFormatter: DateFormatter {
@@ -37,8 +36,7 @@ struct HomeView: View {
                     HomeTop(
                         firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
                         selectedDate: $selectedDate,
-                        isPresentedCalendar: $isPresentedCalendar,
-                        headerScrollProgress: headerScrollProgress
+                        isPresentedCalendar: $isPresentedCalendar
                     )
                     .padding(.horizontal)
                     .padding(.top)
