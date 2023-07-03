@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct AppInfoView: View {
+    @EnvironmentObject private var bannerState: BannerState
     @EnvironmentObject private var notificationSetting: NotificationSetting
 
     @State private var consecutiveDays: Int? = 0
     @State private var diaryCount: Int? = 0
     @State private var isReminderOn = false
+    @State private var isInquiryViewPresented = false
 
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -20,6 +22,8 @@ struct AppInfoView: View {
         formatter.timeStyle = .short
         return formatter
     }()
+
+    private let appVersion = AppVersion.current
 
     var body: some View {
         NavigationStack {
@@ -38,7 +42,8 @@ struct AppInfoView: View {
                 }
 
                 Section("サポート") {
-
+                    inquiry
+                    version
                 }
             }
             .navigationTitle("アプリについて")
@@ -203,6 +208,36 @@ private extension AppInfoView {
         }
     }
 
+    var inquiry: some View {
+        Button(actionWithHapticFB: {
+            isInquiryViewPresented = true
+        }) {
+            rowTitle(symbolName: "mail", iconColor: .green, title: "お問い合わせ")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .sheet(isPresented: $isInquiryViewPresented) {
+            SafariView(url: .init(string: "https://docs.google.com/forms/d/e/1FAIpQLSfe2lnVGuDDifgdPE_0LqmWHT4lOzFQIqx6NMmPCKetHQ6JWg/viewform?usp=sf_link")!)
+        }
+    }
+
+    var version: some View {
+        Button(actionWithHapticFB: {
+            UIPasteboard.general.string = appVersion.versionText
+            bannerState.show(of: .success(message: "バージョン情報をコピーしました"))
+        }) {
+            HStack {
+                rowTitle(symbolName: "iphone.homebutton", iconColor: .orange, title: "バージョン")
+                Spacer()
+                Text(appVersion.versionText)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
     func rowTitle(symbolName: String, iconColor: Color, title: String) -> some View {
         HStack {
             IconWithRoundedBackground(
@@ -243,6 +278,7 @@ struct AppInfoView_Previews: PreviewProvider {
     static var content: some View {
         AppInfoView()
             .environmentObject(NotificationSetting())
+            .environmentObject(BannerState())
     }
 
     static var previews: some View {
