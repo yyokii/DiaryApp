@@ -63,7 +63,7 @@ struct DiaryItem: View {
         }
         .frame(height: height)
         .opacity(opacity)
-        .animate {
+        .animate(using: .easeInOut(duration: 0.5)) {
             opacity = 1
         }
     }

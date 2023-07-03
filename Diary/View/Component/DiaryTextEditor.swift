@@ -44,13 +44,17 @@ private extension DiaryTextEditor {
     }
 
     var background: some View {
-        Color.gray.opacity(0.2)
-            .blur(radius: 10)
-            .onTapGesture {
-                withAnimation {
-                    isPresented = false
+        ZStack {
+            Color.appSecondary
+
+            Color.gray.opacity(0.2)
+                .blur(radius: 10)
+                .onTapGesture {
+                    withAnimation {
+                        isPresented = false
+                    }
                 }
-            }
+        }
     }
 
     var textEditor: some View {
@@ -84,7 +88,6 @@ private extension DiaryTextEditor {
             }
         }) {
             Text("OK")
-                .foregroundColor(.white)
         }
         .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
         .disabled(!isValidText)
