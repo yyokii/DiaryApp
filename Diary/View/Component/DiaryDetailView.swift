@@ -25,6 +25,9 @@ struct DiaryDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         image
+                            .padding(.horizontal, isImageSet ? 0 : 20)
+                            .padding(.top, isImageSet ? 0 : 20)
+
                         VStack(spacing: 20) {
                             header
                             ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
@@ -69,10 +72,18 @@ private extension DiaryDetailView {
     }
 
     var paddingTopToImage: CGFloat {
-        // 画像標示関連Viewが標示されている場合とそれ以外で見栄えを変える
-        isEditing || diaryDataStore.selectedImage != nil
+        /**
+         画像表示関連Viewで画像が設定されている場合とそれ以外で見栄えを変える
+         画像が設定されている: 余白なし
+         画像が設定されていない: 余白あり
+         */
+        isImageSet
         ? 0
-        : 40
+        : 28
+    }
+
+    var isImageSet: Bool {
+        diaryDataStore.selectedImage != nil
     }
 
     // MARK: View
@@ -128,16 +139,9 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var header: some View {
-        if isEditing {
-            VStack(spacing: 20) {
-                weather
-                title
-            }
-        } else {
-            HStack {
-                title
-                weather
-            }
+        HStack {
+            title
+            weather
         }
     }
 
