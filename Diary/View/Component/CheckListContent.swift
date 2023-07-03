@@ -17,9 +17,10 @@ struct CheckListContent: View {
             Text(item.title ?? "no title")
                 .font(.system(size: 20))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Image(systemName: isChecked ? "checkmark.square" : "square")
-                .font(.system(size: 28))
-                .foregroundColor(.green)
+            Image(systemName: isChecked ? "checkmark.square.fill" : "square")
+                .font(.system(size: 26))
+                .bold()
+                .foregroundColor(.primary)
         }
     }
 }
