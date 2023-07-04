@@ -23,6 +23,7 @@ struct HomeView: View {
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
+        formatter.locale = .appLanguageLocale
         return formatter
     }
 

@@ -20,6 +20,13 @@ struct DiaryDetailView: View {
     @State private var isPresentedTextEditor: Bool = false
     @State private var isCheckListEditorPresented: Bool = false
 
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.locale = .appLanguageLocale
+        return formatter
+    }()
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -48,7 +55,7 @@ struct DiaryDetailView: View {
                     )
                 }
             }
-            .navigationTitle(date)
+            .navigationTitle(dateFormatter.string(from: diaryDataStore.selectedDate))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 navigationToolBar
@@ -64,13 +71,6 @@ struct DiaryDetailView: View {
 }
 
 private extension DiaryDetailView {
-
-    var date: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        formatter.locale = .current
-        return formatter.string(from: diaryDataStore.selectedDate)
-    }
 
     var paddingTopToImage: CGFloat {
         /**

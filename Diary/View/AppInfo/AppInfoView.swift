@@ -20,6 +20,7 @@ struct AppInfoView: View {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
 

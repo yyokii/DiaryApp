@@ -18,6 +18,7 @@ struct HomeTop: View {
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
+        formatter.locale = .appLanguageLocale
         return formatter
     }
 
@@ -26,7 +27,7 @@ struct HomeTop: View {
             callToActionView
 
             VStack(spacing: 8) {
-                Text("Monthly Diaries")
+                Text("Diaries")
                     .font(.title2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .bold()

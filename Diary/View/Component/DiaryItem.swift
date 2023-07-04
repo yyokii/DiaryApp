@@ -21,21 +21,25 @@ struct DiaryItem: View {
     private let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
     private let weekdayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EE"
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
     private let yearFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d"
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
 

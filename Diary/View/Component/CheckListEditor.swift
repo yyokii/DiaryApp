@@ -20,7 +20,7 @@ struct CheckListEditor: View {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        formatter.locale = .current
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
 

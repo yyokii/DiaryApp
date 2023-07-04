@@ -74,6 +74,7 @@
 		F5BF443D2A52FE8000217119 /* FeedbackPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF443C2A52FE8000217119 /* FeedbackPhrase.swift */; };
 		F5BF443F2A53170E00217119 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF443E2A53170E00217119 /* SafariView.swift */; };
 		F5BF44412A5348CF00217119 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44402A5348CF00217119 /* AppVersion.swift */; };
+		F5BF44432A54714300217119 /* Locale+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44422A54714300217119 /* Locale+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,7 @@
 		F5BF443C2A52FE8000217119 /* FeedbackPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPhrase.swift; sourceTree = "<group>"; };
 		F5BF443E2A53170E00217119 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		F5BF44402A5348CF00217119 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		F5BF44422A54714300217119 /* Locale+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,12 +252,13 @@
 		F5358CBB29F60286005FD6C8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */,
 				F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */,
-				F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */,
-				F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */,
-				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
 				F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */,
+				F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */,
+				F5BF44422A54714300217119 /* Locale+Extension.swift */,
+				F5358D1329FAADAC005FD6C8 /* UIImage+Extension.swift */,
+				F5358D0D29F8BBE3005FD6C8 /* View+AsyncState.swift */,
+				F5358D2329FEAB60005FD6C8 /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -452,11 +455,12 @@
 			};
 			buildConfigurationList = F5358C9C29F52467005FD6C8 /* Build configuration list for PBXProject "Diary" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ja;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = F5358C9829F52467005FD6C8;
 			packageReferences = (
@@ -536,6 +540,7 @@
 				F5BF44382A4F4B7B00217119 /* CheckListTextEditor.swift in Sources */,
 				F5358D322A000E5D005FD6C8 /* Color.swift in Sources */,
 				F53E3A7F2A0944A20064CB62 /* PassThroughWindow.swift in Sources */,
+				F5BF44432A54714300217119 /* Locale+Extension.swift in Sources */,
 				F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */,
 				F5358D0E29F8BBE3005FD6C8 /* View+AsyncState.swift in Sources */,
 				F550BCA92A1281EC00BCB0F2 /* ResizableLayer.swift in Sources */,

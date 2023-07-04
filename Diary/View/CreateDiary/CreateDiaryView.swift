@@ -25,6 +25,7 @@ struct CreateDiaryView: View {
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
+        formatter.locale = .appLanguageLocale
         return formatter
     }()
     private let dateRange: ClosedRange<Date> = Date(timeIntervalSince1970: 0)...Date()
