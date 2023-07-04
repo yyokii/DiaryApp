@@ -18,6 +18,7 @@ struct DiaryDetailView: View {
     @State private var isEditing: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
     @State private var isPresentedTextEditor: Bool = false
+    @State private var isCheckListEditorPresented: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -164,7 +165,7 @@ private extension DiaryDetailView {
         case .text:
             diaryBody
         case .checkList:
-            CheckList(diaryDataStore: diaryDataStore, isEditable: $isEditing)
+            checkList
         }
     }
 
@@ -192,6 +193,41 @@ private extension DiaryDetailView {
                 .textOption(textOptions)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .multilineTextAlignment(.leading)
+        }
+    }
+
+    var checkList: some View {
+        VStack(spacing: 24) {
+            CheckList(diaryDataStore: diaryDataStore, isEditable: $isEditing)
+            if isEditing {
+                Button(actionWithHapticFB: {
+                    isCheckListEditorPresented = true
+                }) {
+                    editCheckListButton
+                }
+                .sheet(isPresented: $isCheckListEditorPresented) {
+                    CheckListEditor()
+                        .padding(.top)
+                }
+            }
+        }
+    }
+
+    var editCheckListButton: some View {
+        HStack {
+            Image(systemName: "pencil")
+                .font(.system(size: 16))
+                .foregroundColor(.adaptiveBlack)
+            Text("チェックリストを編集する")
+                .font(.system(size: 14))
+                .foregroundColor(.adaptiveBlack)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal)
+        .background {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.appSecondary)
+                .adaptiveShadow(size: .small)
         }
     }
 

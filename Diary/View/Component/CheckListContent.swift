@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CheckListContent: View {
 
-    let item: CheckListItem
+    // Core Dataの変更通知を反映させるためにObservedObjectを設定 https://stackoverflow.com/a/63524550/9015472
+    @ObservedObject var item: CheckListItem
     let isChecked: Bool
 
     var body: some View {
