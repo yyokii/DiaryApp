@@ -95,7 +95,7 @@ private extension DiaryItem {
         }
         .frame(width: 90)
         .background {
-            Color.appSecondary
+            LinearGradient(gradient: Gradient(colors: [.adaptiveWhite, .appSecondary]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .cornerRadius(cornerRadius, corners: [.topLeft, .bottomLeft])
         }
     }
@@ -108,7 +108,7 @@ private extension DiaryItem {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 14)
-                .foregroundColor(.primary)
+                .foregroundColor(.adaptiveBlack)
         })
     }
 
