@@ -38,11 +38,12 @@ private extension BannerView {
 
                 Text(bannerState.mode.message)
                     .bold()
-                    .font(.system(size: 16))
+                    .font(.system(size: 14))
+                    .minimumScaleFactor(0.8)
                     .foregroundColor(.adaptiveBlack)
             }
             .padding(16)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 8)
             .background(
                 Capsule()
                     .foregroundColor(.adaptiveWhite)
@@ -90,7 +91,7 @@ struct BannerView_Previews: PreviewProvider {
     }()
     static var bannerState03: BannerState = {
         let state = BannerState()
-        state.mode = .error(message: "this is error mode")
+        state.mode = .error(message: "入力情報をご確認の上、再度お試しください")
         return state
     }()
 

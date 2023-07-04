@@ -77,7 +77,8 @@ public enum BaseModelError: Error, LocalizedError {
     public var recoverySuggestion: String? {
         switch self {
         case .databaseOperationError(let error):
-            return "\(error?.localizedDescription ?? "")"
+            print(error?.localizedDescription ?? "")
+            return "エラーが発生しました、再度お試しください"
         case .needToCheckSpace:
             return "iCloud連携ができませんでした。設定やiCloudの容量をご確認ください。"
         }

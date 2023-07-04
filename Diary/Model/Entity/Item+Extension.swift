@@ -222,7 +222,21 @@ extension Item: BaseModel {
         imageData: Data?,
         checkListItems: [CheckListItem]
     ) throws {
-        // TODO: 独自エラーの追加
+
+        guard titleRange.contains(title.count) else {
+            throw ItemError.validationError
+        }
+
+        guard !checkListItems.isEmpty || !body.isEmpty else {
+            throw ItemError.validationError
+        }
+
+        if !body.isEmpty {
+            guard textRange.contains(body.count) else {
+                throw ItemError.validationError
+            }
+        }
+
         let now = Date()
         let diaryItem = Item(context: CoreDataProvider.shared.container.viewContext)
 
@@ -252,4 +266,22 @@ extension Item: BaseModel {
     // Validation
     static let titleRange = 1...10
     static let textRange = 1...1000
+}
+
+public enum ItemError: Error, LocalizedError {
+    case validationError
+
+    public var errorDescription: String? {
+        switch self {
+        case .validationError:
+            return "入力内容が不正です"
+        }
+    }
+
+    public var recoverySuggestion: String? {
+        switch self {
+        case .validationError:
+            return "入力内容をご確認の上、再度お試しください"
+        }
+    }
 }

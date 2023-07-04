@@ -31,6 +31,10 @@ extension CheckListItem: BaseModel {
     #endif
 
     static func create(title: String) throws {
+        guard titleRange.contains(title.count) else {
+            throw CheckListItemError.validationError
+        }
+
         let now = Date()
         let checkListItem = CheckListItem(context: CoreDataProvider.shared.container.viewContext)
 
@@ -42,6 +46,10 @@ extension CheckListItem: BaseModel {
     }
 
     func update(title: String) throws {
+        guard CheckListItem.titleRange.contains(title.count) else {
+            throw CheckListItemError.validationError
+        }
+
         self.title = title
         self.updatedAt = Date()
 
@@ -50,4 +58,22 @@ extension CheckListItem: BaseModel {
 
     // Validation
     static let titleRange = 0...100
+}
+
+public enum CheckListItemError: Error, LocalizedError {
+    case validationError
+
+    public var errorDescription: String? {
+        switch self {
+        case .validationError:
+            return "入力内容が不正です"
+        }
+    }
+
+    public var recoverySuggestion: String? {
+        switch self {
+        case .validationError:
+            return "入力内容をご確認の上、再度お試しください"
+        }
+    }
 }

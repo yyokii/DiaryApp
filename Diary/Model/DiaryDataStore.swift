@@ -222,18 +222,18 @@ public enum DiaryDataStoreError: Error, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .notFoundItem:
-            return "Not found item"
+            return "対象の日記が存在しません"
         case .notValidData:
-            return "Not valid data"
+            return "入力内容が不正です"
         }
     }
 
     public var recoverySuggestion: String? {
         switch self {
         case .notFoundItem:
-            return "Sorry, restart your app and try again🙏"
+            return "エラーが発生しました、再度お試しください"
         case .notValidData:
-            return "Check your input datas"
+            return "入力内容をご確認の上、再度お試しください"
         }
     }
 }
