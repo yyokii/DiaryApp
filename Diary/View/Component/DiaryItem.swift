@@ -142,6 +142,7 @@ private extension DiaryItem {
                     .textOption(textOptions)
                     .lineLimit(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 20)

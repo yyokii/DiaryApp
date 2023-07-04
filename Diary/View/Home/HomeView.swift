@@ -46,8 +46,6 @@ struct HomeView: View {
                         selectedDate: $selectedDate,
                         isPresentedCalendar: $isPresentedCalendar
                     )
-
-                    Spacer()
                 }
 
                 FloatingButton(
