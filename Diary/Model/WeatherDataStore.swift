@@ -33,21 +33,27 @@ public class WeatherData: ObservableObject {
     public init() {
         locationService.$location
             .sink { location in
-                if let location = location {
+                if self.locationService.authStatus == .authorizedAlways || self.locationService.authStatus == .authorizedWhenInUse, let location = location {
                     self.location = location
                     Task.detached(priority: .userInitiated) {
                         await self.loadDailyForecast(for: location)
                     }
+                } else {
+                    // 位置情報を許可していない等で位置情報を利用できない場合
+                    self.phase = .success(Date())
                 }
             }
             .store(in: &cancellables)
     }
 
-    public func load() {
-        if let location {
+    public func load() throws {
+        let authorized = locationService.authStatus == .authorizedAlways || locationService.authStatus == .authorizedWhenInUse
+        if let location, authorized {
             Task.detached(priority: .userInitiated) {
                 await self.loadDailyForecast(for: location)
             }
+        } else if !authorized {
+            throw WeatherDataError.noLocationAuth
         }
     }
 
@@ -78,18 +84,23 @@ public class WeatherData: ObservableObject {
 
 public enum WeatherDataError: Error, LocalizedError {
     case notFoundTodayWeatherError
+    case noLocationAuth
 
     public var errorDescription: String? {
         switch self {
         case .notFoundTodayWeatherError:
-            return "Failed to fetch today weather."
+            return "今日の天気を取得できませんでした"
+        case .noLocationAuth:
+            return "位置情報の取得が許可されていません"
         }
     }
 
     public var recoverySuggestion: String? {
         switch self {
         case .notFoundTodayWeatherError:
-            return "Sorry, please try again later."
+            return "エラーが発生しました、再度お試しください"
+        case .noLocationAuth:
+            return "位置情報の取得が許可されていません"
         }
     }
 }

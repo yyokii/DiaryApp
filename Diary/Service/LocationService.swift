@@ -41,16 +41,6 @@ public class LocationService: NSObject, ObservableObject {
 
         locationManager.requestWhenInUseAuthorization()
     }
-
-    public func requestLocation() {
-        guard locationManager.authorizationStatus == .authorizedAlways ||
-                locationManager.authorizationStatus == .authorizedWhenInUse
-        else {
-            return
-        }
-
-        locationManager.requestLocation()
-    }
 }
 
 extension LocationService: CLLocationManagerDelegate {

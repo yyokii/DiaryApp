@@ -48,8 +48,6 @@ private extension ReminderSettingView {
     var hourAndMinutePicker: some View {
         DatePicker("", selection: $selectedDate, displayedComponents: .hourAndMinute)
             .datePickerStyle(WheelDatePickerStyle())
-            .onChange(of: selectedDate) { newValue in
-            }
     }
 
     var requestPermissionAlert: Alert {

@@ -84,7 +84,7 @@ private extension DiaryList {
             Image(illustName)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 100)
+                .frame(height: 140)
                 .padding(28)
                 .background{
                     Circle()
@@ -123,10 +123,10 @@ struct DiaryList_Previews: PreviewProvider {
     static var content: some View {
         NavigationStack {
             DiaryList(
-                    dateInterval: .init(start: Date(), end: Date()),
-                    selectedDate: .constant(Date()),
-                    isPresentedCalendar: .constant(false)
-                )
+                dateInterval: .init(start: Date(), end: Date()),
+                selectedDate: .constant(Date()),
+                isPresentedCalendar: .constant(false)
+            )
         }
     }
 

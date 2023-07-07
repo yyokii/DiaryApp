@@ -20,8 +20,6 @@ struct CreateDiaryView: View {
     @State private var isPresentedTextEditor: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
 
-    @FocusState private var focusedField: FocusedField?
-
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
@@ -50,22 +48,10 @@ struct CreateDiaryView: View {
             }
         }
         .tint(.adaptiveBlack)
-        .interactiveDismissDisabled()
-        .onSubmit {
-            if focusedField == .title {
-                focusedField = .body
-            } else {
-                focusedField = nil
-            }
-        }
         .onReceive(weatherData.$todayWeather , perform: { todayWeather in
             guard let todayWeather else { return }
             diaryDataStore.selectedWeather = .make(from: todayWeather.symbolName)
         })
-        .onAppear{
-            // TODO: 移動させてもいいかも
-            weatherData.requestLocationAuth()
-        }
     }
 }
 
@@ -106,7 +92,7 @@ private extension CreateDiaryView {
                     // 画像以外に水平方向のpaddingを設定したいので別のStackで管理
 
                     HStack {
-                        InputTitle(title: $diaryDataStore.title, focusedField: _focusedField)
+                        InputTitle(title: $diaryDataStore.title)
                         weather
                     }
                     ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)

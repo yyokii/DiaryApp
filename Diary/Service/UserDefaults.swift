@@ -8,4 +8,5 @@
 enum UserDefaultsKey: String {
     case fontSize
     case lineSpacing
+    case hasBeenLaunchedBefore
 }

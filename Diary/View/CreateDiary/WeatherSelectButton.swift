@@ -10,6 +10,7 @@ import SwiftUI
 struct WeatherSelectButton: View {
     @Binding var selectedWeather: WeatherSymbol
     @State private var isPresentedSelectView: Bool = false
+    @State private var isLocationPermissionAlertPresented: Bool = false
 
     var body: some View {
         Button(actionWithHapticFB: {
@@ -20,8 +21,9 @@ struct WeatherSelectButton: View {
         .foregroundColor(.adaptiveBlack)
         .sheet(isPresented: $isPresentedSelectView) {
             WeatherSelect(selectedWeather: $selectedWeather)
-                .padding(30)
-                .presentationDetents([.height(280)])
+                .padding(.horizontal)
+                .padding(.top, 30)
+                .presentationDetents([.height(300)])
         }
     }
 }
@@ -47,6 +49,7 @@ struct WeatherSelect: View {
     @EnvironmentObject private var weatherData: WeatherData
 
     @Binding var selectedWeather: WeatherSymbol
+    @State var isLocationPermissionTextPresented: Bool = false
 
     private static let itemWidth: CGFloat = 70
     private let columns: [GridItem] = Array(
@@ -62,34 +65,52 @@ struct WeatherSelect: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
-                ForEach(weatherSymbols, id: \.symbol) { weatherSymbol in
+            VStack {
+                if isLocationPermissionTextPresented {
                     Button(actionWithHapticFB: {
-                        selectedWeather = weatherSymbol
-                        dismiss()
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    }) {
+                        Text("「現在位置から取得」するにはこちらをタップして、設定アプリから位置情報を許可してください")
+                            .multilineTextAlignment(.leading)
+                            .font(.system(size: 12))
+                    }
+                }
+                LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
+                    ForEach(weatherSymbols, id: \.symbol) { weatherSymbol in
+                        Button(actionWithHapticFB: {
+                            selectedWeather = weatherSymbol
+                            dismiss()
+                        }) {
+                            weatherItem(
+                                imageName: weatherSymbol.symbol,
+                                title: weatherSymbol.name
+                            )
+                        }
+                    }
+
+                    Button(actionWithHapticFB: {
+                        if weatherData.hasTodayWeather {
+                            selectedWeather = .make(from: weatherData.todayWeather!.symbolName)
+                        } else {
+                            do {
+                                try  weatherData.load()
+                            } catch WeatherDataError.noLocationAuth {
+                                isLocationPermissionTextPresented = true
+                            } catch {
+                                print(error.localizedDescription)
+                                dismiss()
+                            }
+                        }
                     }) {
                         weatherItem(
-                            imageName: weatherSymbol.symbol,
-                            title: weatherSymbol.name
+                            imageName: "arrow.2.squarepath",
+                            title: "現在位置から取得"
                         )
                     }
                 }
-
-                Button(actionWithHapticFB: {
-                    if weatherData.hasTodayWeather {
-                        selectedWeather = .make(from: weatherData.todayWeather!.symbolName)
-                    } else {
-                        weatherData.load()
-                    }
-                    dismiss()
-                }) {
-                    weatherItem(
-                        imageName: "arrow.2.squarepath",
-                        title: "現在位置から取得"
-                    )
-                }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

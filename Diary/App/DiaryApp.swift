@@ -17,7 +17,7 @@ struct DiaryApp: App {
     @StateObject private var notificationSetting: NotificationSetting = NotificationSetting()
     @StateObject private var weatherData = WeatherData()
 
-//    init() {
+    init() {
 //        let now = Date()
 //        for i in -3 ... 0 {
 //            let targetDate = Calendar.current.date(byAdding: .month, value: i, to: now)!
@@ -25,7 +25,7 @@ struct DiaryApp: App {
 //            let item2 = Item.makeRandom(date: targetDate)
 //            try! item.save()
 //        }
-//    }
+    }
 
     var body: some Scene {
         WindowGroup {

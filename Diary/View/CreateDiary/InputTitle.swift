@@ -7,13 +7,8 @@
 
 import SwiftUI
 
-enum FocusedField {
-    case title, body
-}
-
 struct InputTitle: View {
     @Binding var title: String
-    @FocusState var focusedField: FocusedField?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -26,7 +21,6 @@ struct InputTitle: View {
             TextField("タイトル（1~10文字）", text: $title)
                 .font(.system(size: 20))
                 .multilineTextAlignment(.leading)
-                .focused($focusedField, equals: .title)
 
             if title.count > Item.titleRange.upperBound {
                 Text("タイトルは10文字以内で設定しましょう")

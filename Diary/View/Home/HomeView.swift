@@ -14,6 +14,9 @@ struct HomeView: View {
     @EnvironmentObject private var sceneDelegate: DiaryAppSceneDelegate
     @EnvironmentObject private var bannerState: BannerState
 
+    @AppStorage(UserDefaultsKey.hasBeenLaunchedBefore.rawValue)
+    private var hasBeenLaunchedBefore: Bool = false
+
     @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
     @State private var isPresentedCreateDiaryView = false
     @State private var isPresentedCalendar = false
@@ -65,6 +68,11 @@ struct HomeView: View {
         }
         .sheet(isPresented: $isPresentedCreateDiaryView) {
             CreateDiaryView()
+                .interactiveDismissDisabled()
+        }
+        .sheet(isPresented: $hasBeenLaunchedBefore.not) {
+            WelcomeView()
+                .interactiveDismissDisabled()
         }
     }
 }

@@ -52,6 +52,7 @@
 		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
 		F54395E22A45C40600C74D59 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E12A45C40600C74D59 /* CreateDiaryView.swift */; };
 		F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */; };
+		F549A54F2A57970C003E7F68 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F549A54E2A57970C003E7F68 /* Binding+Extension.swift */; };
 		F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */; };
 		F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */; };
 		F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */; };
@@ -75,6 +76,7 @@
 		F5BF443F2A53170E00217119 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF443E2A53170E00217119 /* SafariView.swift */; };
 		F5BF44412A5348CF00217119 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44402A5348CF00217119 /* AppVersion.swift */; };
 		F5BF44432A54714300217119 /* Locale+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44422A54714300217119 /* Locale+Extension.swift */; };
+		F5BF44462A557E8600217119 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF44452A557E8600217119 /* WelcomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,7 @@
 		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		F54395E12A45C40600C74D59 /* CreateDiaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
 		F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTextEditor.swift; sourceTree = "<group>"; };
+		F549A54E2A57970C003E7F68 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingView.swift; sourceTree = "<group>"; };
 		F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Haptic.swift"; sourceTree = "<group>"; };
@@ -160,6 +163,7 @@
 		F5BF443E2A53170E00217119 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		F5BF44402A5348CF00217119 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		F5BF44422A54714300217119 /* Locale+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+Extension.swift"; sourceTree = "<group>"; };
+		F5BF44452A557E8600217119 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +211,7 @@
 				F5358CBC29F602BD005FD6C8 /* Service */,
 				F5358D2229FEAB46005FD6C8 /* StyleGuide */,
 				F5358CBA29F6027A005FD6C8 /* View */,
+				F5BF44442A557E6E00217119 /* Welcome */,
 				F5358CB829F53BB5005FD6C8 /* Diary.entitlements */,
 				F5358CA829F52468005FD6C8 /* Assets.xcassets */,
 				F5358CB229F52468005FD6C8 /* Info.plist */,
@@ -253,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				F5358D0B29F8BB86005FD6C8 /* AsyncState.swift */,
+				F549A54E2A57970C003E7F68 /* Binding+Extension.swift */,
 				F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */,
 				F5358CC129F6DFE5005FD6C8 /* Date+Extension.swift */,
 				F5BF44422A54714300217119 /* Locale+Extension.swift */,
@@ -394,6 +400,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		F5BF44442A557E6E00217119 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				F5BF44452A557E8600217119 /* WelcomeView.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -519,6 +533,7 @@
 				F5358D532A0698BE005FD6C8 /* WeatherSelectButton.swift in Sources */,
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
+				F5BF44462A557E8600217119 /* WelcomeView.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
 				F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */,
 				F5BF44342A4C2CAE00217119 /* CheckListContent.swift in Sources */,
@@ -559,6 +574,7 @@
 				F53CE9632A153CB400E63078 /* WeatherSymbol.swift in Sources */,
 				F5358CB129F52468005FD6C8 /* Diary.xcdatamodeld in Sources */,
 				F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */,
+				F549A54F2A57970C003E7F68 /* Binding+Extension.swift in Sources */,
 				F5358D2A29FF401D005FD6C8 /* HomeView.swift in Sources */,
 				F5358D342A000E9B005FD6C8 /* Shadow.swift in Sources */,
 				F5358D2429FEAB60005FD6C8 /* View+Extension.swift in Sources */,
@@ -719,6 +735,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -755,6 +772,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
