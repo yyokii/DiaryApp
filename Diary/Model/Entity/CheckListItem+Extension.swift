@@ -9,7 +9,6 @@ import CoreData
 
 extension CheckListItem: BaseModel {
 
-    #if DEBUG
     static func makeRandom(
         context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext,
         date: Date = Date()
@@ -28,7 +27,6 @@ extension CheckListItem: BaseModel {
 
         return newItem
     }
-    #endif
 
     static func create(title: String) throws {
         guard titleRange.contains(title.count) else {
