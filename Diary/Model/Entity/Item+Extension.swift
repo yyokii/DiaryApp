@@ -20,7 +20,7 @@ extension Item {
 }
 
 extension Item: BaseModel {
-#if DEBUG
+
     static func makeRandom(
         context: NSManagedObjectContext = CoreDataProvider.shared.container.viewContext,
         date: Date = Date(),
@@ -88,7 +88,6 @@ extension Item: BaseModel {
 
         return newItem
     }
-#endif
 
     static var allSortedByDate: NSFetchRequest<Item> {
         let request = NSFetchRequest<Item>(entityName: String(describing: self))

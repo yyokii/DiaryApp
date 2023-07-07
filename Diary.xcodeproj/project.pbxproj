@@ -53,6 +53,8 @@
 		F54395E22A45C40600C74D59 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E12A45C40600C74D59 /* CreateDiaryView.swift */; };
 		F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */; };
 		F549A54F2A57970C003E7F68 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F549A54E2A57970C003E7F68 /* Binding+Extension.swift */; };
+		F549A5512A57A496003E7F68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F549A5502A57A495003E7F68 /* GoogleService-Info.plist */; };
+		F549A5542A57A581003E7F68 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F549A5532A57A581003E7F68 /* FirebaseAnalytics */; };
 		F550BC952A0E499600BCB0F2 /* ReminderSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */; };
 		F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */; };
 		F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */; };
@@ -140,6 +142,7 @@
 		F54395E12A45C40600C74D59 /* CreateDiaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
 		F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTextEditor.swift; sourceTree = "<group>"; };
 		F549A54E2A57970C003E7F68 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		F549A5502A57A495003E7F68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingView.swift; sourceTree = "<group>"; };
 		F550BC982A0E58BD00BCB0F2 /* NotificationSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSetting.swift; sourceTree = "<group>"; };
 		F550BC9B2A111C0B00BCB0F2 /* Button+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Haptic.swift"; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F549A5542A57A581003E7F68 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +219,7 @@
 				F5358CB829F53BB5005FD6C8 /* Diary.entitlements */,
 				F5358CA829F52468005FD6C8 /* Assets.xcassets */,
 				F5358CB229F52468005FD6C8 /* Info.plist */,
+				F549A5502A57A495003E7F68 /* GoogleService-Info.plist */,
 				F5358CAA29F52468005FD6C8 /* Preview Content */,
 			);
 			path = Diary;
@@ -425,6 +430,7 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
+				F549A5532A57A581003E7F68 /* FirebaseAnalytics */,
 			);
 			productName = Diary;
 			productReference = F5358CA129F52467005FD6C8 /* Diary.app */;
@@ -478,6 +484,7 @@
 			);
 			mainGroup = F5358C9829F52467005FD6C8;
 			packageReferences = (
+				F549A5522A57A581003E7F68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F5358CA229F52467005FD6C8 /* Products */;
 			projectDirPath = "";
@@ -496,6 +503,7 @@
 			files = (
 				F5358CAC29F52468005FD6C8 /* Preview Assets.xcassets in Resources */,
 				F5358CA929F52468005FD6C8 /* Assets.xcassets in Resources */,
+				F549A5512A57A496003E7F68 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,12 +738,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Shizuku;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "日記に自動で正確な天気予報を表示するために利用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -768,12 +776,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diary/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Shizuku;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "日記に自動で正確な天気予報を表示するために利用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -861,6 +869,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F549A5522A57A581003E7F68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F549A5532A57A581003E7F68 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F549A5522A57A581003E7F68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		F5358CAF29F52468005FD6C8 /* Diary.xcdatamodeld */ = {
