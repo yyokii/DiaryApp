@@ -169,8 +169,7 @@ public class DiaryDataStore: ObservableObject {
             originalItem.title = title
         }
 
-        if originalItem.body != bodyText,
-           !bodyText.isEmpty {
+        if originalItem.body != bodyText {
             originalItem.body = bodyText
         }
 
