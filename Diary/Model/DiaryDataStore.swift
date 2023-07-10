@@ -54,8 +54,12 @@ public class DiaryDataStore: ObservableObject {
 
     // MARK: Validation
 
+    /*
+     @Published 属性プロパティを扱っている場合は、その変更により再計算される
+     */
+
     var canCreate: Bool {
-        validTitle && (validBody || !checkListItems.isEmpty)
+        validTitle && validContent
     }
 
     var validTitle: Bool {
@@ -63,9 +67,16 @@ public class DiaryDataStore: ObservableObject {
         title.count <= Item.titleRange.upperBound
     }
 
-    var validBody: Bool {
-        bodyText.count >= Item.textRange.lowerBound &&
-        bodyText.count <= Item.textRange.upperBound
+    /**
+     何れかのチェックリストがチェック済み or テキストが設定済みであればtrue
+     */
+    var validContent: Bool {
+        if checkListItems.isEmpty {
+            return bodyText.count > Item.textRange.lowerBound
+            && bodyText.count <= Item.textRange.upperBound
+        } else {
+            return bodyText.count <= Item.textRange.upperBound
+        }
     }
 
     // MARK: func

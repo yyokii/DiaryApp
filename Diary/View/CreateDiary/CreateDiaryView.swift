@@ -41,7 +41,7 @@ struct CreateDiaryView: View {
 
                 if isPresentedTextEditor {
                     DiaryTextEditor(
-                        bodyText: $diaryDataStore.bodyText,
+                        diaryDataStore: diaryDataStore,
                         isPresented: $isPresentedTextEditor
                     )
                 }

@@ -264,7 +264,7 @@ extension Item: BaseModel {
 
     // Validation
     static let titleRange = 1...10
-    static let textRange = 1...1000
+    static let textRange = 0...1000
 }
 
 public enum ItemError: Error, LocalizedError {

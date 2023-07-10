@@ -10,7 +10,8 @@ import SwiftUI
 struct DiaryTextEditor: View {
     @FocusState var focused: Bool
 
-    @Binding var bodyText: String
+    @ObservedObject var diaryDataStore: DiaryDataStore
+
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -33,12 +34,9 @@ struct DiaryTextEditor: View {
 }
 
 private extension DiaryTextEditor {
-    var isValidText: Bool {
-        Item.textRange.contains(bodyText.count)
-    }
 
     var progressColor: Color {
-        bodyText.count > Item.textRange.upperBound
+        diaryDataStore.bodyText.count > Item.textRange.upperBound
         ? .red
         : .adaptiveBlack
     }
@@ -59,7 +57,7 @@ private extension DiaryTextEditor {
 
     var textEditor: some View {
         VStack(alignment: .leading, spacing: 12) {
-            TextEditor(text: $bodyText)
+            TextEditor(text: $diaryDataStore.bodyText)
                 .focused($focused)
                 .scrollContentBackground(.hidden)
                 .background(Color.adaptiveWhite)
@@ -68,8 +66,8 @@ private extension DiaryTextEditor {
                 .padding(.horizontal)
 
             ProgressView(
-                "文字数: \(bodyText.count) / \(Item.textRange.upperBound)",
-                value: Double(bodyText.count),
+                "文字数: \(diaryDataStore.bodyText.count) / \(Item.textRange.upperBound)",
+                value: Double(diaryDataStore.bodyText.count),
                 total: Double(Item.textRange.upperBound)
             )
             .accentColor(progressColor)
@@ -89,8 +87,8 @@ private extension DiaryTextEditor {
         }) {
             Text("OK")
         }
-        .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: isValidText, size: .small))
-        .disabled(!isValidText)
+        .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: diaryDataStore.validContent, size: .small))
+        .disabled(!diaryDataStore.canCreate)
     }
 }
 
@@ -98,15 +96,27 @@ private extension DiaryTextEditor {
 
 struct DiaryTextEditor_Previews: PreviewProvider {
 
+    static var item: Item {
+        let item = Item.makeRandom()
+        item.body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
+        return item
+    }
+
+    static var itemWithLongBody: Item {
+        let item = Item.makeRandom()
+        item.body = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
+        return item
+    }
+
     static var content: some View {
         VStack {
             DiaryTextEditor(
-                bodyText: .constant("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"),
+                diaryDataStore: DiaryDataStore(item: item),
                 isPresented: .constant(true)
             )
 
             DiaryTextEditor(
-                bodyText: .constant(String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count: 11)),
+                diaryDataStore: DiaryDataStore(item: itemWithLongBody),
                 isPresented: .constant(true)
             )
         }
