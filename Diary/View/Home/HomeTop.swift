@@ -25,14 +25,7 @@ struct HomeTop: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 28) {
             callToActionView
-
-            VStack(spacing: 8) {
-                Text("Diaries")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .bold()
-                displayingMonth
-            }
+            displayingMonth
         }
         .sheet(isPresented: $isCalendarPresented) {
             CalendarView(
