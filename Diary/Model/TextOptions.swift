@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 final class TextOptions: ObservableObject {
-    static let defaultFontSize: CGFloat = 12
+    static let defaultFontSize: CGFloat = 16
     static let defaultLineSpacing: CGFloat = 4
     static let fontSizeRange: ClosedRange<CGFloat> = 8...40
     static let lineSpacingRange: ClosedRange<CGFloat> = 1...20

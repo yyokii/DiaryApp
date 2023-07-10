@@ -88,7 +88,7 @@ private extension DiaryTextEditor {
             Text("OK")
         }
         .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: diaryDataStore.validContent, size: .small))
-        .disabled(!diaryDataStore.canCreate)
+        .disabled(!diaryDataStore.validContent)
     }
 }
 
