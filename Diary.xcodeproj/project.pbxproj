@@ -94,6 +94,7 @@
 
 /* Begin PBXFileReference section */
 		F514464F2A5BE346002DA8CC /* CheckListEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListEditButton.swift; sourceTree = "<group>"; };
+		F51446522A5C1B20002DA8CC /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F5358CA129F52467005FD6C8 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5358CA429F52467005FD6C8 /* DiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryApp.swift; sourceTree = "<group>"; };
 		F5358CA829F52468005FD6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -190,9 +191,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F51446512A5C1B05002DA8CC /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				F51446522A5C1B20002DA8CC /* ci_pre_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		F5358C9829F52467005FD6C8 = {
 			isa = PBXGroup;
 			children = (
+				F51446512A5C1B05002DA8CC /* ci_scripts */,
 				F5358CA329F52467005FD6C8 /* Diary */,
 				F5358CFF29F80879005FD6C8 /* DiaryTests */,
 				F5358CA229F52467005FD6C8 /* Products */,
