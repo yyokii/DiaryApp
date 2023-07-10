@@ -190,7 +190,7 @@ public class DiaryDataStore: ObservableObject {
     /**
      Update bookmark state(on/off)
 
-     This is modified only after creating item.
+     This is used for already created item.
      */
     func updateBookmarkState() throws {
         guard let originalItem else {
@@ -199,9 +199,8 @@ public class DiaryDataStore: ObservableObject {
 
         if originalItem.isBookmarked != isBookmarked {
             originalItem.isBookmarked = isBookmarked
+            try saveItem()
         }
-
-        try saveItem()
     }
 
     func updateCheckListItemState(of item: CheckListItem) {

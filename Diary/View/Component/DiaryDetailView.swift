@@ -218,7 +218,7 @@ private extension DiaryDetailView {
     func updateBookmarkState() {
         diaryDataStore.isBookmarked.toggle()
         do {
-            try diaryDataStore.update()
+            try diaryDataStore.updateBookmarkState()
         } catch {
             bannerState.show(with: error)
         }
