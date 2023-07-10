@@ -197,37 +197,19 @@ private extension DiaryDetailView {
     }
 
     var checkList: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 60) {
             CheckList(diaryDataStore: diaryDataStore, isEditable: $isEditing)
             if isEditing {
                 Button(actionWithHapticFB: {
                     isCheckListEditorPresented = true
                 }) {
-                    editCheckListButton
+                    CheckListEditButton()
                 }
                 .sheet(isPresented: $isCheckListEditorPresented) {
                     CheckListEditor()
                         .padding(.top)
                 }
             }
-        }
-    }
-
-    var editCheckListButton: some View {
-        HStack {
-            Image(systemName: "pencil")
-                .font(.system(size: 16))
-                .foregroundColor(.adaptiveBlack)
-            Text("チェックリストを編集する")
-                .font(.system(size: 14))
-                .foregroundColor(.adaptiveBlack)
-        }
-        .padding(.vertical, 12)
-        .padding(.horizontal)
-        .background {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(.appSecondary)
-                .adaptiveShadow(size: .small)
         }
     }
 

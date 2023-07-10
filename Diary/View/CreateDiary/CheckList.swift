@@ -31,7 +31,7 @@ struct CheckList: View {
             }
 
             if checkListItems.count == 0 {
-                Text("現在チェックリストはありません。\n編集ボタンから追加してやってことを記録してみましょう！")
+                Text("現在チェックリストはありません。\n編集ボタンから追加してやったことを記録してみましょう！")
                     .font(.system(size: 16))
             }
         }
