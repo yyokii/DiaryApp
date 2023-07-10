@@ -22,7 +22,6 @@ struct WeatherSelectButton: View {
         .sheet(isPresented: $isPresentedSelectView) {
             WeatherSelect(selectedWeather: $selectedWeather)
                 .padding(.horizontal)
-                .padding(.top, 30)
                 .presentationDetents([.height(300)])
         }
     }
@@ -40,7 +39,6 @@ struct WeatherIcon: View {
                 Image(systemName: weatherSymbolName)
                     .font(.system(size: 24))
             }
-            .adaptiveShadow()
     }
 }
 
@@ -109,6 +107,7 @@ struct WeatherSelect: View {
                     }
                 }
             }
+            .padding(.top, 20)
         }
         .scrollIndicators(.hidden)
     }

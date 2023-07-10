@@ -170,7 +170,7 @@ private extension HomeTop {
         return Circle()
             .foregroundColor(.adaptiveWhite)
             .frame(width: 48)
-            .adaptiveShadow()
+            .adaptiveShadow(size: .small)
             .overlay {
                 Image(systemName: imageName)
                     .resizable()
