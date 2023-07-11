@@ -39,6 +39,7 @@ struct WelcomeView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
 
             nextButton
+                .padding(.bottom)
         }
     }
 }
