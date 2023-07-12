@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WeatherKit
 
 struct WeatherSelectButton: View {
     @Binding var selectedWeather: WeatherSymbol
@@ -47,7 +48,10 @@ struct WeatherSelect: View {
     @EnvironmentObject private var weatherData: WeatherData
 
     @Binding var selectedWeather: WeatherSymbol
-    @State var isLocationPermissionTextPresented: Bool = false
+
+    @State private var isLocationPermissionTextPresented: Bool = false
+    @State private var weatherAttribution: WeatherAttribution?
+    private let weatherService = WeatherService()
 
     private static let itemWidth: CGFloat = 70
     private let columns: [GridItem] = Array(
@@ -63,7 +67,7 @@ struct WeatherSelect: View {
 
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 24) {
                 if isLocationPermissionTextPresented {
                     Button(actionWithHapticFB: {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
@@ -73,6 +77,7 @@ struct WeatherSelect: View {
                             .font(.system(size: 12))
                     }
                 }
+
                 LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
                     ForEach(weatherSymbols, id: \.symbol) { weatherSymbol in
                         Button(actionWithHapticFB: {
@@ -86,40 +91,69 @@ struct WeatherSelect: View {
                         }
                     }
 
-                    Button(actionWithHapticFB: {
-                        if weatherData.hasTodayWeather {
-                            selectedWeather = .make(from: weatherData.todayWeather!.symbolName)
-                        } else {
-                            do {
-                                try  weatherData.load()
-                            } catch WeatherDataError.noLocationAuth {
-                                isLocationPermissionTextPresented = true
-                            } catch {
-                                print(error.localizedDescription)
-                                dismiss()
-                            }
-                        }
-                    }) {
-                        weatherItem(
-                            imageName: "arrow.2.squarepath",
-                            title: "現在位置から取得"
-                        )
-                    }
+                    dataFromCurrentLocationButton
+                }
+
+                if let weatherAttribution {
+                    appleWeatherAttribution(weatherAttribution)
                 }
             }
             .padding(.top, 20)
         }
         .scrollIndicators(.hidden)
+        .task {
+            weatherAttribution = try? await weatherService.attribution
+        }
     }
 }
 
 private extension WeatherSelect {
+
+    var dataFromCurrentLocationButton: some View {
+        Button(actionWithHapticFB: {
+            if weatherData.hasTodayWeather {
+                selectedWeather = .make(from: weatherData.todayWeather!.symbolName)
+            } else {
+                do {
+                    try  weatherData.load()
+                } catch WeatherDataError.noLocationAuth {
+                    isLocationPermissionTextPresented = true
+                } catch {
+                    print(error.localizedDescription)
+                    dismiss()
+                }
+            }
+        }) {
+            weatherItem(
+                imageName: "arrow.2.squarepath",
+                title: "現在位置から取得"
+            )
+        }
+    }
+
     func weatherItem(imageName: String, title: String) -> some View {
         VStack(alignment: .center, spacing: 16) {
             WeatherIcon(weatherSymbolName: imageName)
             Text(title)
         }
         .foregroundColor(.adaptiveBlack)
+    }
+
+    func appleWeatherAttribution(_ weatherAttribution: WeatherAttribution) -> some View {
+        HStack {
+            AsyncImage( url: weatherAttribution.combinedMarkLightURL) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 12)
+            } placeholder: {
+                ProgressView()
+            }
+            Button("Link") {
+                UIApplication.shared.open(weatherAttribution.legalPageURL)
+            }
+            .tint(.blue)
+        }
     }
 }
 
