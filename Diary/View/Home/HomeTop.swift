@@ -149,9 +149,6 @@ private extension HomeTop {
             })
             .disabled(isDisplayingThisMonth)
         }
-        .onSwipe { direction in
-            moveMonthWithSwipe(direction)
-        }
         .frame(maxWidth: .infinity)
     }
 
@@ -196,17 +193,6 @@ private extension HomeTop {
         guard let date = calendar.date(byAdding: .month, value: diff, to: firstDateOfDisplayedMonth) else { return }
 
         self.firstDateOfDisplayedMonth = date
-    }
-
-    func moveMonthWithSwipe(_ direction: SwipeDirection) {
-        switch direction{
-        case .left:
-            moveMonth(.forward)
-        case .right:
-            moveMonth(.backward)
-        case .up, .down, .none:
-            break
-        }
     }
 }
 

@@ -41,10 +41,10 @@ extension View {
     /**
      Adds an action to perform when a swipe action occurs.
      */
-    func onSwipe(perform action: ((SwipeDirection) -> Void)? = nil) -> some View {
+    func onSwipe(minimumDistance: CGFloat, perform action: @escaping ((SwipeDirection) -> Void)) -> some View {
         self
             .gesture(
-                DragGesture(minimumDistance: 24, coordinateSpace: .global)
+                DragGesture(minimumDistance: minimumDistance, coordinateSpace: .global)
                     .onEnded { value in
                         let horizontalAmount = value.translation.width
                         let verticalAmount = value.translation.height
@@ -56,7 +56,7 @@ extension View {
                             direction = verticalAmount < 0 ? .up : .down
                         }
 
-                        action?(direction)
+                        action(direction)
                     }
             )
     }
