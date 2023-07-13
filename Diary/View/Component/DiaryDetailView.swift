@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiaryDetailView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bannerState: BannerState
     @EnvironmentObject private var textOptions: TextOptions
     @EnvironmentObject private var weatherData: WeatherData
@@ -19,6 +19,7 @@ struct DiaryDetailView: View {
     @State private var selectedContentType: DiaryContentType = .text
     @State private var isPresentedTextEditor: Bool = false
     @State private var isCheckListEditorPresented: Bool = false
+    @State private var isImageViewerPresented: Bool = false
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -136,6 +137,23 @@ private extension DiaryDetailView {
             selectedImage: $diaryDataStore.selectedImage,
             isEditing: isEditing
         )
+        .onTapGesture {
+            if !isEditing {
+                isImageViewerPresented = true
+            }
+        }
+        .fullScreenCover(isPresented: $isImageViewerPresented) {
+            if !isEditing,
+               let image = diaryDataStore.selectedImage {
+                ImageViewer(image: image)
+                    .overlay(alignment: .topTrailing) {
+                        XButton {
+                            isImageViewerPresented = false
+                        }
+                        .padding()
+                    }
+            }
+        }
     }
 
     @ViewBuilder
