@@ -8,6 +8,9 @@
 import Foundation
 
 extension Locale {
+    /*
+     https://qiita.com/uhooi/items/a9c9d8b923005028ce4e
+     */
     static var appLanguageLocale: Locale {
         if let languageCode = Locale.preferredLanguages.first {
             return Locale(identifier: languageCode)
