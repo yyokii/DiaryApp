@@ -137,6 +137,7 @@ private extension DiaryDetailView {
             selectedImage: $diaryDataStore.selectedImage,
             isEditing: isEditing
         )
+        .contentShape(Rectangle())
         .onTapGesture {
             if !isEditing {
                 isImageViewerPresented = true
