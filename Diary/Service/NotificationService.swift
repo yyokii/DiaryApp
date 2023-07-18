@@ -64,13 +64,12 @@ struct NotificationService {
     }
 
     func updateEverydayNotification(date: Date) {
-//        assert(0 <= hour && hour <= 24 && 0 <= minute && minute <= 59)
         deleteAllNotification()
 
         let content = UNMutableNotificationContent()
-        content.title = "Hi, your diary time👋"
-        content.subtitle = "look back today"
-        content.body = "Write diary, make your life beautiful"
+        content.title = "日記を書いてみませんか？👋"
+        content.subtitle = ""
+        content.body = "日々を描く、それはあなただけの物語です"
         content.sound = UNNotificationSound.default
 
         let calendar = Calendar.current
