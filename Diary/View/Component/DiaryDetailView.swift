@@ -41,6 +41,8 @@ struct DiaryDetailView: View {
                             header
                             ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
                             diaryContent
+                            diaryAdditionalInfo
+                                .padding(.top, 40)
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, paddingTopToImage)
@@ -229,6 +231,40 @@ private extension DiaryDetailView {
                         .padding(.top)
                 }
             }
+        }
+    }
+
+    var diaryAdditionalInfo: some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .trailing, spacing: 2) {
+                cratedAt
+                updatedAt
+            }
+        }
+    }
+
+    @ViewBuilder
+    var cratedAt: some View {
+        if let createdAt = diaryDataStore.originalItem?.createdAt {
+            HStack {
+                Text("作成日: ")
+                Text(dateFormatter.string(from: createdAt))
+            }
+            .font(.system(size: 14))
+            .foregroundColor(.gray)
+        }
+    }
+
+    @ViewBuilder
+    var updatedAt: some View {
+        if let updatedAt = diaryDataStore.originalItem?.updatedAt {
+            HStack {
+                Text("更新日: ")
+                Text(dateFormatter.string(from: updatedAt))
+            }
+            .font(.system(size: 14))
+            .foregroundColor(.gray)
         }
     }
 

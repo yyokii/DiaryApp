@@ -40,7 +40,7 @@ public class DiaryDataStore: ObservableObject {
     var selectedWeather: WeatherSymbol = .sun
     var selectedPickerItem: PhotosPickerItem?
 
-    private let originalItem: Item?
+    let originalItem: Item?
     private var originalItemImage: UIImage?
 
     /*
