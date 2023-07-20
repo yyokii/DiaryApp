@@ -135,6 +135,7 @@ private extension HomeView {
                         isCalendarPresented: $isCalendarPresented
                     )
                         .padding(.vertical, 8)
+                        .padding(.bottom, 4)
                         .background(content: {
                             Color.white
                         })
