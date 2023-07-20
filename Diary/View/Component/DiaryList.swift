@@ -18,14 +18,14 @@ struct DiaryList: View {
      */
     @FetchRequest private var items: FetchedResults<Item>
     @Binding var selectedDate: Date?
-    @Binding var isPresentedCalendar: Bool
+    @Binding var scrollToItem: Item?
 
     let illustName = Image.randomIllustName
 
     init(
         dateInterval: DateInterval,
         selectedDate: Binding<Date?>,
-        isPresentedCalendar: Binding<Bool>
+        scrollToItem: Binding<Item?>
     ) {
         /*
          HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
@@ -34,46 +34,38 @@ struct DiaryList: View {
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
 
         self._selectedDate = selectedDate
-        self._isPresentedCalendar = isPresentedCalendar
+        self._scrollToItem = scrollToItem
     }
 
     var body: some View {
-        ScrollViewReader { scrollViewProxy in
-            ScrollView {
-                if items.isEmpty {
-                    empty
-                        .padding(.top, 60)
-                } else {
-                    LazyVStack(spacing: 24) {
-                        ForEach(items) { item in
-                            NavigationLink {
-                                DiaryDetailView(diaryDataStore: .init(item: item))
-                            } label: {
-                                DiaryItem(item: item)
-                            }
-                            .id(item.objectID)
-                            .padding(.horizontal, 20)
-                        }
+        if items.isEmpty {
+            empty
+                .padding(.top, 60)
+        } else {
+            LazyVStack(spacing: 24) {
+                ForEach(items) { item in
+                    NavigationLink {
+                        DiaryDetailView(diaryDataStore: .init(item: item))
+                    } label: {
+                        DiaryItem(item: item)
                     }
-                    .padding(.top, 12)
-                    .padding(.bottom, 200)
-                    .onChange(of: selectedDate, perform: { newValue in
-                        guard let date = newValue else {
-                            return
-                        }
-
-                        if let firstItemOnDate = fetchFirstItem(on: date) {
-                            withAnimation {
-                                scrollViewProxy.scrollTo(firstItemOnDate.objectID, anchor: .center)
-                                isPresentedCalendar = false
-                            }
-                        } else {
-                            bannerState.show(of: .warning(message: "この日付の日記はありません"))
-                        }
-                    })
+                    .id(item.objectID)
+                    .padding(.horizontal, 20)
                 }
             }
-            .scrollIndicators(.hidden)
+            .padding(.top, 12)
+            .padding(.bottom, 200)
+            .onChange(of: selectedDate, perform: { newValue in
+                guard let date = newValue else {
+                    return
+                }
+
+                if let firstItemOnDate = fetchFirstItem(on: date) {
+                    scrollToItem = firstItemOnDate
+                } else {
+                    bannerState.show(of: .warning(message: "この日付の日記はありません"))
+                }
+            })
         }
     }
 }
@@ -125,7 +117,7 @@ struct DiaryList_Previews: PreviewProvider {
             DiaryList(
                 dateInterval: .init(start: Date(), end: Date()),
                 selectedDate: .constant(Date()),
-                isPresentedCalendar: .constant(false)
+                scrollToItem: .constant(nil)
             )
         }
     }

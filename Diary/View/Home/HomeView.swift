@@ -18,43 +18,62 @@ struct HomeView: View {
     private var hasBeenLaunchedBefore: Bool = false
 
     @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
-    @State private var isPresentedCreateDiaryView = false
-    @State private var isPresentedCalendar = false
+    @State private var isCreateDiaryViewPresented = false
+    @State private var isCalendarPresented = false
     @State private var selectedDate: Date? = Date()
+    @State private var scrollToItem: Item? = nil
 
     private let calendar = Calendar.current
-    private var dateFormatter: DateFormatter {
+    private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         formatter.locale = .appLanguageLocale
         return formatter
-    }
+    }()
 
     var body: some View {
         NavigationStack {
             ZStack {
+                // メインコンテンツ
                 VStack {
                     appInfo
                         .padding(.trailing)
 
-                    HomeTop(
-                        firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
-                        selectedDate: $selectedDate,
-                        isCalendarPresented: $isPresentedCalendar
-                    )
-                    .padding(.horizontal)
-                    .padding(.top)
+                    ScrollViewReader { scrollViewProxy in
+                        ScrollView {
+                            LazyVStack(pinnedViews: .sectionHeaders) {
+                                HomeTopCard()
+                                    .padding(.horizontal)
+                                    .padding(.top)
 
-                    DiaryList(
-                        dateInterval: displayDateInterval,
-                        selectedDate: $selectedDate,
-                        isPresentedCalendar: $isPresentedCalendar
-                    )
+                                diaryListSection
+                                    .zIndex(-1) // HomeTopCardのshadowを隠さないため
+                            }
+                            .background(content: {
+                                Rectangle()
+                                    .fill(Color.white)
+                            })
+
+                        }
+                        .onChange(of: scrollToItem, perform: { newValue in
+                            defer {
+                                isCalendarPresented = false
+                            }
+
+                            guard let scrollToItem else { return }
+
+                            withAnimation {
+                                scrollViewProxy.scrollTo(scrollToItem.objectID, anchor: .center)
+                            }
+                        })
+                        .scrollIndicators(.hidden)
+                    }
+                    .padding(.top, 4)
                 }
 
                 FloatingButton(
                     action: {
-                        isPresentedCreateDiaryView = true
+                        isCreateDiaryViewPresented = true
                     },
                     icon: "plus"
                 )
@@ -66,7 +85,7 @@ struct HomeView: View {
         .onAppear {
             sceneDelegate.bannerState = bannerState
         }
-        .sheet(isPresented: $isPresentedCreateDiaryView) {
+        .sheet(isPresented: $isCreateDiaryViewPresented) {
             CreateDiaryView()
                 .interactiveDismissDisabled()
         }
@@ -105,6 +124,26 @@ private extension HomeView {
                     .frame(width: 28)
                     .bold()
             }
+        }
+    }
+
+    var diaryListSection: some View {
+        Section(header:
+                    MonthSelector(
+                        firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
+                        selectedDate: $selectedDate,
+                        isCalendarPresented: $isCalendarPresented
+                    )
+                        .padding(.vertical, 8)
+                        .background(content: {
+                            Color.white
+                        })
+        ) {
+            DiaryList(
+                dateInterval: displayDateInterval,
+                selectedDate: $selectedDate,
+                scrollToItem: $scrollToItem
+            )
         }
     }
 }

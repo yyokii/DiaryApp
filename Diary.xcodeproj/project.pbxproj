@@ -64,10 +64,11 @@
 		F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */; };
 		F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */; };
 		F5562C3F2A5FC379006AECC5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */; };
+		F5562C452A694C1E006AECC5 /* MonthSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C442A694C1E006AECC5 /* MonthSelector.swift */; };
 		F5578E6E2A4AE21800562FCB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5578E6D2A4AE21800562FCB /* Image.swift */; };
 		F568BB6B2A3B88E2000330E1 /* DiaryContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */; };
 		F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */; };
-		F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTop.swift */; };
+		F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTopCard.swift */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
 		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
@@ -155,10 +156,11 @@
 		F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradient.swift; sourceTree = "<group>"; };
 		F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobLayer.swift; sourceTree = "<group>"; };
 		F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		F5562C442A694C1E006AECC5 /* MonthSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelector.swift; sourceTree = "<group>"; };
 		F5578E6D2A4AE21800562FCB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryContentType.swift; sourceTree = "<group>"; };
 		F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypeSegmentedPicker.swift; sourceTree = "<group>"; };
-		F5737D392A28882000D706E8 /* HomeTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTop.swift; sourceTree = "<group>"; };
+		F5737D392A28882000D706E8 /* HomeTopCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopCard.swift; sourceTree = "<group>"; };
 		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
 		F576D37D2A433CCC0062650A /* iCloudSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudSetupView.swift; sourceTree = "<group>"; };
@@ -324,8 +326,9 @@
 			children = (
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
+				F5737D392A28882000D706E8 /* HomeTopCard.swift */,
+				F5562C442A694C1E006AECC5 /* MonthSelector.swift */,
 				F53CE9672A1B7C4F00E63078 /* CalendarView.swift */,
-				F5737D392A28882000D706E8 /* HomeTop.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
+				F5562C452A694C1E006AECC5 /* MonthSelector.swift in Sources */,
 				F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */,
 				F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */,
 				F5358D0C29F8BB86005FD6C8 /* AsyncState.swift in Sources */,
@@ -565,7 +569,7 @@
 				F5BF44342A4C2CAE00217119 /* CheckListContent.swift in Sources */,
 				F550BC992A0E58BD00BCB0F2 /* NotificationSetting.swift in Sources */,
 				F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */,
-				F5737D3A2A28882000D706E8 /* HomeTop.swift in Sources */,
+				F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */,
 				F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */,
 				F5358D512A054D05005FD6C8 /* DiaryDetailView.swift in Sources */,
 				F5358D3A2A00BB1E005FD6C8 /* FloatingActionButton.swift in Sources */,
