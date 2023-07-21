@@ -23,6 +23,8 @@ struct HomeView: View {
     @State private var selectedDate: Date? = Date()
     @State private var scrollToItem: Item? = nil
 
+    @Namespace var homeTopID
+
     private let calendar = Calendar.current
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -45,6 +47,7 @@ struct HomeView: View {
                                 HomeTopCard()
                                     .padding(.horizontal)
                                     .padding(.top)
+                                    .id(homeTopID)
 
                                 diaryListSection
                                     .zIndex(-1) // HomeTopCardのshadowを隠さないため
@@ -64,6 +67,11 @@ struct HomeView: View {
 
                             withAnimation {
                                 scrollViewProxy.scrollTo(scrollToItem.objectID, anchor: .center)
+                            }
+                        })
+                        .onChange(of: firstDateOfDisplayedMonth, perform: { _ in
+                            withAnimation {
+                                scrollViewProxy.scrollTo(homeTopID)
                             }
                         })
                         .scrollIndicators(.hidden)
