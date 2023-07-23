@@ -60,8 +60,8 @@ struct DiaryItem: View {
                 ZStack(alignment: .topTrailing) {
                     diaryContent
                     bookMarkButton
-                        .padding(.top, 10)
-                        .padding(.trailing, 20)
+                        .padding(.top, 8)
+                        .padding(.trailing, 12)
                 }
             }
         }
@@ -111,8 +111,14 @@ private extension DiaryItem {
             Image(systemName: item.isBookmarked ? "bookmark.fill" : "bookmark")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 14)
+                .frame(width: 11)
                 .foregroundColor(.adaptiveBlack)
+                .padding(8)
+                .background {
+                    Circle()
+                        .foregroundColor(.adaptiveWhite)
+                        .frame(width: 48)
+                }
         })
     }
 
