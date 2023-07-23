@@ -106,7 +106,7 @@ private extension MonthSelector {
                 Image(systemName: imageName)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(disabled ? .gray : .primary)
+                    .foregroundColor(disabled ? .gray.opacity(0.5) : .primary)
                     .frame(width: 12)
                     .offset(x: xOffset)
             }

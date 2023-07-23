@@ -122,7 +122,6 @@ private extension CreateDiaryView {
                 .background {
                     RoundedRectangle(cornerRadius: 20)
                         .foregroundColor(.appSecondary)
-                        .adaptiveShadow(size: .small)
                 }
                 Text("の日記")
                     .foregroundColor(.adaptiveBlack)

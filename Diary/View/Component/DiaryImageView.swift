@@ -76,7 +76,6 @@ private extension DiaryImageView {
             .background {
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.appSecondary)
-                    .adaptiveShadow(size: .small)
             }
         }
         .onChange(of: selectedPickerItem) { pickerItem in
