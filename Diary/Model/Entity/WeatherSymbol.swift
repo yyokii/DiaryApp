@@ -60,16 +60,3 @@ enum WeatherSymbol {
         return .custom(symbol: symbol, name: "")
     }
 }
-
-
-//struct WeatherSymbol {
-//    let symbol: String
-//    let name: String
-//
-//    static var sun: WeatherSymbol = .init(symbol: "sun.max", name: "晴れ")
-//    static var cloud: WeatherSymbol = .init(symbol: "cloud", name: "曇り")
-//    static var rain: WeatherSymbol = .init(symbol: "cloud.rain", name: "雨")
-//    static var snow: WeatherSymbol = .init(symbol: "cloud.snow", name: "雪")
-//    static var wind: WeatherSymbol = .init(symbol: "wind", name: "強風")
-//
-//}

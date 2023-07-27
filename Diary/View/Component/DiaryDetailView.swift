@@ -21,13 +21,6 @@ struct DiaryDetailView: View {
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
 
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        formatter.locale = .appLanguageLocale
-        return formatter
-    }()
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -58,7 +51,7 @@ struct DiaryDetailView: View {
                     )
                 }
             }
-            .navigationTitle(dateFormatter.string(from: diaryDataStore.selectedDate))
+            .navigationTitle(Locale.appLocaleFullDateFormatter.string(from: diaryDataStore.selectedDate))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 navigationToolBar
@@ -94,6 +87,18 @@ private extension DiaryDetailView {
 
     var navigationToolBar: some View {
         HStack(spacing: 12) {
+            if !isEditing {
+                NavigationLink {
+                    if let item = diaryDataStore.originalItem {
+                        ShareView(item: item)
+                    }
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 16))
+                        .foregroundColor(.primary)
+                }
+            }
+
             Button(actionWithHapticFB: {
                 updateBookmarkState()
             }, label: {
@@ -249,7 +254,7 @@ private extension DiaryDetailView {
         if let createdAt = diaryDataStore.originalItem?.createdAt {
             HStack {
                 Text("作成日: ")
-                Text(dateFormatter.string(from: createdAt))
+                Text(Locale.appLocaleFullDateFormatter.string(from: createdAt))
             }
             .font(.system(size: 14))
             .foregroundColor(.gray)
@@ -261,7 +266,7 @@ private extension DiaryDetailView {
         if let updatedAt = diaryDataStore.originalItem?.updatedAt {
             HStack {
                 Text("更新日: ")
-                Text(dateFormatter.string(from: updatedAt))
+                Text(Locale.appLocaleFullDateFormatter.string(from: updatedAt))
             }
             .font(.system(size: 14))
             .foregroundColor(.gray)

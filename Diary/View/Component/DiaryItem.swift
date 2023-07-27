@@ -126,7 +126,7 @@ private extension DiaryItem {
      [表示パターン（優先順位が高い順）]
      画像が設定されている場合：画像を表示
      画像が設定されていない場合：テキストコンテンツを表示
-     画像が設定されていない場合 && テキストが空：チェックリストの内容を表示
+     画像が設定されていない場合 && テキストが空  && チェックリストがある：チェックリストの内容を表示
      */
     @ViewBuilder
     var diaryContent: some View {
@@ -156,7 +156,7 @@ private extension DiaryItem {
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 20)
-        } else {
+        } else if !item.checkListItemsArray.isEmpty {
             VStack(alignment: .leading, spacing: 10) {
                 Text(item.title ?? "")
                     .bold()
@@ -166,7 +166,7 @@ private extension DiaryItem {
                     .padding(.trailing, 40)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    // 最初の2つぐらい出してあとは省略にする
+                    // 最初の2つを表示し残りは省略する
                     ForEach(Array(item.checkListItemsArray.prefix(2)), id: \.self) { checkListItem in
                         HStack {
                             Image(systemName:"checkmark")

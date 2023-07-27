@@ -18,4 +18,11 @@ extension Locale {
             return Locale.current
         }
     }
+
+    static let appLocaleFullDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.locale = .appLanguageLocale
+        return formatter
+    }()
 }
