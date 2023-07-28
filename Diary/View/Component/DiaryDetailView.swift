@@ -20,6 +20,7 @@ struct DiaryDetailView: View {
     @State private var isPresentedTextEditor: Bool = false
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
+    @State private var isShareViewPresented: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -57,6 +58,12 @@ struct DiaryDetailView: View {
                 navigationToolBar
             }
         }
+        .sheet(isPresented: $isShareViewPresented, content: {
+            if let item = diaryDataStore.originalItem {
+                ShareView(item: item)
+                    .presentationDetents([.large])
+            }
+        })
         .onAppear {
             diaryDataStore.updateValuesWithOriginalData()
             if diaryDataStore.bodyText.isEmpty {
@@ -88,15 +95,13 @@ private extension DiaryDetailView {
     var navigationToolBar: some View {
         HStack(spacing: 12) {
             if !isEditing {
-                NavigationLink {
-                    if let item = diaryDataStore.originalItem {
-                        ShareView(item: item)
-                    }
-                } label: {
+                Button(actionWithHapticFB: {
+                    isShareViewPresented = true
+                }, label: {
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 16))
                         .foregroundColor(.primary)
-                }
+                })
             }
 
             Button(actionWithHapticFB: {
