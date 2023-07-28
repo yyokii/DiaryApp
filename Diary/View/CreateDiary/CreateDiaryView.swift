@@ -62,9 +62,9 @@ private extension CreateDiaryView {
     var dismissButton: some View {
         HStack {
             Spacer()
-            XButton(action: {
+            XButton {
                 dismiss()
-            })
+            }
             .padding(.trailing)
         }
     }
