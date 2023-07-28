@@ -21,6 +21,7 @@ struct DiaryDetailView: View {
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
     @State private var isShareViewPresented: Bool = false
+    @State private var showDeleteAlert: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -58,6 +59,9 @@ struct DiaryDetailView: View {
                 navigationToolBar
             }
         }
+        .alert(isPresented: $showDeleteAlert) {
+            deleteAlert
+        }
         .sheet(isPresented: $isShareViewPresented, content: {
             if let item = diaryDataStore.originalItem {
                 ShareView(item: item)
@@ -94,15 +98,6 @@ private extension DiaryDetailView {
 
     var navigationToolBar: some View {
         HStack(spacing: 12) {
-            if !isEditing {
-                Button(actionWithHapticFB: {
-                    isShareViewPresented = true
-                }, label: {
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 16))
-                        .foregroundColor(.primary)
-                })
-            }
 
             Button(actionWithHapticFB: {
                 updateBookmarkState()
@@ -111,6 +106,44 @@ private extension DiaryDetailView {
                     .font(.system(size: 16))
                     .foregroundColor(.primary)
             })
+
+            if isEditing {
+                Button(actionWithHapticFB: {
+                    showDeleteAlert = true
+                }, label: {
+                    Image(systemName: "trash")
+                        .font(.system(size: 16))
+                        .foregroundColor(.primary)
+                })
+
+                Button(actionWithHapticFB: {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isEditing = false
+                    }
+                    save()
+                }, label: {
+                    Text("保存")
+                })
+            } else {
+                headerMenu
+            }
+        }
+    }
+
+    var headerMenu: some View {
+        Menu {
+            if !isEditing {
+                Button(actionWithHapticFB: {
+                    isShareViewPresented = true
+                }, label: {
+                    HStack {
+                        Text("共有する")
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 16))
+                            .foregroundColor(.primary)
+                    }
+                })
+            }
 
             if isEditing {
                 Button(actionWithHapticFB: {
@@ -135,12 +168,26 @@ private extension DiaryDetailView {
                         isEditing = true
                     }
                 }, label: {
-                    Image(systemName: "pencil")
-                        .font(.system(size: 20))
-                        .foregroundColor(.primary)
+                    HStack {
+                        Text("編集する")
+                        Image(systemName: "pencil")
+                            .font(.system(size: 20))
+                            .foregroundColor(.primary)
+                    }
                 })
             }
+        } label: {
+            Image(systemName: "ellipsis")
+                .font(.system(size: 20))
+                .foregroundColor(.primary)
         }
+    }
+
+    var deleteAlert: Alert {
+        Alert(title: Text("この日記を削除します"),
+              message: Text("削除すると復元することはできません。"),
+              primaryButton: .cancel(Text("キャンセル")),
+              secondaryButton: .destructive(Text("削除する"), action: { delete() }))
     }
 
     @ViewBuilder
