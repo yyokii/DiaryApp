@@ -14,9 +14,11 @@ struct DiaryItem: View {
     @ObservedObject var item: Item
 
     @State private var opacity: Double = 0
+    @State private var isShareViewPresented: Bool = false
 
     private let isYearDisplayed: Bool
-    private let height: CGFloat = 140
+    private let iconsHeight: CGFloat = 40
+    private let contentHeight: CGFloat = 130
     private let cornerRadius: CGFloat = 10
     private let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -56,24 +58,100 @@ struct DiaryItem: View {
 
             HStack(alignment: .top, spacing: 0) {
                 diaryDate
-
-                ZStack(alignment: .topTrailing) {
-                    diaryContent
-                    bookMarkButton
-                        .padding(.top, 8)
-                        .padding(.trailing, 12)
-                }
+                diaryContentLayout
             }
         }
-        .frame(height: height)
+        .frame(height: contentHeight + iconsHeight)
         .opacity(opacity)
         .animate(using: .easeInOut(duration: 0.5)) {
             opacity = 1
         }
+        .sheet(isPresented: $isShareViewPresented, content: {
+            ShareView(item: item)
+                .presentationDetents([.large])
+        })
     }
 }
 
 private extension DiaryItem {
+
+    enum DisplayLayout {
+        case image(uiImage: UIImage)
+        case text
+        case checklist
+    }
+
+    var displayLayoutType: DisplayLayout {
+        if let imageData = item.imageData,
+           let uiImage: UIImage = .init(data: imageData) {
+            return .image(uiImage: uiImage)
+        } else if let body = item.body, !body.isEmpty {
+            return .text
+        } else if !item.checkListItemsArray.isEmpty {
+            return .checklist
+        } else {
+            return .text
+        }
+    }
+
+    @ViewBuilder
+    var diaryContentLayout: some View {
+        switch displayLayoutType {
+        case .image:
+            ZStack(alignment: .topTrailing) {
+                diaryContent
+                icons
+            }
+        default:
+            VStack(spacing: 0) {
+                icons
+                diaryContent
+            }
+        }
+    }
+
+    var icons: some View {
+        HStack(spacing: 4) {
+            Spacer()
+            shareButton
+            bookMarkButton
+        }
+        .frame(height: iconsHeight)
+        .padding(.trailing, 4)
+    }
+
+    var bookMarkButton: some View {
+        Button(actionWithHapticFB: {
+            bookMark()
+        }, label: {
+            Image(systemName: item.isBookmarked ? "bookmark.fill" : "bookmark")
+                .font(.system(size: 14))
+                .foregroundColor(.adaptiveBlack)
+                .padding(8)
+                .background {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .foregroundColor(.adaptiveWhite)
+                        .frame(width: 28, height: 28)
+                }
+        })
+    }
+
+    var shareButton: some View {
+        Button(actionWithHapticFB: {
+            isShareViewPresented = true
+        }, label: {
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 14))
+                .foregroundColor(.adaptiveBlack)
+                .padding(8)
+                .background {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .foregroundColor(.adaptiveWhite)
+                        .frame(width: 28, height: 28)
+                }
+        })
+    }
+
     var diaryDate: some View {
         VStack(alignment: .center) {
             Spacer()
@@ -104,24 +182,6 @@ private extension DiaryItem {
         }
     }
 
-    var bookMarkButton: some View {
-        Button(actionWithHapticFB: {
-            bookMark()
-        }, label: {
-            Image(systemName: item.isBookmarked ? "bookmark.fill" : "bookmark")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 11)
-                .foregroundColor(.adaptiveBlack)
-                .padding(8)
-                .background {
-                    Circle()
-                        .foregroundColor(.adaptiveWhite)
-                        .frame(width: 48)
-                }
-        })
-    }
-
     /**
      [表示パターン（優先順位が高い順）]
      画像が設定されている場合：画像を表示
@@ -130,23 +190,22 @@ private extension DiaryItem {
      */
     @ViewBuilder
     var diaryContent: some View {
-        if let imageData = item.imageData,
-           let uiImage: UIImage = .init(data: imageData) {
+        switch displayLayoutType {
+        case .image(let uiImage):
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
-                .frame(height: height)
+                .frame(height: iconsHeight + contentHeight)
                 .clipped()
                 .cornerRadius(cornerRadius, corners: [.topRight, .bottomRight])
                 .allowsHitTesting(false) // clipはUI上のclipは起こるが内部では画像をそのままのサイズで保持しているため、予期せぬタップ判定をもたらす。それを回避するためのワークアラウンド。 https://stackoverflow.com/questions/63300411/clipped-not-actually-clips-the-image-in-swiftui
-        } else if let body = item.body, !body.isEmpty {
+        case .text:
             VStack(alignment: .leading, spacing: 14) {
                 Text(item.title ?? "")
                     .bold()
                     .font(.system(size: 32))
                     .lineLimit(2)
                     .minimumScaleFactor(0.7)
-                    .padding(.trailing, 40)
 
                 Text(item.body ?? "")
                     .textOption(textOptions)
@@ -154,9 +213,8 @@ private extension DiaryItem {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
             }
-            .padding(.vertical, 10)
             .padding(.horizontal, 20)
-        } else if !item.checkListItemsArray.isEmpty {
+        case .checklist:
             VStack(alignment: .leading, spacing: 10) {
                 Text(item.title ?? "")
                     .bold()
@@ -188,7 +246,6 @@ private extension DiaryItem {
                         .foregroundColor(.gray)
                 }
             }
-            .padding(.vertical, 10)
             .padding(.horizontal, 20)
         }
     }
