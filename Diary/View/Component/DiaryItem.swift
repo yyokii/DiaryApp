@@ -18,7 +18,7 @@ struct DiaryItem: View {
 
     private let isYearDisplayed: Bool
     private let iconsHeight: CGFloat = 40
-    private let contentHeight: CGFloat = 130
+    private let contentHeight: CGFloat = 120
     private let cornerRadius: CGFloat = 10
     private let dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -184,7 +184,7 @@ private extension DiaryItem {
 
     /**
      [表示パターン（優先順位が高い順）]
-     画像が設定されている場合：画像を表示
+     画像が設定されている場合：画像とタイトルを表示
      画像が設定されていない場合：テキストコンテンツを表示
      画像が設定されていない場合 && テキストが空  && チェックリストがある：チェックリストの内容を表示
      */
@@ -192,13 +192,33 @@ private extension DiaryItem {
     var diaryContent: some View {
         switch displayLayoutType {
         case .image(let uiImage):
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
-                .frame(height: iconsHeight + contentHeight)
-                .clipped()
-                .cornerRadius(cornerRadius, corners: [.topRight, .bottomRight])
-                .allowsHitTesting(false) // clipはUI上のclipは起こるが内部では画像をそのままのサイズで保持しているため、予期せぬタップ判定をもたらす。それを回避するためのワークアラウンド。 https://stackoverflow.com/questions/63300411/clipped-not-actually-clips-the-image-in-swiftui
+            ZStack(alignment: .bottomLeading) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: iconsHeight + contentHeight)
+                    .clipped()
+                    .cornerRadius(cornerRadius, corners: [.topRight, .bottomRight])
+                    .allowsHitTesting(false) // clipはUI上のclipは起こるが内部では画像をそのままのサイズで保持しているため、予期せぬタップ判定をもたらす。それを回避するためのワークアラウンド。 https://stackoverflow.com/questions/63300411/clipped-not-actually-clips-the-image-in-swiftui
+
+                Text(item.title ?? "")
+                    .bold()
+                    .font(.system(size: 28))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top)
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 20)
+                    .background {
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.hex(0x27282d).opacity(0.4), .clear]),
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                    }
+            }
         case .text:
             VStack(alignment: .leading, spacing: 14) {
                 Text(item.title ?? "")
@@ -212,10 +232,11 @@ private extension DiaryItem {
                     .lineLimit(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
+                    .padding(.bottom, 4)
             }
             .padding(.horizontal, 20)
         case .checklist:
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(item.title ?? "")
                     .bold()
                     .font(.system(size: 32))
