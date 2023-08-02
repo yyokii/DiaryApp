@@ -37,14 +37,14 @@ struct ShareCardBackgroundColorList: View {
                             .frame(width: 40)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.appBlack, lineWidth: 3)
+                                    .stroke(Color.adaptiveBlack, lineWidth: 3)
                             )
 
                         if color == selectedColor {
                             Image(systemName: "checkmark")
                                 .font(.system(size: 16))
                                 .bold()
-                                .foregroundColor(.primary)
+                                .foregroundColor(.appBlack)
                         }
                     }
                 }

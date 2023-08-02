@@ -52,11 +52,6 @@ struct HomeView: View {
                                 diaryListSection
                                     .zIndex(-1) // HomeTopCardのshadowを隠さないため
                             }
-                            .background(content: {
-                                Rectangle()
-                                    .fill(Color.white)
-                            })
-
                         }
                         .onChange(of: scrollToItem, perform: { newValue in
                             defer {
@@ -144,9 +139,10 @@ private extension HomeView {
                     )
                         .padding(.vertical, 8)
                         .padding(.bottom, 4)
-                        .background(content: {
-                            Color.white
-                        })
+                        .background {
+                            Rectangle()
+                                .fill(.background)
+                        }
         ) {
             DiaryList(
                 dateInterval: displayDateInterval,

@@ -106,7 +106,7 @@ private extension WelcomeView {
 
             Text(description)
                 .foregroundColor(.adaptiveBlack.opacity(0.8))
-                .font(.system(size: 16))
+                .font(.system(size: 18))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -128,19 +128,14 @@ private extension WelcomeView {
                 description: "位置情報を許可してよりリッチな日記体験を開始しましょう。"
             )
 
-            Image("illust-dogJump")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 200)
-                .padding(28)
-                .background{
-                    Circle()
-                        .foregroundColor(.white)
-                        .blur(radius: 3)
-                }
+            HStack(spacing: 24) {
+                IconWithRoundedBackground(systemName: "mappin", backgroundColor: .green)
 
-            Text("「Shizuku」では自動的に天気情報を追加します。\n位置情報は天気情報の取得のみに使用されます。いつでも設定を変更することが可能です。")
-                .foregroundColor(.gray)
+                Text("「Shizuku」では自動的に天気情報を追加します。\n位置情報は天気情報の取得のみに使用されます。いつでも設定を変更することが可能です。")
+                    .foregroundColor(.adaptiveBlack.opacity(0.8))
+                    .font(.system(size: 18))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
         .frame(maxHeight: .infinity)
         .padding(.horizontal)
