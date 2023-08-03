@@ -38,9 +38,6 @@ struct HomeView: View {
             ZStack {
                 // メインコンテンツ
                 VStack {
-                    appInfo
-                        .padding(.trailing)
-
                     ScrollViewReader { scrollViewProxy in
                         ScrollView {
                             LazyVStack(pinnedViews: .sectionHeaders) {
@@ -71,7 +68,6 @@ struct HomeView: View {
                         })
                         .scrollIndicators(.hidden)
                     }
-                    .padding(.top, 4)
                 }
 
                 FloatingButton(
@@ -82,6 +78,14 @@ struct HomeView: View {
                 )
                 .padding(.trailing, 10)
                 .padding(.bottom, 20)
+            }
+            .navigationTitle("Diary")
+            .toolbarBackground(
+                .background,
+                for: .navigationBar
+            )
+            .toolbar {
+                navigationToolBar
             }
         }
         .tint(.adaptiveBlack)
@@ -149,6 +153,16 @@ private extension HomeView {
                 selectedDate: $selectedDate,
                 scrollToItem: $scrollToItem
             )
+        }
+    }
+
+    var navigationToolBar: some View {
+        NavigationLink {
+            AppInfoView()
+        } label: {
+            Image(systemName: "gearshape")
+                .font(.system(size: 18))
+                .bold()
         }
     }
 }
