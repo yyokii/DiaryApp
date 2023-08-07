@@ -346,6 +346,7 @@
 				F5737D392A28882000D706E8 /* HomeTopCard.swift */,
 				F5562C442A694C1E006AECC5 /* MonthSelector.swift */,
 				F53CE9672A1B7C4F00E63078 /* CalendarView.swift */,
+				F5358D372A00B621005FD6C8 /* Direction.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -402,7 +403,6 @@
 				F5358CBD29F691E8005FD6C8 /* BaseModel.swift */,
 				F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */,
 				F5358CBF29F69276005FD6C8 /* Item+Extension.swift */,
-				F5358D372A00B621005FD6C8 /* Direction.swift */,
 				F53CE9622A153CB400E63078 /* WeatherSymbol.swift */,
 			);
 			path = Entity;

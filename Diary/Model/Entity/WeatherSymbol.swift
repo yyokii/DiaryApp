@@ -5,7 +5,6 @@
 //  Created by Higashihara Yoki on 2023/05/18.
 //
 
-
 enum WeatherSymbol {
     case sun
     case cloud
