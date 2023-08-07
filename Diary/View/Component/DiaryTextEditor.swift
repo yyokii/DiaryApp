@@ -42,17 +42,13 @@ private extension DiaryTextEditor {
     }
 
     var background: some View {
-        ZStack {
-            Color.appSecondary
-
-            Color.gray.opacity(0.2)
-                .blur(radius: 10)
-                .onTapGesture {
-                    withAnimation {
-                        isPresented = false
-                    }
+        Color.clear
+            .background(.thinMaterial)
+            .onTapGesture {
+                withAnimation {
+                    isPresented = false
                 }
-        }
+            }
     }
 
     var textEditor: some View {
@@ -77,6 +73,10 @@ private extension DiaryTextEditor {
         }
         .background(Color.adaptiveWhite)
         .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.adaptiveBlack, lineWidth: 2)
+        )
     }
 
     var okButton: some View {
