@@ -109,7 +109,7 @@ private extension CreateDiaryView {
         Button(actionWithHapticFB: {
             isPresentedDatePicker.toggle()
         }, label: {
-            HStack {
+            HStack(spacing: 4) {
                 HStack {
                     Image(systemName: "calendar")
                         .foregroundColor(.adaptiveBlack)
@@ -118,11 +118,7 @@ private extension CreateDiaryView {
                         .foregroundColor(.adaptiveBlack)
                 }
                 .padding(.vertical, 12)
-                .padding(.horizontal)
-                .background {
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.appSecondary)
-                }
+
                 Text("の日記")
                     .foregroundColor(.adaptiveBlack)
             }
