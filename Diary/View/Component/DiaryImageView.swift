@@ -65,13 +65,13 @@ private extension DiaryImageView {
         PhotosPicker(selection: $selectedPickerItem) {
             HStack {
                 Image(systemName: "photo")
-                    .font(.system(size: 16))
-                    .foregroundColor(.adaptiveBlack)
-                Text("画像を設定")
                     .font(.system(size: 14))
                     .foregroundColor(.adaptiveBlack)
+                Text("画像を設定")
+                    .font(.system(size: 12))
+                    .foregroundColor(.adaptiveBlack)
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, 8)
             .padding(.horizontal)
             .background {
                 RoundedRectangle(cornerRadius: 20)
