@@ -109,14 +109,6 @@ private extension DiaryDetailView {
 
             if isEditing {
                 Button(actionWithHapticFB: {
-                    showDeleteAlert = true
-                }, label: {
-                    Image(systemName: "trash")
-                        .font(.system(size: 16))
-                        .foregroundColor(.primary)
-                })
-
-                Button(actionWithHapticFB: {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isEditing = false
                     }
@@ -132,50 +124,39 @@ private extension DiaryDetailView {
 
     var headerMenu: some View {
         Menu {
-            if !isEditing {
-                Button(actionWithHapticFB: {
-                    isShareViewPresented = true
-                }, label: {
-                    HStack {
-                        Text("共有する")
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 16))
-                            .foregroundColor(.primary)
-                    }
-                })
-            }
-
-            if isEditing {
-                Button(actionWithHapticFB: {
-                    delete()
-                }, label: {
-                    Image(systemName: "trash")
+            Button(actionWithHapticFB: {
+                isShareViewPresented = true
+            }, label: {
+                HStack {
+                    Text("共有する")
+                    Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 16))
                         .foregroundColor(.primary)
-                })
+                }
+            })
 
-                Button(actionWithHapticFB: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        isEditing = false
-                    }
-                    save()
-                }, label: {
-                    Text("保存")
-                })
-            } else {
-                Button(actionWithHapticFB: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        isEditing = true
-                    }
-                }, label: {
-                    HStack {
-                        Text("編集する")
-                        Image(systemName: "pencil")
-                            .font(.system(size: 20))
-                            .foregroundColor(.primary)
-                    }
-                })
-            }
+            Button(actionWithHapticFB: {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    isEditing = true
+                }
+            }, label: {
+                HStack {
+                    Text("編集する")
+                    Image(systemName: "pencil")
+                        .font(.system(size: 20))
+                        .foregroundColor(.primary)
+                }
+            })
+
+            Button(actionWithHapticFB: {
+                showDeleteAlert = true
+            }, label: {
+                Text("削除する")
+                Image(systemName: "trash")
+                    .font(.system(size: 16))
+                    .foregroundColor(.primary)
+            })
+            
         } label: {
             Image(systemName: "ellipsis")
                 .font(.system(size: 20))
