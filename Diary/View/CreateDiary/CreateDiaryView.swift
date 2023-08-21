@@ -71,7 +71,7 @@ private extension CreateDiaryView {
 
     var header: some View {
         HStack {
-            date
+            DiaryDateButton(selectedDate: $diaryDataStore.selectedDate)
                 .padding(.leading)
             Spacer()
             createButton
@@ -102,41 +102,6 @@ private extension CreateDiaryView {
                 .padding(.horizontal, 20)
             }
             .padding(.bottom, 100)
-        }
-    }
-
-    var date: some View {
-        Button(actionWithHapticFB: {
-            isPresentedDatePicker.toggle()
-        }, label: {
-            HStack(spacing: 4) {
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundColor(.adaptiveBlack)
-                    Text(diaryDataStore.selectedDate, style: .date)
-                        .bold()
-                        .foregroundColor(.adaptiveBlack)
-                }
-                .padding(.vertical, 12)
-
-                Text("の日記")
-                    .foregroundColor(.adaptiveBlack)
-            }
-            .font(.system(size: 20))
-        })
-        .foregroundColor(.appBlack)
-        .sheet(isPresented: $isPresentedDatePicker) {
-            /*
-             https://developer.apple.com/forums/thread/725965
-
-             下部に限らずDatePickerを表示している状態または閉じてすぐに他のsheetを表示させるとPresentaionエラーとなり、
-             以降Viewが再生成？されるまでSheetは表示されない。（iOS 16.4.1(a)実機で検証）
-             そのため、DatePickerをそのまま利用するのではなくsheetで表示している。
-             */
-            DatePicker("", selection: $diaryDataStore.selectedDate, displayedComponents: [.date])
-                .padding(.horizontal)
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .presentationDetents([.medium])
         }
     }
 

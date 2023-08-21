@@ -51,6 +51,7 @@
 		F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */; };
 		F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8D2A0C07680064CB62 /* TextOptions.swift */; };
 		F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */; };
+		F5405B942A93BD4B002FA0C9 /* DiaryDateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5405B932A93BD4B002FA0C9 /* DiaryDateButton.swift */; };
 		F54395E22A45C40600C74D59 /* CreateDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E12A45C40600C74D59 /* CreateDiaryView.swift */; };
 		F54395E42A47F43400C74D59 /* DiaryTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */; };
 		F549A54F2A57970C003E7F68 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F549A54E2A57970C003E7F68 /* Binding+Extension.swift */; };
@@ -151,6 +152,7 @@
 		F53E3A892A0BC88E0064CB62 /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		F53E3A8D2A0C07680064CB62 /* TextOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOptions.swift; sourceTree = "<group>"; };
 		F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		F5405B932A93BD4B002FA0C9 /* DiaryDateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDateButton.swift; sourceTree = "<group>"; };
 		F54395E12A45C40600C74D59 /* CreateDiaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDiaryView.swift; sourceTree = "<group>"; };
 		F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTextEditor.swift; sourceTree = "<group>"; };
 		F549A54E2A57970C003E7F68 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				F514464F2A5BE346002DA8CC /* CheckListEditButton.swift */,
 				F5BF44372A4F4B7B00217119 /* CheckListTextEditor.swift */,
 				F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */,
+				F5405B932A93BD4B002FA0C9 /* DiaryDateButton.swift */,
 				F5358D502A054D05005FD6C8 /* DiaryDetailView.swift */,
 				F53E3A722A087ADE0064CB62 /* DiaryImageView.swift */,
 				F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */,
@@ -638,6 +641,7 @@
 				F5358D382A00B621005FD6C8 /* Direction.swift in Sources */,
 				F550BC9C2A111C0B00BCB0F2 /* Button+Haptic.swift in Sources */,
 				F5BE68872A7115CD00A92F00 /* ShareImageRender.swift in Sources */,
+				F5405B942A93BD4B002FA0C9 /* DiaryDateButton.swift in Sources */,
 				F5BF44412A5348CF00217119 /* AppVersion.swift in Sources */,
 				F53E3A8E2A0C07680064CB62 /* TextOptions.swift in Sources */,
 				F5BF443B2A5059F100217119 /* XButton.swift in Sources */,

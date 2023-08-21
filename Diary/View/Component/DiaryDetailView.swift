@@ -28,9 +28,11 @@ struct DiaryDetailView: View {
             ZStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        date
+                            .frame(maxWidth: .infinity)
+
                         image
                             .padding(.horizontal, isImageSet ? 0 : 20)
-                            .padding(.top, isImageSet ? 0 : 20)
 
                         VStack(spacing: 20) {
                             header
@@ -40,7 +42,7 @@ struct DiaryDetailView: View {
                                 .padding(.top, 40)
                         }
                         .padding(.horizontal, 20)
-                        .padding(.top, paddingTopToImage)
+                        .padding(.top, paddingTopFromBottomContent)
                     }
                     .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
                 }
@@ -53,7 +55,7 @@ struct DiaryDetailView: View {
                     )
                 }
             }
-            .navigationTitle(Locale.appLocaleFullDateFormatter.string(from: diaryDataStore.selectedDate))
+            .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 navigationToolBar
@@ -79,26 +81,39 @@ struct DiaryDetailView: View {
 
 private extension DiaryDetailView {
 
-    var paddingTopToImage: CGFloat {
+    var paddingTopFromBottomContent: CGFloat {
         /**
          画像表示関連Viewで画像が設定されている場合とそれ以外で見栄えを変える
          画像が設定されている: 余白なし
          画像が設定されていない: 余白あり
+         編集中の場合: 余白なし
          */
-        isImageSet
-        ? 0
-        : 28
+
+        if isEditing {
+            return 0
+        } else {
+            return isImageSet
+            ? 0
+            : 28
+        }
     }
 
     var isImageSet: Bool {
         diaryDataStore.selectedImage != nil
     }
 
+    var navigationTitle: String {
+        if isEditing {
+            return "編集中"
+        } else {
+            return Locale.appLocaleFullDateFormatter.string(from: diaryDataStore.selectedDate)
+        }
+    }
+
     // MARK: View
 
     var navigationToolBar: some View {
         HStack(spacing: 12) {
-
             Button(actionWithHapticFB: {
                 updateBookmarkState()
             }, label: {
@@ -156,7 +171,6 @@ private extension DiaryDetailView {
                     .font(.system(size: 16))
                     .foregroundColor(.primary)
             })
-            
         } label: {
             Image(systemName: "ellipsis")
                 .font(.system(size: 20))
@@ -194,6 +208,13 @@ private extension DiaryDetailView {
                         .padding()
                     }
             }
+        }
+    }
+
+    @ViewBuilder
+    var date: some View {
+        if isEditing {
+            DiaryDateButton(selectedDate: $diaryDataStore.selectedDate)
         }
     }
 
