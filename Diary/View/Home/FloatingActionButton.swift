@@ -22,19 +22,12 @@ struct FloatingButton: View {
                     Image(systemName: icon)
                         .bold()
                         .font(.system(size: 40))
-                        .foregroundColor(.white)
+                        .foregroundColor(.adaptiveWhite)
                         .padding(16)
-                        .background {
-                            ZStack {
-                                Circle()
-                                    .fill(.white)
-                                FluidGradient(
-                                    blobs: [.blue, .green, .yellow, .orange, .red, .pink, .teal],
-                                    highlights:  [.blue, .green, .yellow, .orange, .red, .pink, .purple, .teal, .indigo],
-                                    speed: 0.5
-                                )
-                            }
-                        }
+                }
+                .background {
+                    Circle()
+                        .fill(Color.adaptiveBlack)
                 }
                 .frame(width: size, height: size)
                 .cornerRadius(size/2)
@@ -49,9 +42,11 @@ struct FloatingButton: View {
 struct FloatingButton_Previews: PreviewProvider {
 
     static var content: some View {
-        FloatingButton(action: {
-            print("tap button")
-        }, icon: "plus")
+        NavigationStack {
+            FloatingButton(action: {
+                print("tap button")
+            }, icon: "plus")
+        }
     }
 
     static var previews: some View {
