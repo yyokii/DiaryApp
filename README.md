@@ -12,6 +12,9 @@ Tracking your daily habits is another important feature of Shizuku. Using checkl
 
 Shizuku is the perfect place to tell your story. Take your day by day and use your journal as a tool for growth and learning!
 
+時間を過ごすこと、感じることはAIにはできない人間だけのものです。
+全ての経験を大事にしましょう。
+
 <img src="https://github.com/yyokii/DiaryApp/assets/20992687/642898a5-04c3-4746-80da-867f5264ad99" width="600">  
 
 screen shots
