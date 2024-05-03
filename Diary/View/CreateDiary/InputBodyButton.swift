@@ -38,7 +38,8 @@ struct InputBodyButton: View {
                             .foregroundColor(.placeholderGray)
                     }
 
-                    Text(bodyText)                        .foregroundColor(.adaptiveBlack)
+                    Text(bodyText)
+                        .foregroundColor(.adaptiveBlack)
                         .frame(
                             maxWidth: .infinity,
                             maxHeight: .infinity,
