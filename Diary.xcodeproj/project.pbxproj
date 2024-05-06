@@ -73,7 +73,6 @@
 		F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTopCard.swift */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
-		F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37D2A433CCC0062650A /* iCloudSetupView.swift */; };
 		F576D3802A433DC10062650A /* IconWithRoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */; };
 		F5BE68822A6FDF1000A92F00 /* ShareCardBackgroundColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BE68812A6FDF1000A92F00 /* ShareCardBackgroundColorList.swift */; };
 		F5BE68852A71149300A92F00 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F5BE68842A71149300A92F00 /* FirebaseAnalytics */; };
@@ -173,7 +172,6 @@
 		F5737D392A28882000D706E8 /* HomeTopCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopCard.swift; sourceTree = "<group>"; };
 		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
-		F576D37D2A433CCC0062650A /* iCloudSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudSetupView.swift; sourceTree = "<group>"; };
 		F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundedBackground.swift; sourceTree = "<group>"; };
 		F5BE68812A6FDF1000A92F00 /* ShareCardBackgroundColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardBackgroundColorList.swift; sourceTree = "<group>"; };
 		F5BE68862A7115CD00A92F00 /* ShareImageRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageRender.swift; sourceTree = "<group>"; };
@@ -393,7 +391,6 @@
 				F53E3A8F2A0C8FCC0064CB62 /* BookmarkListView.swift */,
 				F53E3A872A0BB6D50064CB62 /* TextOptionsView.swift */,
 				F550BC942A0E499600BCB0F2 /* ReminderSettingView.swift */,
-				F576D37D2A433CCC0062650A /* iCloudSetupView.swift */,
 			);
 			path = AppInfo;
 			sourceTree = "<group>";
@@ -585,7 +582,6 @@
 				F5358D1429FAADAC005FD6C8 /* UIImage+Extension.swift in Sources */,
 				F5358D0A29F8B8B9005FD6C8 /* WeatherDataStore.swift in Sources */,
 				F5358CAE29F52468005FD6C8 /* CoreDataProvider.swift in Sources */,
-				F576D37E2A433CCC0062650A /* iCloudSetupView.swift in Sources */,
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
