@@ -11,23 +11,17 @@ import SwiftUI
 /**
  日記用画像の閲覧、設定が可能なView
 
- 編集、画像未設定 → ボタン
- 編集、画像設定あり　→ 画像  +  xアイコン
- 閲覧、画像未設定 → 空
- 閲覧、画像設定あり → 画像
+ 画像未設定: ボタン
+ 画像設定あり; 画像  +  xアイコン
  */
 struct DiaryImageView: View {
     @Binding var selectedImage: UIImage?
-
-    let isEditing: Bool
-
     @State private var selectedPickerItem: PhotosPickerItem?
 
     private let resizeImageSize: CGSize = .init(width: 300, height: 300)
     private let imageHeight: CGFloat = 200
 
     var body: some View {
-        if isEditing {
             if let image = selectedImage {
                 imageViewer(image)
                     .overlay(alignment: .topTrailing, content: {
@@ -40,12 +34,6 @@ struct DiaryImageView: View {
             } else {
                 imagePicker
             }
-        } else {
-            if let image = selectedImage {
-                // 閲覧状態であり且つ画像設定あり → 画像を表示
-                imageViewer(image)
-            } 
-        }
     }
 }
 
@@ -109,35 +97,16 @@ struct AddPhoto_Previews: PreviewProvider {
             VStack(spacing: 20) {
                 VStack {
                     DiaryImageView(
-                        selectedImage: .constant(nil),
-                        isEditing: true
+                        selectedImage: .constant(nil)
                     )
-                    Text("編集, 画像設定なし")
+                    Text("画像設定なし")
                 }
 
                 VStack {
                     DiaryImageView(
-                        selectedImage: .constant(sampleImage),
-                        isEditing: true
+                        selectedImage: .constant(sampleImage)
                     )
-                    Text("編集, 画像設定あり")
-                }
-
-                VStack {
-                    DiaryImageView(
-                        selectedImage: .constant(nil),
-                        isEditing: false
-                    )
-                    Text("（空 View）")
-                    Text("閲覧, 画像未設定")
-                }
-
-                VStack {
-                    DiaryImageView(
-                        selectedImage: .constant(sampleImage),
-                        isEditing: false
-                    )
-                    Text("閲覧, 画像設定あり")
+                    Text("画像設定あり")
                 }
             }
         }

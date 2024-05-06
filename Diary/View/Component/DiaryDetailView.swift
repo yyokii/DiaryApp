@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// 日記の詳細画面
+///
+/// DiaryListでForeachの中のNavigationLink内で使用しており、値が変わった時にForeach内の全てのDiaryDetailViewが再描画されている。
 struct DiaryDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bannerState: BannerState
@@ -15,20 +18,24 @@ struct DiaryDetailView: View {
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
-    @State private var isEditing: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
-    @State private var isPresentedTextEditor: Bool = false
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
     @State private var isShareViewPresented: Bool = false
     @State private var showDeleteAlert: Bool = false
+
+    enum Field: Hashable {
+        case title
+        case body
+    }
+    @FocusState private var focusedField: Field?
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        date
+                        DiaryDateButton(selectedDate: $diaryDataStore.selectedDate)
                             .frame(maxWidth: .infinity)
 
                         image
@@ -37,25 +44,17 @@ struct DiaryDetailView: View {
                         VStack(spacing: 20) {
                             header
                             ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
-                            diaryContent
-                            diaryAdditionalInfo
-                                .padding(.top, 40)
+                            VStack(alignment: .leading, spacing: 8) {
+                                diaryContent
+                                diaryAdditionalInfo
+                            }
                         }
                         .padding(.horizontal, 20)
-                        .padding(.top, paddingTopFromBottomContent)
                     }
-                    .padding(.bottom, 500) // コンテンツの下部を見やすくするために余白を持たせる
+                    .padding(.bottom, 400) // コンテンツの下部を見やすくするために余白を持たせる
                 }
                 .scrollIndicators(.hidden)
-
-                if isPresentedTextEditor {
-                    DiaryTextEditor(
-                        diaryDataStore: diaryDataStore,
-                        isPresented: $isPresentedTextEditor
-                    )
-                }
             }
-            .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 navigationToolBar
@@ -64,14 +63,25 @@ struct DiaryDetailView: View {
         .alert(isPresented: $showDeleteAlert) {
             deleteAlert
         }
-        .sheet(isPresented: $isShareViewPresented, content: {
+        .sheet(isPresented: $isShareViewPresented) {
             if let item = diaryDataStore.originalItem {
                 ShareView(item: item)
                     .presentationDetents([.large])
             }
-        })
+        }
+        .onChange(of: diaryDataStore.selectedImage) {
+            save()
+        }
+        .onChange(of: diaryDataStore.selectedWeather) {
+            save()
+        }
+        .onChange(of: diaryDataStore.selectedDate) {
+            save()
+        }
+        .onChange(of: focusedField) {
+            save()
+        }
         .onAppear {
-            diaryDataStore.updateValuesWithOriginalData()
             if diaryDataStore.bodyText.isEmpty {
                 selectedContentType = .checkList
             }
@@ -80,34 +90,8 @@ struct DiaryDetailView: View {
 }
 
 private extension DiaryDetailView {
-
-    var paddingTopFromBottomContent: CGFloat {
-        /**
-         画像表示関連Viewで画像が設定されている場合とそれ以外で見栄えを変える
-         画像が設定されている: 余白なし
-         画像が設定されていない: 余白あり
-         編集中の場合: 余白なし
-         */
-
-        if isEditing {
-            return 0
-        } else {
-            return isImageSet
-            ? 0
-            : 28
-        }
-    }
-
     var isImageSet: Bool {
         diaryDataStore.selectedImage != nil
-    }
-
-    var navigationTitle: String {
-        if isEditing {
-            return "編集中"
-        } else {
-            return Locale.appLocaleFullDateFormatter.string(from: diaryDataStore.selectedDate)
-        }
     }
 
     // MARK: View
@@ -121,19 +105,7 @@ private extension DiaryDetailView {
                     .font(.system(size: 16))
                     .foregroundColor(.primary)
             })
-
-            if isEditing {
-                Button(actionWithHapticFB: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        isEditing = false
-                    }
-                    save()
-                }, label: {
-                    Text("保存")
-                })
-            } else {
-                headerMenu
-            }
+            headerMenu
         }
     }
 
@@ -146,19 +118,6 @@ private extension DiaryDetailView {
                     Text("共有する")
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 16))
-                        .foregroundColor(.primary)
-                }
-            })
-
-            Button(actionWithHapticFB: {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    isEditing = true
-                }
-            }, label: {
-                HStack {
-                    Text("編集する")
-                    Image(systemName: "pencil")
-                        .font(.system(size: 20))
                         .foregroundColor(.primary)
                 }
             })
@@ -187,35 +146,22 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var image: some View {
-        DiaryImageView(
-            selectedImage: $diaryDataStore.selectedImage,
-            isEditing: isEditing
-        )
-        .contentShape(Rectangle())
-        .onTapGesture {
-            if !isEditing {
+        DiaryImageView(selectedImage: $diaryDataStore.selectedImage)
+            .contentShape(Rectangle())
+            .onTapGesture {
                 isImageViewerPresented = true
             }
-        }
-        .fullScreenCover(isPresented: $isImageViewerPresented) {
-            if !isEditing,
-               let image = diaryDataStore.selectedImage {
-                ImageViewer(image: image)
-                    .overlay(alignment: .topTrailing) {
-                        XButton {
-                            isImageViewerPresented = false
+            .fullScreenCover(isPresented: $isImageViewerPresented) {
+                if let image = diaryDataStore.selectedImage {
+                    ImageViewer(image: image)
+                        .overlay(alignment: .topTrailing) {
+                            XButton {
+                                isImageViewerPresented = false
+                            }
+                            .padding()
                         }
-                        .padding()
-                    }
+                }
             }
-        }
-    }
-
-    @ViewBuilder
-    var date: some View {
-        if isEditing {
-            DiaryDateButton(selectedDate: $diaryDataStore.selectedDate)
-        }
     }
 
     @ViewBuilder
@@ -228,22 +174,15 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var weather: some View {
-        if isEditing {
-            WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
-                .asyncState(weatherData.phase)
-        } else {
-            Image(systemName: diaryDataStore.selectedWeather.symbol)
-                .resizable()
-                .scaledToFit()
-                .frame(width:24)
-        }
+        WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
+            .asyncState(weatherData.phase)
     }
 
     @ViewBuilder
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
-            diaryBody
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
         case .checkList:
             checkList
         }
@@ -251,44 +190,21 @@ private extension DiaryDetailView {
 
     @ViewBuilder
     var title: some View {
-        if isEditing {
-            InputTitle(title: $diaryDataStore.title)
-        } else if !diaryDataStore.title.isEmpty {
-            Text(diaryDataStore.title)
-                .bold()
-                .font(.system(size: 24))
-                .multilineTextAlignment(.center)
-        }
-    }
-
-    @ViewBuilder
-    var diaryBody: some View {
-        if isEditing {
-            InputBodyButton(
-                bodyText: diaryDataStore.bodyText) {
-                    isPresentedTextEditor = true
-                }
-        } else if !diaryDataStore.bodyText.isEmpty {
-            Text(diaryDataStore.bodyText)
-                .textOption(textOptions)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .multilineTextAlignment(.leading)
-        }
+        InputTitle(title: $diaryDataStore.title)
+            .focused($focusedField, equals: .title)
     }
 
     var checkList: some View {
         VStack(spacing: 60) {
-            CheckList(diaryDataStore: diaryDataStore, isEditable: $isEditing)
-            if isEditing {
-                Button(actionWithHapticFB: {
-                    isCheckListEditorPresented = true
-                }) {
-                    CheckListEditButton()
-                }
-                .sheet(isPresented: $isCheckListEditorPresented) {
-                    CheckListEditor()
-                        .padding(.top)
-                }
+            CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true)) // TODO: isEditable消せるかも？
+            Button(actionWithHapticFB: {
+                isCheckListEditorPresented = true
+            }) {
+                CheckListEditButton()
+            }
+            .sheet(isPresented: $isCheckListEditorPresented) {
+                CheckListEditor()
+                    .padding(.top)
             }
         }
     }
@@ -341,7 +257,6 @@ private extension DiaryDetailView {
     func save() {
         do {
             try diaryDataStore.update()
-            isEditing = false
         } catch {
             bannerState.show(with: error)
         }
@@ -350,7 +265,6 @@ private extension DiaryDetailView {
     func delete() {
         do {
             try diaryDataStore.delete()
-            isEditing = false
             dismiss()
         } catch {
             bannerState.show(with: error)

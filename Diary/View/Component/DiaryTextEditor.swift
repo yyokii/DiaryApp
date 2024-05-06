@@ -8,117 +8,65 @@
 import SwiftUI
 
 struct DiaryTextEditor: View {
-    @FocusState var focused: Bool
+    @EnvironmentObject private var textOptions: TextOptions
 
-    @ObservedObject var diaryDataStore: DiaryDataStore
-
-    @Binding var isPresented: Bool
+    @Binding var bodyText: String
 
     var body: some View {
-        ZStack {
-            background
+        ZStack(alignment: .topLeading) {
+            VStack(alignment: .trailing, spacing: 12) {
+                TextEditor(text: $bodyText)
+                    .frame(height: 300)
+                    .multilineTextAlignment(.leading)
+                    .textOption(textOptions)
+                    .scrollIndicators(.visible)
 
-            VStack(spacing: 12) {
-                textEditor
-                    .padding()
-
-                okButton
+                Text("文字数: \(bodyText.count) / \(Item.textRange.upperBound)")
+                    .foregroundStyle(isOverMaxBodyText ? .red : .adaptiveBlack)
+                    .foregroundColor(.gray)
             }
-            .padding(.bottom)
-        }
-        .ignoresSafeArea(.container, edges: [.bottom]) // .container を指定しキーボードを回避
-        .onAppear {
-            focused = true
+
+            if bodyText.isEmpty {
+                Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 4)
+                    .allowsHitTesting(false)
+            }
         }
     }
 }
 
 private extension DiaryTextEditor {
-
-    var progressColor: Color {
-        diaryDataStore.bodyText.count > Item.textRange.upperBound
-        ? .red
-        : .adaptiveBlack
-    }
-
-    var background: some View {
-        Color.clear
-            .background(.thinMaterial)
-            .onTapGesture {
-                withAnimation {
-                    isPresented = false
-                }
-            }
-    }
-
-    var textEditor: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            TextEditor(text: $diaryDataStore.bodyText)
-                .focused($focused)
-                .scrollContentBackground(.hidden)
-                .background(Color.adaptiveWhite)
-                .cornerRadius(12)
-                .padding(.top)
-                .padding(.horizontal)
-
-            ProgressView(
-                "文字数: \(diaryDataStore.bodyText.count) / \(Item.textRange.upperBound)",
-                value: Double(diaryDataStore.bodyText.count),
-                total: Double(Item.textRange.upperBound)
-            )
-            .accentColor(progressColor)
-            .foregroundColor(.gray)
-            .padding(.horizontal)
-            .padding(.bottom)
-        }
-        .background(Color.adaptiveWhite)
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.adaptiveBlack, lineWidth: 2)
-        )
-    }
-
-    var okButton: some View {
-        Button(actionWithHapticFB: {
-            withAnimation {
-                isPresented = false
-            }
-        }) {
-            Text("OK")
-        }
-        .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: diaryDataStore.validContent, size: .small))
-        .disabled(!diaryDataStore.validContent)
+    var isOverMaxBodyText: Bool {
+        bodyText.count > Item.textRange.upperBound
     }
 }
 
 #if DEBUG
 
 struct DiaryTextEditor_Previews: PreviewProvider {
+    @State static var bodyTextEmpty = ""
 
-    static var item: Item {
-        let item = Item.makeRandom()
-        item.body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
-        return item
-    }
+    @State static var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
 
-    static var itemWithLongBody: Item {
-        let item = Item.makeRandom()
-        item.body = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
-        return item
-    }
+    @State static var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
 
     static var content: some View {
-        VStack {
-            DiaryTextEditor(
-                diaryDataStore: DiaryDataStore(item: item),
-                isPresented: .constant(true)
-            )
+        ScrollView {
+            VStack {
+                DiaryTextEditor(
+                    bodyText: $bodyTextEmpty
+                )
 
-            DiaryTextEditor(
-                diaryDataStore: DiaryDataStore(item: itemWithLongBody),
-                isPresented: .constant(true)
-            )
+                DiaryTextEditor(
+                    bodyText: $bodyText
+                )
+
+                DiaryTextEditor(
+                    bodyText: $bodyLongText
+                )
+            }
+            .environmentObject(TextOptions.preview)
         }
     }
 
@@ -129,6 +77,7 @@ struct DiaryTextEditor_Previews: PreviewProvider {
             content
                 .environment(\.colorScheme, .dark)
         }
+        .environmentObject(TextOptions.preview)
     }
 }
 
