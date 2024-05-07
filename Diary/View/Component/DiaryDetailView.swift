@@ -185,6 +185,7 @@ private extension DiaryDetailView {
             DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
         case .checkList:
             checkList
+                .padding(.bottom, 100)
         }
     }
 
@@ -195,7 +196,7 @@ private extension DiaryDetailView {
     }
 
     var checkList: some View {
-        VStack(spacing: 60) {
+        VStack(spacing: 40) {
             CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true)) // TODO: isEditable消せるかも？
             Button(actionWithHapticFB: {
                 isCheckListEditorPresented = true
@@ -203,10 +204,12 @@ private extension DiaryDetailView {
                 CheckListEditButton()
             }
             .sheet(isPresented: $isCheckListEditorPresented) {
-                CheckListEditor()
-                    .padding(.top)
+                NavigationStack {
+                    CheckListEditor()
+                }
             }
         }
+        .frame(maxWidth: .infinity)
     }
 
     var diaryAdditionalInfo: some View {

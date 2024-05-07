@@ -45,6 +45,8 @@ struct CheckListEditor: View {
                 )
             }
         }
+        .navigationTitle("チェックリスト")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
