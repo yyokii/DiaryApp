@@ -78,6 +78,9 @@ struct DiaryDetailView: View {
         .onChange(of: diaryDataStore.selectedDate) {
             save()
         }
+        .onChange(of: diaryDataStore.checkListItems) {
+            save()
+        }
         .onChange(of: focusedField) {
             save()
         }

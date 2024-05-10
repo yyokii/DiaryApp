@@ -183,9 +183,9 @@ public class DiaryDataStore: ObservableObject {
             updatedItem.imageData = selectedImage?.jpegData(compressionQuality: 0.5)
         }
 
-
-// TODO:       ここで毎回更新してるのどうなのよ、これ起因でfetchrequestのitemsが呼ばれてそう
-//        originalItem.checkListItems = NSSet(array: checkListItems)
+        if originalItem.checkListItemsArray != checkListItems {
+            updatedItem.checkListItems = NSSet(array: checkListItems)
+        }
 
         if updatedItem != originalItem {
             try saveItem(updatedItem)
