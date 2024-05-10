@@ -1,58 +1,75 @@
-//
-//  DiaryTextEditor.swift
-//  Diary
-//
-//  Created by Higashihara Yoki on 2023/06/25.
-//
-
 import SwiftUI
 
 struct DiaryTextEditor: View {
     @EnvironmentObject private var textOptions: TextOptions
 
     @Binding var bodyText: String
+    @State private var height: CGFloat = .zero
+
+    var isOverMaxBodyText: Bool {
+        bodyText.count > Item.textRange.upperBound
+    }
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            VStack(alignment: .trailing, spacing: 12) {
-                TextEditor(text: $bodyText)
-                    .frame(height: 300)
-                    .multilineTextAlignment(.leading)
-                    .textOption(textOptions)
-                    .scrollIndicators(.visible)
+        VStack(alignment: .trailing, spacing: 4) {
+            Text("文字数: \(bodyText.count) / \(Item.textRange.upperBound)")
+                .font(.system(size: 12))
+                .foregroundStyle(isOverMaxBodyText ? .red : .gray)
+                .padding(.horizontal, 8)
 
-                Text("文字数: \(bodyText.count) / \(Item.textRange.upperBound)")
-                    .foregroundStyle(isOverMaxBodyText ? .red : .adaptiveBlack)
-                    .foregroundColor(.gray)
-            }
+            ZStack(alignment: .topLeading) {
+                ZStack(alignment: .leading) {
+                    // TextEditorの高さを動的に変えるために裏でTextを透明で表示しその高さをTextEditoに設定する
+                    Text(bodyText)
+                        .foregroundColor(.clear)
+                        .padding(.vertical, 12)
+                        .background {
+                            GeometryReader {
+                                Color.clear.preference(
+                                    key: ViewHeightKey.self,
+                                    value: $0.frame(in: .local).size.height
+                                )
+                            }
+                        }
+                        .textOption(textOptions)
+                    TextEditor(text: $bodyText)
+                        .frame(minHeight: height)
+                        .scrollDisabled(true) // Scrollableなコンテンツの中で編集する前提で、そっちのスクロールのみを効かせるほうがUXとして自然
+                        .textOption(textOptions)
+                }
+                .onPreferenceChange(ViewHeightKey.self) { height = $0 }
 
-            if bodyText.isEmpty {
-                Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 4)
-                    .allowsHitTesting(false)
+                if bodyText.isEmpty {
+                    Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 4)
+                        .allowsHitTesting(false)
+                        .textOption(textOptions)
+                }
             }
         }
     }
 }
 
-private extension DiaryTextEditor {
-    var isOverMaxBodyText: Bool {
-        bodyText.count > Item.textRange.upperBound
+private struct ViewHeightKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }
 
 #if DEBUG
 
 struct DiaryTextEditor_Previews: PreviewProvider {
-    @State static var bodyTextEmpty = ""
 
-    @State static var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
+    struct Demo: View {
+        @State var bodyTextEmpty = ""
 
-    @State static var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
+        @State var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
 
-    static var content: some View {
-        ScrollView {
+        @State var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
+        var body: some View {
             VStack {
                 DiaryTextEditor(
                     bodyText: $bodyTextEmpty
@@ -66,7 +83,13 @@ struct DiaryTextEditor_Previews: PreviewProvider {
                     bodyText: $bodyLongText
                 )
             }
-            .environmentObject(TextOptions.preview)
+        }
+    }
+
+
+    static var content: some View {
+        ScrollView {
+            Demo()
         }
     }
 

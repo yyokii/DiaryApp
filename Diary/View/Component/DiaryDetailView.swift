@@ -13,7 +13,6 @@ import SwiftUI
 struct DiaryDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bannerState: BannerState
-    @EnvironmentObject private var textOptions: TextOptions
     @EnvironmentObject private var weatherData: WeatherData
 
     @ObservedObject var diaryDataStore: DiaryDataStore
@@ -46,7 +45,8 @@ struct DiaryDetailView: View {
                             ContentTypeSegmentedPicker(selectedContentType: $selectedContentType)
                             VStack(alignment: .leading, spacing: 8) {
                                 diaryContent
-                                diaryAdditionalInfo
+                                // TODO: 表示箇所を変える
+//                                diaryAdditionalInfo
                             }
                         }
                         .padding(.horizontal, 20)
@@ -200,7 +200,7 @@ private extension DiaryDetailView {
 
     var checkList: some View {
         VStack(spacing: 40) {
-            CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true)) // TODO: isEditable消せるかも？
+            CheckList(diaryDataStore: diaryDataStore)
             Button(actionWithHapticFB: {
                 isCheckListEditorPresented = true
             }) {

@@ -107,7 +107,7 @@ private extension CreateDiaryView {
             DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
         case .checkList:
             VStack(spacing: 60) {
-                CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true))
+                CheckList(diaryDataStore: diaryDataStore)
 
                 NavigationLink {
                     CheckListEditor()

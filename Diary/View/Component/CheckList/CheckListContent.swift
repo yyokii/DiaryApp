@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CheckListContent: View {
-
+    @EnvironmentObject private var textOptions: TextOptions
     // Core Dataの変更通知を反映させるためにObservedObjectを設定 https://stackoverflow.com/a/63524550/9015472
     @ObservedObject var item: CheckListItem
     let isChecked: Bool
@@ -18,6 +18,7 @@ struct CheckListContent: View {
             Text(item.title ?? "no title")
                 .font(.system(size: 20))
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .textOption(textOptions)
             Image(systemName: isChecked ? "checkmark.square.fill" : "square")
                 .font(.system(size: 26))
                 .bold()
@@ -46,6 +47,7 @@ struct CheckListContent_Previews: PreviewProvider {
             content
                 .environment(\.colorScheme, .dark)
         }
+        .environmentObject(TextOptions.preview)
     }
 }
 
