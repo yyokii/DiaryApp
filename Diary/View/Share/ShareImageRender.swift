@@ -75,9 +75,6 @@ private extension ShareImageRender {
                     checkList
                         .padding(.horizontal)
                 }
-
-                appName
-                    .padding(.top, 8)
             }
         }
     }
@@ -105,16 +102,16 @@ private extension ShareImageRender {
         HStack {
             Spacer()
             Text(item.date!, formatter: yearFormatter)
-                .font(.custom("BodoniSvtyTwoOSITCTT-Bold", size: 20))
+                .font(.system(size: 16))
         }
     }
 
     var date: some View {
         VStack(alignment: .center) {
             Text(item.date!, formatter: dateFormatter)
-                .font(.custom("BodoniSvtyTwoOSITCTT-Bold", size: 28))
+                .font(.system(size: 20))
             Text(item.date!, formatter: weekdayFormatter)
-                .font(.custom("BodoniSvtyTwoOSITCTT-Bold", size: 20))
+                .font(.system(size: 20))
                 .textCase(.lowercase)
         }
     }
@@ -155,22 +152,6 @@ private extension ShareImageRender {
 
                 }
             }
-        }
-    }
-
-    var appName: some View {
-        HStack {
-            Spacer()
-
-            Text("#Shizuku")
-                .font(.system(size: 12))
-                .fontWeight(.heavy)
-
-            Image("logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24)
-                .offset(x: -10)
         }
     }
 }
