@@ -178,7 +178,11 @@ private extension DiaryDetailView {
     @ViewBuilder
     var weather: some View {
         WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
-            .asyncState(weatherData.phase)
+            .asyncState(
+                weatherData.phase,
+                loadingContent: ProgressView()
+                    .frame(width: WeatherIcon.size.width, height: WeatherIcon.size.height)
+            )
     }
 
     @ViewBuilder
