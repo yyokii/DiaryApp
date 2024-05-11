@@ -1,10 +1,3 @@
-//
-//  WeatherSelectButton.swift
-//  Diary
-//
-//  Created by Higashihara Yoki on 2023/05/06.
-//
-
 import SwiftUI
 import WeatherKit
 
@@ -21,25 +14,23 @@ struct WeatherSelectButton: View {
         }
         .foregroundColor(.adaptiveBlack)
         .sheet(isPresented: $isPresentedSelectView) {
-            WeatherSelect(selectedWeather: $selectedWeather)
-                .padding(.horizontal)
-                .presentationDetents([.height(300)])
+            NavigationStack {
+                WeatherSelect(selectedWeather: $selectedWeather)
+                    .padding(.horizontal)
+            }
+            .presentationDetents([.height(340)])
         }
     }
 }
 
 struct WeatherIcon: View {
-    public static var itemWidth: CGFloat = 50
+    public static var size: CGSize = .init(width: 50, height: 50)
     let weatherSymbolName: String
 
     var body: some View {
-        Circle()
-            .fill(Color.adaptiveWhite)
-            .frame(width: WeatherIcon.itemWidth)
-            .overlay {
-                Image(systemName: weatherSymbolName)
-                    .font(.system(size: 24))
-            }
+        Image(systemName: weatherSymbolName)
+            .font(.system(size: 24))
+            .frame(width: WeatherIcon.size.width, height: WeatherIcon.size.height)
     }
 }
 
@@ -67,7 +58,7 @@ struct WeatherSelect: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 16) {
                 if isLocationPermissionTextPresented {
                     Button(actionWithHapticFB: {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
@@ -101,6 +92,8 @@ struct WeatherSelect: View {
             .padding(.top, 20)
         }
         .scrollIndicators(.hidden)
+        .navigationTitle("天気")
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             weatherAttribution = try? await weatherService.attribution
         }
@@ -111,6 +104,9 @@ private extension WeatherSelect {
 
     var dataFromCurrentLocationButton: some View {
         Button(actionWithHapticFB: {
+            defer {
+                dismiss()
+            }
             if weatherData.hasTodayWeather {
                 selectedWeather = .make(from: weatherData.todayWeather!.symbolName)
             } else {
@@ -120,7 +116,6 @@ private extension WeatherSelect {
                     isLocationPermissionTextPresented = true
                 } catch {
                     print(error.localizedDescription)
-                    dismiss()
                 }
             }
         }) {
@@ -144,8 +139,10 @@ private extension WeatherSelect {
             AsyncImage( url: weatherAttribution.combinedMarkLightURL) { image in
                 image
                     .resizable()
+                    .renderingMode(.template)
                     .scaledToFit()
                     .frame(height: 12)
+                    .foregroundStyle(Color.adaptiveBlack)
             } placeholder: {
                 ProgressView()
             }

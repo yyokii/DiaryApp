@@ -19,10 +19,18 @@ struct CheckListTextEditor: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            background
+            Color.clear
 
-            VStack(spacing: 24) {
+            VStack(alignment: .trailing, spacing: 0) {
+                if case let .editCurrentItem(item) = editState {
+                    Button(actionWithHapticFB: {
+                        delete(item)
+                    }) {
+                        Text("削除")
+                    }
+                }
                 inputProgress
+                Spacer(minLength: 24).fixedSize()
                 itemEditor
             }
             .padding()
@@ -76,17 +84,9 @@ private extension CheckListTextEditor {
 
     var itemEditor: some View {
         HStack(spacing: 16) {
-            if case let .editCurrentItem(item) = editState {
-                Button(actionWithHapticFB: {
-                    delete(item)
-                }) {
-                    circleIcon(imageName: "trash")
-                }
-            }
-
             TextField("", text: $title)
                 .focused($focused)
-                .foregroundColor(.appBlack)
+                .foregroundStyle(Color.adaptiveBlack)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 10)
@@ -100,7 +100,7 @@ private extension CheckListTextEditor {
             Button(actionWithHapticFB: {
                 send(with: editState)
             }) {
-                circleIcon(imageName: "paperplane")
+                Text("OK")
             }
         }
     }
@@ -172,11 +172,8 @@ private extension CheckListTextEditor {
 #if DEBUG
 
 struct CheckListTextEditor_Previews: PreviewProvider {
-    static let sampleText = "あいうえお123abd"
-
     static var content: some View {
         NavigationStack {
-
             VStack {
                 CheckListTextEditor(
                     isPresented: .constant(true),

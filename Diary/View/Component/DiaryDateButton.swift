@@ -46,6 +46,9 @@ struct DiaryDateButton: View {
                   .datePickerStyle(GraphicalDatePickerStyle())
                   .presentationDetents([.medium])
           }
+          .onChange(of: selectedDate) {
+              isPresentedDatePicker = false
+          }
       }
 }
 
@@ -54,19 +57,22 @@ struct DiaryDateButton: View {
 
 struct DiaryDateButton_Previews: PreviewProvider {
 
-    static var content: some View {
-        NavigationStack {
-            VStack {
-                DiaryDateButton(selectedDate: .constant(.now))
+    struct Demo: View {
+        @State var selectedDate: Date = .now
+        var body: some View {
+            NavigationStack {
+                VStack {
+                    DiaryDateButton(selectedDate: $selectedDate)
+                }
             }
         }
     }
 
     static var previews: some View {
         Group {
-            content
+            Demo()
                 .environment(\.colorScheme, .light)
-            content
+            Demo()
                 .environment(\.colorScheme, .dark)
         }
     }

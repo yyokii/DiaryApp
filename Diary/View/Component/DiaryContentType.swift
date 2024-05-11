@@ -14,7 +14,7 @@ enum DiaryContentType: CaseIterable {
         case .text:
             return "テキスト"
         case .checkList:
-            return "チェックリスト"
+            return "毎日チェックリスト"
         }
     }
 }

@@ -45,6 +45,8 @@ struct CheckListEditor: View {
                 )
             }
         }
+        .navigationTitle("チェックリスト")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -62,19 +64,12 @@ private extension CheckListEditor {
             editState = .createNewItem
             isPresentedTextEditor = true
         }) {
-            HStack {
-                Image(systemName:"plus")
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.adaptiveBlack)
-                    .bold()
-
-                Text("新しいチェックリストを追加")
-                    .font(.system(size: 16))
-                    .foregroundColor(.adaptiveBlack)
-                    .multilineTextAlignment(.leading)
-            }
-            .padding(.vertical, 8)
-            .padding(.horizontal)
+            Text("新しいチェックリストを追加")
+                .font(.system(size: 16))
+                .foregroundColor(.adaptiveBlack)
+                .multilineTextAlignment(.leading)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
             .background {
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.appSecondary)

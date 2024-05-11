@@ -1,94 +1,61 @@
-//
-//  DiaryTextEditor.swift
-//  Diary
-//
-//  Created by Higashihara Yoki on 2023/06/25.
-//
-
 import SwiftUI
 
 struct DiaryTextEditor: View {
-    @FocusState var focused: Bool
+    @EnvironmentObject private var textOptions: TextOptions
 
-    @ObservedObject var diaryDataStore: DiaryDataStore
+    @Binding var bodyText: String
+    @State private var height: CGFloat = .zero
 
-    @Binding var isPresented: Bool
+    var isOverMaxBodyText: Bool {
+        bodyText.count > Item.textRange.upperBound
+    }
 
     var body: some View {
-        ZStack {
-            background
+        VStack(alignment: .trailing, spacing: 4) {
+            Text("文字数: \(bodyText.count) / \(Item.textRange.upperBound)")
+                .font(.system(size: 12))
+                .foregroundStyle(isOverMaxBodyText ? .red : .gray)
+                .padding(.horizontal, 8)
 
-            VStack(spacing: 12) {
-                textEditor
-                    .padding()
+            ZStack(alignment: .topLeading) {
+                ZStack(alignment: .leading) {
+                    // TextEditorの高さを動的に変えるために裏でTextを透明で表示しその高さをTextEditoに設定する
+                    Text(bodyText)
+                        .foregroundColor(.clear)
+                        .padding(.vertical, 12)
+                        .background {
+                            GeometryReader {
+                                Color.clear.preference(
+                                    key: ViewHeightKey.self,
+                                    value: $0.frame(in: .local).size.height
+                                )
+                            }
+                        }
+                        .textOption(textOptions)
+                    TextEditor(text: $bodyText)
+                        .frame(minHeight: height)
+                        .scrollDisabled(true) // Scrollableなコンテンツの中で編集する前提で、そっちのスクロールのみを効かせるほうがUXとして自然
+                        .textOption(textOptions)
+                }
+                .onPreferenceChange(ViewHeightKey.self) { height = $0 }
 
-                okButton
+                if bodyText.isEmpty {
+                    Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 4)
+                        .allowsHitTesting(false)
+                        .textOption(textOptions)
+                }
             }
-            .padding(.bottom)
-        }
-        .ignoresSafeArea(.container, edges: [.bottom]) // .container を指定しキーボードを回避
-        .onAppear {
-            focused = true
         }
     }
 }
 
-private extension DiaryTextEditor {
-
-    var progressColor: Color {
-        diaryDataStore.bodyText.count > Item.textRange.upperBound
-        ? .red
-        : .adaptiveBlack
-    }
-
-    var background: some View {
-        Color.clear
-            .background(.thinMaterial)
-            .onTapGesture {
-                withAnimation {
-                    isPresented = false
-                }
-            }
-    }
-
-    var textEditor: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            TextEditor(text: $diaryDataStore.bodyText)
-                .focused($focused)
-                .scrollContentBackground(.hidden)
-                .background(Color.adaptiveWhite)
-                .cornerRadius(12)
-                .padding(.top)
-                .padding(.horizontal)
-
-            ProgressView(
-                "文字数: \(diaryDataStore.bodyText.count) / \(Item.textRange.upperBound)",
-                value: Double(diaryDataStore.bodyText.count),
-                total: Double(Item.textRange.upperBound)
-            )
-            .accentColor(progressColor)
-            .foregroundColor(.gray)
-            .padding(.horizontal)
-            .padding(.bottom)
-        }
-        .background(Color.adaptiveWhite)
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.adaptiveBlack, lineWidth: 2)
-        )
-    }
-
-    var okButton: some View {
-        Button(actionWithHapticFB: {
-            withAnimation {
-                isPresented = false
-            }
-        }) {
-            Text("OK")
-        }
-        .buttonStyle(ActionButtonStyle(backgroundColor: .appPrimary, isActive: diaryDataStore.validContent, size: .small))
-        .disabled(!diaryDataStore.validContent)
+private struct ViewHeightKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }
 
@@ -96,29 +63,33 @@ private extension DiaryTextEditor {
 
 struct DiaryTextEditor_Previews: PreviewProvider {
 
-    static var item: Item {
-        let item = Item.makeRandom()
-        item.body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
-        return item
+    struct Demo: View {
+        @State var bodyTextEmpty = ""
+
+        @State var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
+
+        @State var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
+        var body: some View {
+            VStack {
+                DiaryTextEditor(
+                    bodyText: $bodyTextEmpty
+                )
+
+                DiaryTextEditor(
+                    bodyText: $bodyText
+                )
+
+                DiaryTextEditor(
+                    bodyText: $bodyLongText
+                )
+            }
+        }
     }
 
-    static var itemWithLongBody: Item {
-        let item = Item.makeRandom()
-        item.body = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
-        return item
-    }
 
     static var content: some View {
-        VStack {
-            DiaryTextEditor(
-                diaryDataStore: DiaryDataStore(item: item),
-                isPresented: .constant(true)
-            )
-
-            DiaryTextEditor(
-                diaryDataStore: DiaryDataStore(item: itemWithLongBody),
-                isPresented: .constant(true)
-            )
+        ScrollView {
+            Demo()
         }
     }
 
@@ -129,6 +100,7 @@ struct DiaryTextEditor_Previews: PreviewProvider {
             content
                 .environment(\.colorScheme, .dark)
         }
+        .environmentObject(TextOptions.preview)
     }
 }
 

@@ -17,7 +17,6 @@ struct CreateDiaryView: View {
     @StateObject private var diaryDataStore: DiaryDataStore = DiaryDataStore()
 
     @State private var isPresentedDatePicker: Bool = false
-    @State private var isPresentedTextEditor: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
 
     private var dateFormatter: DateFormatter = {
@@ -37,13 +36,6 @@ struct CreateDiaryView: View {
                     header
                         .padding(.top)
                     scrollContent
-                }
-
-                if isPresentedTextEditor {
-                    DiaryTextEditor(
-                        diaryDataStore: diaryDataStore,
-                        isPresented: $isPresentedTextEditor
-                    )
                 }
             }
         }
@@ -82,10 +74,7 @@ private extension CreateDiaryView {
     var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                DiaryImageView(
-                    selectedImage: $diaryDataStore.selectedImage,
-                    isEditing: true
-                )
+                DiaryImageView(selectedImage: $diaryDataStore.selectedImage)
                 .padding(.horizontal, diaryDataStore.selectedImage == nil ? 20 : 0)
 
                 VStack(alignment: .leading, spacing: 20) {
@@ -108,20 +97,22 @@ private extension CreateDiaryView {
     @ViewBuilder
     var weather: some View {
         WeatherSelectButton(selectedWeather: $diaryDataStore.selectedWeather)
-            .asyncState(weatherData.phase)
+            .asyncState(
+                weatherData.phase,
+                loadingContent:
+                    ProgressView()
+                    .frame(width: WeatherIcon.size.width, height: WeatherIcon.size.height)
+            )
     }
 
     @ViewBuilder
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
-            InputBodyButton(
-                bodyText: diaryDataStore.bodyText) {
-                    isPresentedTextEditor = true
-                }
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
         case .checkList:
             VStack(spacing: 60) {
-                CheckList(diaryDataStore: diaryDataStore, isEditable: .constant(true))
+                CheckList(diaryDataStore: diaryDataStore)
 
                 NavigationLink {
                     CheckListEditor()
