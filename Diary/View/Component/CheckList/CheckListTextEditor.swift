@@ -172,8 +172,6 @@ private extension CheckListTextEditor {
 #if DEBUG
 
 struct CheckListTextEditor_Previews: PreviewProvider {
-    static let sampleText = "あいうえお123abd"
-
     static var content: some View {
         NavigationStack {
             VStack {
