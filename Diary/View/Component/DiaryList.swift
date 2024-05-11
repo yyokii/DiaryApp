@@ -20,8 +20,6 @@ struct DiaryList: View {
     @Binding var selectedDate: Date?
     @Binding var scrollToItem: Item?
 
-    let illustName = Image.randomIllustName
-
     init(
         dateInterval: DateInterval,
         selectedDate: Binding<Date?>,
