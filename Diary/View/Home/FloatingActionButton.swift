@@ -21,9 +21,9 @@ struct FloatingButton: View {
                 Button(actionWithHapticFB: action) {
                     Image(systemName: icon)
                         .bold()
-                        .font(.system(size: 40))
+                        .font(.system(size: 24))
                         .foregroundColor(.adaptiveWhite)
-                        .padding(16)
+                        .padding(20)
                 }
                 .background {
                     Circle()
