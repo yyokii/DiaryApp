@@ -226,7 +226,7 @@ public class DiaryDataStore: ObservableObject {
         }
         item.updatedAt = Date()
         self.originalItem = item
-        try originalItem.save()
+        try self.originalItem!.save()
     }
 }
 
