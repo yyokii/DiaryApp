@@ -158,37 +158,43 @@ public class DiaryDataStore: ObservableObject {
             throw DiaryDataStoreError.notFoundItem
         }
 
-        let updatedItem = originalItem
+        var updated: Bool = false
 
         // 値の変更があるかどうかを元の値との比較より行い、変更されている場合のみプロパティの更新を行う
 
         if originalItem.date != selectedDate {
-            updatedItem.date = selectedDate
+            originalItem.date = selectedDate
+            updated = true
         }
 
         if originalItem.title != title,
            !title.isEmpty {
-            updatedItem.title = title
+            originalItem.title = title
+            updated = true
         }
 
         if originalItem.body != bodyText {
-            updatedItem.body = bodyText
+            originalItem.body = bodyText
+            updated = true
         }
 
         if originalItem.weather != selectedWeather.symbol {
-            updatedItem.weather = selectedWeather.symbol
+            originalItem.weather = selectedWeather.symbol
+            updated = true
         }
 
         if originalItemImage != selectedImage {
-            updatedItem.imageData = selectedImage?.jpegData(compressionQuality: 0.5)
+            originalItem.imageData = selectedImage?.jpegData(compressionQuality: 0.5)
+            updated = true
         }
 
         if originalItem.checkListItemsArray != checkListItems {
-            updatedItem.checkListItems = NSSet(array: checkListItems)
+            originalItem.checkListItems = NSSet(array: checkListItems)
+            updated = true
         }
 
-        if updatedItem != originalItem {
-            try saveItem(updatedItem)
+        if updated {
+            try saveItem()
         }
     }
 
@@ -205,7 +211,7 @@ public class DiaryDataStore: ObservableObject {
         if originalItem.isBookmarked != isBookmarked {
             let updatedItem = originalItem
             updatedItem.isBookmarked = isBookmarked
-            try saveItem(updatedItem)
+            try saveItem()
         }
     }
 
@@ -220,13 +226,12 @@ public class DiaryDataStore: ObservableObject {
         }
     }
 
-    private func saveItem(_ item: Item) throws {
+    private func saveItem() throws {
         guard let originalItem else {
             throw DiaryDataStoreError.notFoundItem
         }
-        item.updatedAt = Date()
-        self.originalItem = item
-        try self.originalItem!.save()
+        originalItem.updatedAt = Date()
+        try self.originalItem?.save()
     }
 }
 
