@@ -69,6 +69,9 @@ struct DiaryDetailView: View {
                     .presentationDetents([.large])
             }
         }
+        .onDisappear {
+            save()
+        }
         .onChange(of: diaryDataStore.selectedImage) {
             save()
         }

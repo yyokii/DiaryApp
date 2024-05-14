@@ -35,7 +35,7 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 // メインコンテンツ
                 VStack {
                     ScrollViewReader { scrollViewProxy in
@@ -61,22 +61,19 @@ struct HomeView: View {
                                 scrollViewProxy.scrollTo(scrollToItem.objectID, anchor: .center)
                             }
                         })
-                        .onChange(of: firstDateOfDisplayedMonth, perform: { _ in
+                        .onChange(of: firstDateOfDisplayedMonth) {
                             withAnimation {
                                 scrollViewProxy.scrollTo(homeTopID)
                             }
-                        })
+                        }
                         .scrollIndicators(.hidden)
                     }
                 }
 
-                FloatingButton(
-                    action: {
-                        isCreateDiaryViewPresented = true
-                    },
-                    icon: "plus"
-                )
-                .padding(.trailing, 10)
+                FloatingButton {
+                    isCreateDiaryViewPresented = true
+                }
+                .padding(.trailing, 16)
                 .padding(.bottom, 20)
             }
             .navigationTitle("Diary")

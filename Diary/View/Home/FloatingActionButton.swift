@@ -9,31 +9,27 @@ import SwiftUI
 
 struct FloatingButton: View {
     let action: () -> Void
-    let icon: String
-
-    let size: CGFloat = 70
 
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Button(actionWithHapticFB: action) {
-                    Image(systemName: icon)
-                        .bold()
-                        .font(.system(size: 24))
-                        .foregroundColor(.adaptiveWhite)
-                        .padding(20)
-                }
-                .background {
-                    Circle()
-                        .fill(Color.adaptiveBlack)
-                }
-                .frame(width: size, height: size)
-                .cornerRadius(size/2)
-                .adaptiveShadow()
+        Button(actionWithHapticFB: action) {
+            HStack(alignment: .center, spacing: 8) {
+                Image(systemName: "plus")
+                    .bold()
+                    .font(.system(size: 20))
+                    .foregroundColor(.adaptiveWhite)
+                Text("作成")
+                    .font(.system(size: 16))
+                    .bold()
+                    .foregroundStyle(Color.adaptiveWhite)
+            }
+            .padding(.vertical, 16)
+            .padding(.horizontal, 20)
+            .background {
+                Capsule()
+                    .fill(Color.adaptiveBlack)
             }
         }
+        .adaptiveShadow()
     }
 }
 
@@ -43,9 +39,9 @@ struct FloatingButton_Previews: PreviewProvider {
 
     static var content: some View {
         NavigationStack {
-            FloatingButton(action: {
+            FloatingButton {
                 print("tap button")
-            }, icon: "plus")
+            }
         }
     }
 
