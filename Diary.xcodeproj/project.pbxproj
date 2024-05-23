@@ -429,8 +429,8 @@
 			children = (
 				F56FF3922BF62B0200C0D1D3 /* CustomCalendarView.swift */,
 				F56FF3942BF62C5100C0D1D3 /* Day.swift */,
-				F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */,
 				F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */,
+				F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
