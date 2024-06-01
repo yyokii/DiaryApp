@@ -61,19 +61,20 @@ public struct ActionButtonStyle: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
         return configuration.label
             .bold()
-            .foregroundColor(
+            .foregroundStyle(
                 self.foregroundColor
                     .opacity(!configuration.isPressed ? 1 : 0.5)
             )
             .padding(.vertical, size.verticalPadding)
-            .background(
+            .padding(.horizontal, 16)
+            .background {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(
                         self.backgroundColor
                             .opacity(self.isActive && !configuration.isPressed ? 1 : 0.5)
                     )
-                    .frame(width: size.buttonWidth)
-            )
+                    .frame(minWidth: size.buttonWidth)
+            }
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
