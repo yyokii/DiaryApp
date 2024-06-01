@@ -14,13 +14,16 @@ struct DiaryDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bannerState: BannerState
     @EnvironmentObject private var weatherData: WeatherData
+    @EnvironmentObject private var textOptions: TextOptions
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
     @State private var selectedContentType: DiaryContentType = .text
+
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
     @State private var isShareViewPresented: Bool = false
+    @State private var isTextEditorPresented: Bool = false
     @State private var showDeleteAlert: Bool = false
 
     enum Field: Hashable {
@@ -51,9 +54,18 @@ struct DiaryDetailView: View {
                         }
                         .padding(.horizontal, 20)
                     }
-                    .padding(.bottom, 400) // コンテンツの下部を見やすくするために余白を持たせる
                 }
                 .scrollIndicators(.hidden)
+
+                if isTextEditorPresented {
+                    DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
+                        withAnimation {
+                            isTextEditorPresented = false
+                        }
+                        save()
+                    }
+                    .focused($focusedField, equals: .body)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -192,7 +204,11 @@ private extension DiaryDetailView {
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
-            DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
+            DiaryText(text: diaryDataStore.bodyText) {
+                withAnimation {
+                    isTextEditorPresented = true
+                }
+            }
         case .checkList:
             checkList
                 .padding(.bottom, 100)

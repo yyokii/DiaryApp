@@ -69,6 +69,7 @@
 		F5562C472A6D3358006AECC5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C462A6D3358006AECC5 /* ShareView.swift */; };
 		F568BB6B2A3B88E2000330E1 /* DiaryContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */; };
 		F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */; };
+		F56FF3A12C0AB35300C0D1D3 /* DiaryText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */; };
 		F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTopCard.swift */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
@@ -167,6 +168,7 @@
 		F5562C462A6D3358006AECC5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryContentType.swift; sourceTree = "<group>"; };
 		F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypeSegmentedPicker.swift; sourceTree = "<group>"; };
+		F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryText.swift; sourceTree = "<group>"; };
 		F5737D392A28882000D706E8 /* HomeTopCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopCard.swift; sourceTree = "<group>"; };
 		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
+				F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */,
 				F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */,
 				F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */,
 				F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */,
@@ -609,6 +612,7 @@
 				F5358D532A0698BE005FD6C8 /* WeatherSelectButton.swift in Sources */,
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
+				F56FF3A12C0AB35300C0D1D3 /* DiaryText.swift in Sources */,
 				F51446502A5BE346002DA8CC /* CheckListEditButton.swift in Sources */,
 				F5BF44462A557E8600217119 /* WelcomeView.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
