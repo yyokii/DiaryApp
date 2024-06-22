@@ -14,20 +14,17 @@ struct DiaryDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var bannerState: BannerState
     @EnvironmentObject private var weatherData: WeatherData
+    @EnvironmentObject private var textOptions: TextOptions
 
     @ObservedObject var diaryDataStore: DiaryDataStore
 
     @State private var selectedContentType: DiaryContentType = .text
+
     @State private var isCheckListEditorPresented: Bool = false
     @State private var isImageViewerPresented: Bool = false
     @State private var isShareViewPresented: Bool = false
+    @State private var isTextEditorPresented: Bool = false
     @State private var showDeleteAlert: Bool = false
-
-    enum Field: Hashable {
-        case title
-        case body
-    }
-    @FocusState private var focusedField: Field?
 
     var body: some View {
         NavigationStack {
@@ -51,7 +48,6 @@ struct DiaryDetailView: View {
                         }
                         .padding(.horizontal, 20)
                     }
-                    .padding(.bottom, 400) // コンテンツの下部を見やすくするために余白を持たせる
                 }
                 .scrollIndicators(.hidden)
             }
@@ -69,6 +65,12 @@ struct DiaryDetailView: View {
                     .presentationDetents([.large])
             }
         }
+        .sheet(isPresented: $isTextEditorPresented) {
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
+                isTextEditorPresented = false
+                save()
+            }
+        }
         .onDisappear {
             save()
         }
@@ -82,9 +84,6 @@ struct DiaryDetailView: View {
             save()
         }
         .onChange(of: diaryDataStore.checkListItems) {
-            save()
-        }
-        .onChange(of: focusedField) {
             save()
         }
         .onAppear {
@@ -192,7 +191,11 @@ private extension DiaryDetailView {
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
-            DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
+            DiaryText(text: diaryDataStore.bodyText) {
+                withAnimation {
+                    isTextEditorPresented = true
+                }
+            }
         case .checkList:
             checkList
                 .padding(.bottom, 100)
@@ -202,7 +205,6 @@ private extension DiaryDetailView {
     @ViewBuilder
     var title: some View {
         InputTitle(title: $diaryDataStore.title)
-            .focused($focusedField, equals: .title)
     }
 
     var checkList: some View {
