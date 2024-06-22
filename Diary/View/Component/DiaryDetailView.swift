@@ -26,12 +26,6 @@ struct DiaryDetailView: View {
     @State private var isTextEditorPresented: Bool = false
     @State private var showDeleteAlert: Bool = false
 
-    enum Field: Hashable {
-        case title
-        case body
-    }
-    @FocusState private var focusedField: Field?
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -56,16 +50,6 @@ struct DiaryDetailView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-
-                if isTextEditorPresented {
-                    DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
-                        withAnimation {
-                            isTextEditorPresented = false
-                        }
-                        save()
-                    }
-                    .focused($focusedField, equals: .body)
-                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -81,6 +65,12 @@ struct DiaryDetailView: View {
                     .presentationDetents([.large])
             }
         }
+        .sheet(isPresented: $isTextEditorPresented) {
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
+                isTextEditorPresented = false
+                save()
+            }
+        }
         .onDisappear {
             save()
         }
@@ -94,9 +84,6 @@ struct DiaryDetailView: View {
             save()
         }
         .onChange(of: diaryDataStore.checkListItems) {
-            save()
-        }
-        .onChange(of: focusedField) {
             save()
         }
         .onAppear {
@@ -218,7 +205,6 @@ private extension DiaryDetailView {
     @ViewBuilder
     var title: some View {
         InputTitle(title: $diaryDataStore.title)
-            .focused($focusedField, equals: .title)
     }
 
     var checkList: some View {

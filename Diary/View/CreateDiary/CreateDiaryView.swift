@@ -38,19 +38,17 @@ struct CreateDiaryView: View {
                         .padding(.top)
                     scrollContent
                 }
-                if isTextEditorPresented {
-                    DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
-                        withAnimation {
-                            isTextEditorPresented = false
-                        }
-                    }
-                }
             }
         }
         .tint(.adaptiveBlack)
         .onReceive(weatherData.$todayWeather , perform: { todayWeather in
             guard let todayWeather else { return }
             diaryDataStore.selectedWeather = .make(from: todayWeather.symbolName)
+        })
+        .sheet(isPresented: $isTextEditorPresented, content: {
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
+                isTextEditorPresented = false
+            }
         })
     }
 }
