@@ -1,43 +1,30 @@
 import SwiftUI
 
+/**
+ 日記本文の編集画面
+
+ ScrollViewの中にTextEditorを入れると「改行した際にキーボードの下にもぐり込まない」という挙動の実現が難しいのでSheetなどで本Viewをメインで表示するようにする
+ */
 struct DiaryTextEditor: View {
     @EnvironmentObject private var textOptions: TextOptions
 
     @Binding var bodyText: String
-    @State private var height: CGFloat = .zero
+
+    @FocusState private var isFocused: Bool
+
+    let okButtonAction: () -> Void
 
     var isOverMaxBodyText: Bool {
         bodyText.count > Item.textRange.upperBound
     }
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 4) {
-            Text("文字数: \(bodyText.count) / \(Item.textRange.upperBound)")
-                .font(.system(size: 12))
-                .foregroundStyle(isOverMaxBodyText ? .red : .gray)
-                .padding(.horizontal, 8)
-
+        VStack(alignment: .center, spacing: 16) {
             ZStack(alignment: .topLeading) {
-                ZStack(alignment: .leading) {
-                    // TextEditorの高さを動的に変えるために裏でTextを透明で表示しその高さをTextEditoに設定する
-                    Text(bodyText)
-                        .foregroundColor(.clear)
-                        .padding(.vertical, 12)
-                        .background {
-                            GeometryReader {
-                                Color.clear.preference(
-                                    key: ViewHeightKey.self,
-                                    value: $0.frame(in: .local).size.height
-                                )
-                            }
-                        }
-                        .textOption(textOptions)
-                    TextEditor(text: $bodyText)
-                        .frame(minHeight: height)
-                        .scrollDisabled(true) // Scrollableなコンテンツの中で編集する前提で、そっちのスクロールのみを効かせるほうがUXとして自然
-                        .textOption(textOptions)
-                }
-                .onPreferenceChange(ViewHeightKey.self) { height = $0 }
+                TextEditor(text: $bodyText)
+                    .frame(maxHeight: .infinity)
+                    .focused($isFocused)
+                    .textOption(textOptions)
 
                 if bodyText.isEmpty {
                     Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
@@ -47,15 +34,26 @@ struct DiaryTextEditor: View {
                         .textOption(textOptions)
                 }
             }
-        }
-    }
-}
 
-private struct ViewHeightKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
+            HStack(alignment: .center, spacing: 0){
+                Text("\(bodyText.count) / \(Item.textRange.upperBound)")
+                    .font(.monospacedDigit(.system(size: 16))())
+                    .foregroundStyle(isOverMaxBodyText ? Color.red : Color.adaptiveBlack)
+                Spacer(minLength: 8)
+                Button(action: {
+                    okButtonAction()
+                }) {
+                    Text("OK")
+                }
+                .buttonStyle(ActionButtonStyle(size: .extraSmall))
+            }
+            .padding(.vertical, 16)
+            .padding(.horizontal, 24)
+            .background(Color.adaptiveWhite)
+        }
+        .onAppear {
+            isFocused = true
+        }
     }
 }
 
@@ -66,21 +64,21 @@ struct DiaryTextEditor_Previews: PreviewProvider {
     struct Demo: View {
         @State var bodyTextEmpty = ""
 
-        @State var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s\ndemo\ndemo\ndemo\ndemo\n"
+        @State var bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum \ndemo\ndemo\ndemo\ndemo\n"
 
-        @State var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum s", count:11)
+        @State var bodyLongText = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tortor porta erat feugiat dictum\n", count:11)
         var body: some View {
             VStack {
                 DiaryTextEditor(
-                    bodyText: $bodyTextEmpty
+                    bodyText: $bodyTextEmpty, okButtonAction: {}
                 )
 
                 DiaryTextEditor(
-                    bodyText: $bodyText
+                    bodyText: $bodyText, okButtonAction: {}
                 )
 
                 DiaryTextEditor(
-                    bodyText: $bodyLongText
+                    bodyText: $bodyLongText, okButtonAction: {}
                 )
             }
         }
@@ -88,9 +86,7 @@ struct DiaryTextEditor_Previews: PreviewProvider {
 
 
     static var content: some View {
-        ScrollView {
-            Demo()
-        }
+        Demo()
     }
 
     static var previews: some View {

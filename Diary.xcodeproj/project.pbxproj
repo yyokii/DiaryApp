@@ -73,6 +73,7 @@
 		F56FF3952BF62C5100C0D1D3 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3942BF62C5100C0D1D3 /* Day.swift */; };
 		F56FF3972BF632DF00C0D1D3 /* View+ExtractDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */; };
 		F56FF3992BF634B000C0D1D3 /* Date+CurrentMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */; };
+		F56FF3A12C0AB35300C0D1D3 /* DiaryText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */; };
 		F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTopCard.swift */; };
 		F5737D492A303EBA00D706E8 /* CheckList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D482A303EBA00D706E8 /* CheckList.swift */; };
 		F5737D4B2A30AE4700D706E8 /* CheckListItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */; };
@@ -175,6 +176,7 @@
 		F56FF3942BF62C5100C0D1D3 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ExtractDates.swift"; sourceTree = "<group>"; };
 		F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+CurrentMonth.swift"; sourceTree = "<group>"; };
+		F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryText.swift; sourceTree = "<group>"; };
 		F5737D392A28882000D706E8 /* HomeTopCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopCard.swift; sourceTree = "<group>"; };
 		F5737D482A303EBA00D706E8 /* CheckList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckList.swift; sourceTree = "<group>"; };
 		F5737D4A2A30AE4700D706E8 /* CheckListItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckListItem+Extension.swift"; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				F54395E32A47F43300C74D59 /* DiaryTextEditor.swift */,
 				F5358D2F2A000DCC005FD6C8 /* DiaryItem.swift */,
 				F53E3A842A0A1F510064CB62 /* DiaryList.swift */,
+				F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */,
 				F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */,
 				F576D37F2A433DC10062650A /* IconWithRoundedBackground.swift */,
 				F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */,
@@ -630,6 +633,7 @@
 				F5358D532A0698BE005FD6C8 /* WeatherSelectButton.swift in Sources */,
 				F5358D552A069BB2005FD6C8 /* InputTitle.swift in Sources */,
 				F5358CC029F69276005FD6C8 /* Item+Extension.swift in Sources */,
+				F56FF3A12C0AB35300C0D1D3 /* DiaryText.swift in Sources */,
 				F51446502A5BE346002DA8CC /* CheckListEditButton.swift in Sources */,
 				F5BF44462A557E8600217119 /* WelcomeView.swift in Sources */,
 				F5358CA529F52467005FD6C8 /* DiaryApp.swift in Sources */,
@@ -845,7 +849,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yyokii.Diary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -883,7 +887,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yyokii.Diary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -17,6 +17,7 @@ struct CreateDiaryView: View {
     @StateObject private var diaryDataStore: DiaryDataStore = DiaryDataStore()
 
     @State private var isPresentedDatePicker: Bool = false
+    @State private var isTextEditorPresented: Bool = false
     @State private var selectedContentType: DiaryContentType = .text
 
     private var dateFormatter: DateFormatter = {
@@ -43,6 +44,11 @@ struct CreateDiaryView: View {
         .onReceive(weatherData.$todayWeather , perform: { todayWeather in
             guard let todayWeather else { return }
             diaryDataStore.selectedWeather = .make(from: todayWeather.symbolName)
+        })
+        .sheet(isPresented: $isTextEditorPresented, content: {
+            DiaryTextEditor(bodyText: $diaryDataStore.bodyText) {
+                isTextEditorPresented = false
+            }
         })
     }
 }
@@ -90,7 +96,6 @@ private extension CreateDiaryView {
                 .padding(.top, 20)
                 .padding(.horizontal, 20)
             }
-            .padding(.bottom, 100)
         }
     }
 
@@ -109,7 +114,11 @@ private extension CreateDiaryView {
     var diaryContent: some View {
         switch selectedContentType {
         case .text:
-            DiaryTextEditor(bodyText: $diaryDataStore.bodyText)
+            DiaryText(text: diaryDataStore.bodyText) {
+                withAnimation {
+                    isTextEditorPresented = true
+                }
+            }
         case .checkList:
             VStack(spacing: 60) {
                 CheckList(diaryDataStore: diaryDataStore)
