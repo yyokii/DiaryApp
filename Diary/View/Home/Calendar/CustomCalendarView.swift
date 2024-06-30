@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct Demo: View {
-    @State private var selectedMonth: Date = .currentMonthFirstDate
+struct CalendarContainer<Content: View>: View {
+    @Binding var selectedMonth: Date
     @State private var selectedDate: Date = .now
 
     /// スクロールにより表示領域が小さくなった時に最大どれだけ小さくするか（元のカレンダー画面からこの値を引いた値が小さくなった時の高さ）
@@ -20,19 +20,22 @@ struct Demo: View {
         return calendarTitleViewHeight + weekLabelHeight + calendarGridHeight + safeArea.top + topPadding + bottomPadding
     }
 
-    let safeArea: EdgeInsets
+    private let safeArea: EdgeInsets
+    private let content: () -> Content
     /// カレンダー上部の年月表示の高さ
     let calendarTitleViewHeight: CGFloat = 28
     /// 曜日表示の高さ
-    let weekLabelHeight: CGFloat = 30.0
+    let weekLabelHeight: CGFloat = 30
     /// 日にち表示1つの高さ
     let dayHeight: CGFloat = 40
     let horizontalPadding: CGFloat = 16
     let topPadding: CGFloat = 8
     let bottomPadding: CGFloat = 8
 
-    init(safeAreaInsets: EdgeInsets) {
+    init(selectedMonth: Binding<Date>, safeAreaInsets: EdgeInsets, content: @escaping () -> Content) {
         self.safeArea = safeAreaInsets
+        self.content = content
+        self._selectedMonth = selectedMonth
     }
 
     var body: some View {
@@ -42,25 +45,11 @@ struct Demo: View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
                 CalendarView()
-
-                VStack(spacing: 15) {
-                    ForEach(1...10, id: \.self) { _ in
-                        CardView()
-                    }
-                }
-                .padding(15)
+                content()
             }
         }
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(CustomScrollBehaviour(minHeight: autoScrollThreshold))
-    }
-
-    /// Test Card View (For Scroll Content)
-    @ViewBuilder
-    func CardView() -> some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.blue.gradient)
-            .frame(height: 70)
     }
 
     /// Calendar View
@@ -72,11 +61,8 @@ struct Demo: View {
             /// スクロールView内での座標. 初期位置から上スクロールで「-」、下スクロールで「+」の値
             let minY = $0.frame(in: .scrollView(axis: .vertical)).minY
 
-//            let _ = print("📝 minY: \(minY)")
             // miYが「-」になる = 上にスワイプした時にカレンダーViewが縮小するのでprogressが増加する
             let progress = max(min((-minY / heightReductionAmount), 1), 0)
-
-//            let _ = print("📝 frame height: \( size.height - (heightReductionAmount * progress))")
 
             VStack(alignment: .leading, spacing: 0, content: {
                 // 年月表記
@@ -153,28 +139,49 @@ struct Demo: View {
     }
 }
 
-private extension Demo {}
-
-/// Custom Scroll Behaviour
-struct CustomScrollBehaviour: ScrollTargetBehavior {
-    var minHeight: CGFloat
-    func updateTarget(_ target: inout ScrollTarget, context: TargetContext) {
-        // target.rect.minY はスクロールコンテンツの上部の座標（0以上の値）
-        if target.rect.minY < minHeight {
-            // 最小サイズを超えるまでスクロールされなかった場合は初期位置に戻す
-            target.rect = .zero
+private extension CalendarContainer {
+    struct CustomScrollBehaviour: ScrollTargetBehavior {
+        var minHeight: CGFloat
+        func updateTarget(_ target: inout ScrollTarget, context: TargetContext) {
+            // target.rect.minY はスクロールコンテンツの上部の座標（0以上の値）
+            if target.rect.minY < minHeight {
+                // 最小サイズを超えるまでスクロールされなかった場合は初期位置に戻す
+                target.rect = .zero
+            }
         }
     }
 }
 
 struct ContentView: View {
     var body: some View {
-        GeometryReader {
-            let safeArea = $0.safeAreaInsets
-
-            Demo(safeAreaInsets: safeArea)
-                .ignoresSafeArea(.container, edges: .top)
+        GeometryReader { proxy in
+            let safeArea = proxy.safeAreaInsets
+            CalendarContainer(selectedMonth: .constant(.currentMonthFirstDate), safeAreaInsets: safeArea) {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(0..<10, id: \.self) { index in
+                            VStack(spacing: 15) {
+                                ForEach(1...10, id: \.self) { _ in
+                                    card
+                                }
+                            }
+                            .frame(width: proxy.size.width - 40)
+                            .padding(.vertical, 16)
+                            .padding(.horizontal, 20)
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+                .scrollTargetBehavior(.viewAligned)
+            }
+            .ignoresSafeArea(.container, edges: .top)
         }
+    }
+
+    var card: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.blue.gradient)
+            .frame(height: 70)
     }
 }
 
