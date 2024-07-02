@@ -1,10 +1,3 @@
-//
-//  Date+Extension.swift
-//  Diary
-//
-//  Created by Higashihara Yoki on 2023/04/25.
-//
-
 import Foundation
 
 public extension Date {
@@ -15,9 +8,19 @@ public extension Date {
     }
 
     var endOfMonth: Date? {
-        guard let endOfNextDay = currentCalendar.dateInterval(of: .month, for: self)?.end else {
+        guard let nextMonthFirstDay = currentCalendar.dateInterval(of: .month, for: self)?.end else {
             return nil
         }
-        return endOfNextDay.addingTimeInterval(-1)
+        return nextMonthFirstDay.addingTimeInterval(-1)
+    }
+
+    static var currentMonthInterval: DateInterval? {
+        let currentCalendar = Calendar.current
+        let now: Date = .now
+        guard let startOfMonth = currentCalendar.dateInterval(of: .month, for: now)?.start,
+              let endOfMonth = now.endOfMonth else {
+            return nil
+        }
+        return DateInterval(start: startOfMonth, end: endOfMonth)
     }
 }

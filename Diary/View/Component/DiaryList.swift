@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct DiaryList: View {
-    @EnvironmentObject private var bannerState: BannerState
-
     /*
      > The fetch request and its results use the managed object context stored in the environment, which you can access using the managedObjectContext environment value.
      https://developer.apple.com/documentation/swiftui/fetchrequest
@@ -17,12 +15,10 @@ struct DiaryList: View {
      FetchRequestにより、コンテキストの変化に応じて自動取得を行う
      */
     @FetchRequest private var items: FetchedResults<Item>
-    @Binding var selectedDate: Date?
     @Binding var scrollToItem: Item?
 
     init(
         dateInterval: DateInterval,
-        selectedDate: Binding<Date?>,
         scrollToItem: Binding<Item?>
     ) {
         /*
@@ -31,7 +27,6 @@ struct DiaryList: View {
          */
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
 
-        self._selectedDate = selectedDate
         self._scrollToItem = scrollToItem
     }
 
@@ -53,17 +48,6 @@ struct DiaryList: View {
             }
             .padding(.top, 4)
             .padding(.bottom, 200)
-            .onChange(of: selectedDate, perform: { newValue in
-                guard let date = newValue else {
-                    return
-                }
-
-                if let firstItemOnDate = fetchFirstItem(on: date) {
-                    scrollToItem = firstItemOnDate
-                } else {
-                    bannerState.show(of: .warning(message: "この日付の日記はありません"))
-                }
-            })
         }
     }
 }
@@ -103,7 +87,6 @@ struct DiaryList_Previews: PreviewProvider {
         NavigationStack {
             DiaryList(
                 dateInterval: .init(start: Date(), end: Date()),
-                selectedDate: .constant(Date()),
                 scrollToItem: .constant(nil)
             )
         }

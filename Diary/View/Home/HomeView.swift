@@ -17,13 +17,11 @@ struct HomeView: View {
     @AppStorage(UserDefaultsKey.hasBeenLaunchedBefore.rawValue)
     private var hasBeenLaunchedBefore: Bool = false
 
-    @State private var firstDateOfDisplayedMonth = Date().startOfMonth!
     @State private var isCreateDiaryViewPresented = false
     @State private var isCalendarPresented = false
     @State private var selectedDate: Date? = Date()
     @State private var scrollToItem: Item? = nil
-
-    @Namespace var homeTopID
+    @State private var diaryListInterval: DateInterval = Date.currentMonthInterval!
 
     private let calendar = Calendar.current
     private var dateFormatter: DateFormatter = {
@@ -37,52 +35,48 @@ struct HomeView: View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 // メインコンテンツ
-                VStack {
-                    ScrollViewReader { scrollViewProxy in
-                        ScrollView {
-                            LazyVStack(pinnedViews: .sectionHeaders) {
-                                HomeTopCard()
-                                    .padding(.horizontal)
-                                    .padding(.top)
-                                    .id(homeTopID)
-
-                                diaryListSection
-                                    .zIndex(-1) // HomeTopCardのshadowを隠さないため
+                ZStack(alignment: .topTrailing) {
+                    appInfo
+                        .padding(.top, 8)
+                        .padding(.trailing, 16)
+                        .zIndex(200)
+                    GeometryReader { proxy in
+                        let safeArea = proxy.safeAreaInsets
+                        CalendarContainer(
+                            selectedMonth: $diaryListInterval.start,
+                            safeAreaInsets: safeArea) {
+                                VStack {
+                                    DiaryList(
+                                        dateInterval: diaryListInterval,
+                                        scrollToItem: $scrollToItem
+                                    )
+                                    .frame(width: proxy.size.width - 20)
+                                    .padding(.vertical, 16)
+                                    .padding(.horizontal, 10)
+                                }
                             }
-                        }
-                        .onChange(of: scrollToItem, perform: { newValue in
-                            defer {
-                                isCalendarPresented = false
+                            .ignoresSafeArea(.container, edges: .top)
+                            .onSwipe(minimumDistance: 28) { direction in
+                                print(direction)
+                                switch direction {
+                                case .left:
+                                    moveMonth(.forward)
+                                    break
+                                case .right:
+                                    // 月を戻る
+                                    moveMonth(.backward)
+                                    break
+                                case .up, .down:
+                                    break
+                                }
                             }
-
-                            guard let scrollToItem else { return }
-
-                            withAnimation {
-                                scrollViewProxy.scrollTo(scrollToItem.objectID, anchor: .center)
-                            }
-                        })
-                        .onChange(of: firstDateOfDisplayedMonth) {
-                            withAnimation {
-                                scrollViewProxy.scrollTo(homeTopID)
-                            }
-                        }
-                        .scrollIndicators(.hidden)
                     }
                 }
-
                 FloatingButton {
                     isCreateDiaryViewPresented = true
                 }
                 .padding(.trailing, 16)
                 .padding(.bottom, 20)
-            }
-            .navigationTitle("Diary")
-            .toolbarBackground(
-                .background,
-                for: .navigationBar
-            )
-            .toolbar {
-                navigationToolBar
             }
         }
         .tint(.adaptiveBlack)
@@ -101,55 +95,38 @@ struct HomeView: View {
 }
 
 private extension HomeView {
-
-    var isDisplayingThisMonth: Bool {
-        guard let firstDateOfThisMonth = Date().startOfMonth else { return false }
-        return firstDateOfDisplayedMonth == firstDateOfThisMonth
+    var card: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(.blue.gradient)
+            .frame(height: 70)
     }
 
-    var displayDateInterval: DateInterval {
-        .init(
-            start: firstDateOfDisplayedMonth,
-            end: firstDateOfDisplayedMonth.endOfMonth!
-        )
+    func moveMonth(_ direction: Direction) {
+        var diff: Int
+        switch direction {
+        case .forward:
+            diff = 1
+        case .backward:
+            diff = -1
+        }
+
+        guard let date = calendar.date(byAdding: .month, value: diff, to: diaryListInterval.start),
+              let start = date.startOfMonth,
+              let end = date.endOfMonth else { return }
+
+        diaryListInterval = .init(start: start, end: end)
     }
 
     var appInfo: some View {
-        HStack {
-            Spacer()
-
-            NavigationLink {
-                AppInfoView()
-            } label: {
-                Image(systemName: "gearshape")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.primary)
-                    .frame(width: 28)
-                    .bold()
-            }
-        }
-    }
-
-    var diaryListSection: some View {
-        Section(header:
-                    MonthSelector(
-                        firstDateOfDisplayedMonth: $firstDateOfDisplayedMonth,
-                        selectedDate: $selectedDate,
-                        isCalendarPresented: $isCalendarPresented
-                    )
-                        .padding(.vertical, 8)
-                        .padding(.bottom, 4)
-                        .background {
-                            Rectangle()
-                                .fill(.background)
-                        }
-        ) {
-            DiaryList(
-                dateInterval: displayDateInterval,
-                selectedDate: $selectedDate,
-                scrollToItem: $scrollToItem
-            )
+        NavigationLink {
+            AppInfoView()
+        } label: {
+            Image(systemName: "gearshape")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(Color.adaptiveWhite)
+                .frame(width: 24)
+                .bold()
         }
     }
 

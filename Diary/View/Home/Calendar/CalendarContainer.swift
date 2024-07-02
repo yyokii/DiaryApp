@@ -3,6 +3,7 @@ import SwiftUI
 struct CalendarContainer<Content: View>: View {
     @Binding var selectedMonth: Date
     @State private var selectedDate: Date = .now
+    @State private var animation: Bool = false
 
     /// スクロールにより表示領域が小さくなった時に最大どれだけ小さくするか（元のカレンダー画面からこの値を引いた値が小さくなった時の高さ）
     var heightReductionAmount: CGFloat {
@@ -30,7 +31,7 @@ struct CalendarContainer<Content: View>: View {
     let dayHeight: CGFloat = 40
     let horizontalPadding: CGFloat = 16
     let topPadding: CGFloat = 8
-    let bottomPadding: CGFloat = 8
+    let bottomPadding: CGFloat = 12
 
     init(selectedMonth: Binding<Date>, safeAreaInsets: EdgeInsets, content: @escaping () -> Content) {
         self.safeArea = safeAreaInsets
@@ -61,6 +62,7 @@ struct CalendarContainer<Content: View>: View {
             /// スクロールView内での座標. 初期位置から上スクロールで「-」、下スクロールで「+」の値
             let minY = $0.frame(in: .scrollView(axis: .vertical)).minY
 
+            let _ = print("minY: \(minY)")
             // miYが「-」になる = 上にスワイプした時にカレンダーViewが縮小するのでprogressが増加する
             let progress = max(min((-minY / heightReductionAmount), 1), 0)
 
@@ -68,6 +70,7 @@ struct CalendarContainer<Content: View>: View {
                 // 年月表記
                 HStack(alignment: .center, spacing: 0) {
                     Text(selectedMonth.formatted(.dateTime.year().month()))
+                        .animation(.spring, value: selectedMonth)
                 }
                 .font(.title)
                 .fontWeight(.bold)
@@ -109,10 +112,15 @@ struct CalendarContainer<Content: View>: View {
                                 }
                         }
                     })
-                    // 日にち表示全体を割合で変化させる
-                    .frame(height: calendarGridHeight - (calendarGridHeight * progress), alignment: .top)
+                    .frame(
+                        height:  minY > 0
+                           ? calendarGridHeight + minY
+                           : calendarGridHeight - (calendarGridHeight * progress),
+                        alignment: .center
+                    )
                     .clipped()
                     .opacity(1 - progress)
+                    .animation(.spring, value: selectedMonth)
                 }
             })
             .foregroundStyle(Color.adaptiveWhite)
@@ -121,21 +129,26 @@ struct CalendarContainer<Content: View>: View {
             .padding(.top, safeArea.top)
             .padding(.bottom, bottomPadding)
             .frame(height: size.height - (heightReductionAmount * progress), alignment: .top)
-            .background(.cyan.gradient)
-            .offset(y: -minY) // 「-」に設定することで常に上部に設定する
+            .frame(
+                height: minY > 0
+                   ? size.height + minY
+                   : size.height - (heightReductionAmount * progress),
+                alignment: .top
+            )
+            .background(
+                RoundedRectangle(
+                    cornerRadius: (1 - progress) * 24,
+                    style: .continuous
+                )
+                .fill(.black.gradient)
+            )
+            .offset(y: -minY) // 「-」に設定することでカレンダーのメイン部分を常に上部に設定する
+            .compositingGroup()
+            .adaptiveShadow(size: .medium)
         }
         .frame(height: calendarHeight)
         .zIndex(100)
-    }
-
-
-    /// Month Increment/Decrement
-    func monthUpdate(_ increment: Bool = true) {
-        let calendar = Calendar.current
-        guard let month = calendar.date(byAdding: .month, value: increment ? 1 : -1, to: selectedMonth) else { return }
-        guard let date = calendar.date(byAdding: .month, value: increment ? 1 : -1, to: selectedDate) else { return }
-        selectedMonth = month
-        selectedDate = date
+        .animation(.spring, value: calendarHeight)
     }
 }
 
@@ -180,8 +193,9 @@ struct ContentView: View {
 
     var card: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(.blue.gradient)
+            .fill(.white.gradient)
             .frame(height: 70)
+            .adaptiveShadow()
     }
 }
 

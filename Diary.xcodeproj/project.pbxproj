@@ -65,13 +65,11 @@
 		F550BCAD2A1284EF00BCB0F2 /* FluidGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */; };
 		F550BCAF2A12852C00BCB0F2 /* BlobLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */; };
 		F5562C3F2A5FC379006AECC5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */; };
-		F5562C452A694C1E006AECC5 /* MonthSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C442A694C1E006AECC5 /* MonthSelector.swift */; };
 		F5562C472A6D3358006AECC5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5562C462A6D3358006AECC5 /* ShareView.swift */; };
 		F568BB6B2A3B88E2000330E1 /* DiaryContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */; };
 		F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */; };
-		F56FF3932BF62B0200C0D1D3 /* CustomCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3922BF62B0200C0D1D3 /* CustomCalendarView.swift */; };
+		F56FF3932BF62B0200C0D1D3 /* CalendarContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3922BF62B0200C0D1D3 /* CalendarContainer.swift */; };
 		F56FF3952BF62C5100C0D1D3 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3942BF62C5100C0D1D3 /* Day.swift */; };
-		F56FF3972BF632DF00C0D1D3 /* View+ExtractDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */; };
 		F56FF3992BF634B000C0D1D3 /* Date+CurrentMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */; };
 		F56FF3A12C0AB35300C0D1D3 /* DiaryText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */; };
 		F5737D3A2A28882000D706E8 /* HomeTopCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5737D392A28882000D706E8 /* HomeTopCard.swift */; };
@@ -168,13 +166,11 @@
 		F550BCAC2A1284EF00BCB0F2 /* FluidGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidGradient.swift; sourceTree = "<group>"; };
 		F550BCAE2A12852C00BCB0F2 /* BlobLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobLayer.swift; sourceTree = "<group>"; };
 		F5562C3E2A5FC379006AECC5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
-		F5562C442A694C1E006AECC5 /* MonthSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelector.swift; sourceTree = "<group>"; };
 		F5562C462A6D3358006AECC5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		F568BB6A2A3B88E2000330E1 /* DiaryContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryContentType.swift; sourceTree = "<group>"; };
 		F568BB6C2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypeSegmentedPicker.swift; sourceTree = "<group>"; };
-		F56FF3922BF62B0200C0D1D3 /* CustomCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarView.swift; sourceTree = "<group>"; };
+		F56FF3922BF62B0200C0D1D3 /* CalendarContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarContainer.swift; sourceTree = "<group>"; };
 		F56FF3942BF62C5100C0D1D3 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
-		F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ExtractDates.swift"; sourceTree = "<group>"; };
 		F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+CurrentMonth.swift"; sourceTree = "<group>"; };
 		F56FF3A02C0AB35300C0D1D3 /* DiaryText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryText.swift; sourceTree = "<group>"; };
 		F5737D392A28882000D706E8 /* HomeTopCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopCard.swift; sourceTree = "<group>"; };
@@ -352,7 +348,6 @@
 				F5358D2929FF401D005FD6C8 /* HomeView.swift */,
 				F5358D392A00BB1E005FD6C8 /* FloatingActionButton.swift */,
 				F5737D392A28882000D706E8 /* HomeTopCard.swift */,
-				F5562C442A694C1E006AECC5 /* MonthSelector.swift */,
 				F53CE9672A1B7C4F00E63078 /* CalendarView.swift */,
 				F5358D372A00B621005FD6C8 /* Direction.swift */,
 			);
@@ -429,10 +424,9 @@
 		F56FF3912BF62AF300C0D1D3 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				F56FF3922BF62B0200C0D1D3 /* CustomCalendarView.swift */,
+				F56FF3922BF62B0200C0D1D3 /* CalendarContainer.swift */,
 				F56FF3942BF62C5100C0D1D3 /* Day.swift */,
 				F56FF3982BF634B000C0D1D3 /* Date+CurrentMonth.swift */,
-				F56FF3962BF632DF00C0D1D3 /* View+ExtractDates.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -612,9 +606,8 @@
 				F5358CAE29F52468005FD6C8 /* CoreDataProvider.swift in Sources */,
 				F53E3A7A2A0941F20064CB62 /* BannerState.swift in Sources */,
 				F53CE9682A1B7C4F00E63078 /* CalendarView.swift in Sources */,
-				F56FF3932BF62B0200C0D1D3 /* CustomCalendarView.swift in Sources */,
+				F56FF3932BF62B0200C0D1D3 /* CalendarContainer.swift in Sources */,
 				F5358D302A000DCC005FD6C8 /* DiaryItem.swift in Sources */,
-				F5562C452A694C1E006AECC5 /* MonthSelector.swift in Sources */,
 				F53E3A902A0C8FCC0064CB62 /* BookmarkListView.swift in Sources */,
 				F53E3A8A2A0BC88E0064CB62 /* AppInfoView.swift in Sources */,
 				F5562C472A6D3358006AECC5 /* ShareView.swift in Sources */,
@@ -675,7 +668,6 @@
 				F550BCAB2A1284AC00BCB0F2 /* FluidGradientView.swift in Sources */,
 				F53E3A852A0A1F510064CB62 /* DiaryList.swift in Sources */,
 				F568BB6D2A3B8A44000330E1 /* ContentTypeSegmentedPicker.swift in Sources */,
-				F56FF3972BF632DF00C0D1D3 /* View+ExtractDates.swift in Sources */,
 				F56FF3992BF634B000C0D1D3 /* Date+CurrentMonth.swift in Sources */,
 				F5358D2629FEB2E9005FD6C8 /* UserDefaults.swift in Sources */,
 				F53CE9632A153CB400E63078 /* WeatherSymbol.swift in Sources */,
@@ -844,6 +836,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -882,6 +875,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
