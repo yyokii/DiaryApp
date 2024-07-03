@@ -55,7 +55,7 @@ struct DiaryList: View {
 private extension DiaryList {
     var empty: some View {
         VStack {
-            Text("「+」ボタンから日記を作成して、\nあなたの経験を振り返りましょう")
+            Text("「+」ボタンから日記を作成しましょう")
                 .foregroundColor(.adaptiveBlack)
                 .font(.system(size: 20))
                 .frame(height: 100)
