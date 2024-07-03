@@ -62,7 +62,6 @@ struct CalendarContainer<Content: View>: View {
             /// スクロールView内での座標. 初期位置から上スクロールで「-」、下スクロールで「+」の値
             let minY = $0.frame(in: .scrollView(axis: .vertical)).minY
 
-            let _ = print("minY: \(minY)")
             // miYが「-」になる = 上にスワイプした時にカレンダーViewが縮小するのでprogressが増加する
             let progress = max(min((-minY / heightReductionAmount), 1), 0)
 
@@ -71,6 +70,7 @@ struct CalendarContainer<Content: View>: View {
                 HStack(alignment: .center, spacing: 0) {
                     Text(selectedMonth.formatted(.dateTime.year().month()))
                         .animation(.spring, value: selectedMonth)
+                        .foregroundStyle(Color.black)
                 }
                 .font(.title)
                 .fontWeight(.bold)
@@ -84,7 +84,7 @@ struct CalendarContainer<Content: View>: View {
                             Text(symbol.prefix(3))
                                 .font(.caption)
                                 .frame(maxWidth: .infinity)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.gray)
                         }
                     }
                     .frame(height: weekLabelHeight - (weekLabelHeight * progress), alignment: .bottom)
@@ -97,7 +97,7 @@ struct CalendarContainer<Content: View>: View {
                         ForEach(selectedMonthDates) { day in
                             Text(day.shortSymbol)
                                 .font(.callout)
-                                .foregroundStyle(day.ignored ? .secondary : .primary)
+                                .foregroundStyle(day.ignored ? Color.gray : Color.black)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: dayHeight)
                                 .overlay(alignment: .bottom, content: {
@@ -140,7 +140,7 @@ struct CalendarContainer<Content: View>: View {
                     cornerRadius: (1 - progress) * 24,
                     style: .continuous
                 )
-                .fill(.black.gradient)
+                .fill(.white)
             )
             .offset(y: -minY) // 「-」に設定することでカレンダーのメイン部分を常に上部に設定する
             .compositingGroup()
@@ -179,7 +179,7 @@ struct ContentView: View {
                                 }
                             }
                             .frame(width: proxy.size.width - 40)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, 32)
                             .padding(.horizontal, 20)
                         }
                     }

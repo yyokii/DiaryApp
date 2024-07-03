@@ -95,12 +95,6 @@ struct HomeView: View {
 }
 
 private extension HomeView {
-    var card: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.blue.gradient)
-            .frame(height: 70)
-    }
-
     func moveMonth(_ direction: Direction) {
         var diff: Int
         switch direction {
@@ -124,7 +118,7 @@ private extension HomeView {
             Image(systemName: "gearshape")
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(Color.adaptiveWhite)
+                .foregroundStyle(Color.black)
                 .frame(width: 24)
                 .bold()
         }
