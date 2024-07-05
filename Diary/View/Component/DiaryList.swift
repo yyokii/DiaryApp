@@ -16,6 +16,7 @@ struct DiaryList: View {
      */
     @FetchRequest private var items: FetchedResults<Item>
     @Binding var scrollToItem: Item?
+    @State var selectedItem: Item? = nil
 
     init(
         dateInterval: DateInterval,
@@ -37,17 +38,28 @@ struct DiaryList: View {
         } else {
             LazyVStack(spacing: 24) {
                 ForEach(items) { item in
-                    NavigationLink {
-                        DiaryDetailView(diaryDataStore: .init(item: item))
-                    } label: {
-                        DiaryItem(item: item)
-                    }
-                    .id(item.objectID)
-                    .padding(.horizontal, 20)
+                    DiaryItem(item: item)
+                        .id(item.objectID)
+                        .padding(.horizontal, 20)
+                        .onTapGesture {
+                            // NavigationLinkだと、DiaryItem上でのアクションではNavigationLinkが優先されます。
+                            // 本Viewの使用箇所であるHomeではDiaryItem上で左右スワイプを効かせたかったので、tap gestureにしています。
+                            selectedItem = item
+                        }
                 }
             }
             .padding(.top, 4)
             .padding(.bottom, 200)
+            .navigationDestination(isPresented: .init(
+                get: {
+                    selectedItem != nil
+                }, set: { _ in
+                    selectedItem = nil
+                }
+            )) {
+                DiaryDetailView(diaryDataStore: .init(item: selectedItem))
+            }
+
         }
     }
 }
