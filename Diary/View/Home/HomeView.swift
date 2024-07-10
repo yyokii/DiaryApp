@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
-
+    @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject private var sceneDelegate: DiaryAppSceneDelegate
     @EnvironmentObject private var bannerState: BannerState
 
@@ -22,6 +22,7 @@ struct HomeView: View {
     @State private var selectedDate: Date? = Date()
     @State private var scrollToItem: Item? = nil
     @State private var diaryListInterval: DateInterval = Date.currentMonthInterval!
+    @State private var dateItemCount: [Date: Int] = [:]
 
     private let calendar = Calendar.current
     private var dateFormatter: DateFormatter = {
@@ -44,32 +45,29 @@ struct HomeView: View {
                         let safeArea = proxy.safeAreaInsets
                         CalendarContainer(
                             selectedMonth: $diaryListInterval.start,
-                            safeAreaInsets: safeArea) {
-                                VStack {
-                                    DiaryList(
-                                        dateInterval: diaryListInterval,
-                                        scrollToItem: $scrollToItem
-                                    )
-                                    .frame(width: proxy.size.width - 20)
-                                    .padding(.vertical, 16)
-                                    .padding(.horizontal, 10)
-                                }
+                            safeAreaInsets: safeArea,
+                            dateItemCount: dateItemCount
+                        ) {
+                            DiaryList(
+                                dateInterval: diaryListInterval,
+                                scrollToItem: $scrollToItem
+                            )
+                            .padding(.vertical, 16)
+                            .padding(.horizontal, 10)
+                        }
+                        .ignoresSafeArea(.container, edges: .top)
+                        .onSwipe(minimumDistance: 28) { direction in
+                            switch direction {
+                            case .left:
+                                moveMonth(.forward)
+                                break
+                            case .right:
+                                moveMonth(.backward)
+                                break
+                            case .up, .down:
+                                break
                             }
-                            .ignoresSafeArea(.container, edges: .top)
-                            .onSwipe(minimumDistance: 28) { direction in
-                                print(direction)
-                                switch direction {
-                                case .left:
-                                    moveMonth(.forward)
-                                    break
-                                case .right:
-                                    // 月を戻る
-                                    moveMonth(.backward)
-                                    break
-                                case .up, .down:
-                                    break
-                                }
-                            }
+                        }
                     }
                 }
                 FloatingButton {
@@ -80,9 +78,6 @@ struct HomeView: View {
             }
         }
         .tint(.adaptiveBlack)
-        .onAppear {
-            sceneDelegate.bannerState = bannerState
-        }
         .sheet(isPresented: $isCreateDiaryViewPresented) {
             CreateDiaryView()
                 .interactiveDismissDisabled()
@@ -91,10 +86,45 @@ struct HomeView: View {
             WelcomeView()
                 .interactiveDismissDisabled()
         }
+        .onAppear {
+            sceneDelegate.bannerState = bannerState
+        }
+        .onChange(of: diaryListInterval) { _, newValue in
+            loadItems(of: newValue)
+        }
     }
 }
 
 private extension HomeView {
+    func loadItems(of dateInterval: DateInterval) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(
+            format: "date >= %@ && date <= %@",
+            dateInterval.start as CVarArg,
+            dateInterval.end as CVarArg
+        )
+        do {
+            let fetchedItems = try viewContext.fetch(fetchRequest)
+            var countDict: [Date: Int] = [:]
+            let calendar = Calendar.current
+
+            for item in fetchedItems {
+                guard let date = item.date else { continue }
+                let components = calendar.dateComponents([.year, .month, .day], from: date)
+                guard let startOfDay = calendar.date(from: components) else { continue }
+
+                if let count = countDict[startOfDay] {
+                    countDict[startOfDay] = count + 1
+                } else {
+                    countDict[startOfDay] = 1
+                }
+            }
+            self.dateItemCount = countDict
+        } catch {
+            print("⚠️ Failed to fetch items: \(error)")
+        }
+    }
+
     func moveMonth(_ direction: Direction) {
         var diff: Int
         switch direction {
