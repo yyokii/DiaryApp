@@ -25,11 +25,12 @@ struct DiaryTextEditor: View {
                     .frame(maxHeight: .infinity)
                     .focused($isFocused)
                     .textOption(textOptions)
+                    .padding(.horizontal, 4)
 
                 if bodyText.isEmpty {
                     Text("日記の本文") .foregroundColor(Color(uiColor: .placeholderText))
                         .padding(.vertical, 8)
-                        .padding(.horizontal, 4)
+                        .padding(.horizontal, 8)
                         .allowsHitTesting(false)
                         .textOption(textOptions)
                 }
@@ -44,12 +45,12 @@ struct DiaryTextEditor: View {
                     okButtonAction()
                 }) {
                     Text("OK")
+                        .bold()
+                        .foregroundStyle(Color.adaptiveBlack)
                 }
-                .buttonStyle(ActionButtonStyle(size: .extraSmall))
             }
-            .padding(.vertical, 16)
+            .padding(.vertical, 10)
             .padding(.horizontal, 24)
-            .background(Color.adaptiveWhite)
         }
         .onAppear {
             isFocused = true
