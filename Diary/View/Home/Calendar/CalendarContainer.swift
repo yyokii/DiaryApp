@@ -21,8 +21,6 @@ struct CalendarContainer<Content: View>: View {
         return calendarTitleViewHeight + weekLabelHeight + calendarGridHeight + safeArea.top + topPadding + bottomPadding
     }
 
-    private let safeArea: EdgeInsets
-    private let content: () -> Content
     /// カレンダー上部の年月表示の高さ
     let calendarTitleViewHeight: CGFloat = 28
     /// 曜日表示の高さ
@@ -33,8 +31,13 @@ struct CalendarContainer<Content: View>: View {
     let topPadding: CGFloat = 8
     let bottomPadding: CGFloat = 12
 
-    init(selectedMonth: Binding<Date>, safeAreaInsets: EdgeInsets, content: @escaping () -> Content) {
+    private let safeArea: EdgeInsets
+    private let dateItemCount: [Date: Int]
+    private let content: () -> Content
+
+    init(selectedMonth: Binding<Date>, safeAreaInsets: EdgeInsets, dateItemCount: [Date: Int], content: @escaping () -> Content) {
         self.safeArea = safeAreaInsets
+        self.dateItemCount = dateItemCount
         self.content = content
         self._selectedMonth = selectedMonth
     }
@@ -87,7 +90,7 @@ struct CalendarContainer<Content: View>: View {
                                 .foregroundStyle(Color.gray)
                         }
                     }
-                    .frame(height: weekLabelHeight - (weekLabelHeight * progress), alignment: .bottom)
+                    .frame(height: weekLabelHeight - (weekLabelHeight * progress), alignment: .center)
                     // viewのframe外を表示しないために設定（設定しないとheightを縮めてもTextの表示は残る）
                     .clipped()
                     .opacity(1 - progress)
@@ -95,21 +98,19 @@ struct CalendarContainer<Content: View>: View {
                     // Calendar View
                     LazyVGrid(columns: Array(repeating: GridItem(spacing: 0), count: 7), spacing: 0, content: {
                         ForEach(selectedMonthDates) { day in
-                            Text(day.shortSymbol)
-                                .font(.callout)
-                                .foregroundStyle(day.ignored ? Color.gray : Color.black)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: dayHeight)
-                                .overlay(alignment: .bottom, content: {
-                                    Circle()
-                                        .fill(.white)
-                                        .frame(width: 5, height: 5)
-                                        .opacity(Calendar.current.isDate(day.date, inSameDayAs: selectedDate) ? 1 : 0)
-                                })
-                                .contentShape(.rect)
-                                .onTapGesture {
-                                    selectedDate = day.date
-                                }
+                            VStack(alignment: .center, spacing: 0) {
+                                Text(day.shortSymbol)
+                                    .font(.callout)
+                                    .foregroundStyle(day.ignored ? Color.gray : Color.black)
+                                    .frame(maxWidth: .infinity)
+                                    .contentShape(.rect)
+                                    .onTapGesture {
+                                        selectedDate = day.date
+                                    }
+                                itemsCountView(count: itemCount(for: day.date) ?? 0)
+                                    .frame(height: 8)
+                            }
+                            .frame(height: dayHeight)
                         }
                     })
                     .frame(
@@ -163,42 +164,74 @@ private extension CalendarContainer {
             }
         }
     }
-}
 
-struct ContentView: View {
-    var body: some View {
-        GeometryReader { proxy in
-            let safeArea = proxy.safeAreaInsets
-            CalendarContainer(selectedMonth: .constant(.currentMonthFirstDate), safeAreaInsets: safeArea) {
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(0..<10, id: \.self) { index in
-                            VStack(spacing: 15) {
-                                ForEach(1...10, id: \.self) { _ in
-                                    card
-                                }
-                            }
-                            .frame(width: proxy.size.width - 40)
-                            .padding(.vertical, 32)
-                            .padding(.horizontal, 20)
-                        }
-                    }
-                    .scrollTargetLayout()
-                }
-                .scrollTargetBehavior(.viewAligned)
-            }
-            .ignoresSafeArea(.container, edges: .top)
+    func itemCount(for date: Date) -> Int? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        guard let startOfDay = calendar.date(from: components) else {
+            return nil
         }
+        return dateItemCount[startOfDay]
     }
 
-    var card: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(.white.gradient)
-            .frame(height: 70)
-            .adaptiveShadow()
+    func itemsCountView(count: Int) -> some View {
+        HStack(alignment: .center, spacing: 2) {
+            if count <= 2 {
+                ForEach(0..<count, id: \.self) { _ in
+                    Circle()
+                        .foregroundStyle(Color.black.opacity(0.7))
+                        .frame(width: 3)
+                }
+            } else {
+                HStack(alignment: .center, spacing: 2) {
+                    ForEach(0..<2, id: \.self) { _ in
+                        Circle()
+                            .frame(width: 3, height: 3)
+                    }
+                    Image(systemName: "plus")
+                        .font(.system(size: 4))
+                        .bold()
+                }
+                .foregroundStyle(Color.black.opacity(0.7))
+            }
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    struct ContentView: View {
+        var body: some View {
+            GeometryReader { proxy in
+                let safeArea = proxy.safeAreaInsets
+                CalendarContainer(selectedMonth: .constant(.currentMonthFirstDate), safeAreaInsets: safeArea, dateItemCount: [:]) {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(0..<10, id: \.self) { index in
+                                VStack(spacing: 15) {
+                                    ForEach(1...10, id: \.self) { _ in
+                                        card
+                                    }
+                                }
+                                .frame(width: proxy.size.width - 40)
+                                .padding(.vertical, 32)
+                                .padding(.horizontal, 20)
+                            }
+                        }
+                        .scrollTargetLayout()
+                    }
+                    .scrollTargetBehavior(.viewAligned)
+                }
+                .ignoresSafeArea(.container, edges: .top)
+            }
+        }
+
+        var card: some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(.white.gradient)
+                .frame(height: 70)
+                .adaptiveShadow()
+        }
+    }
+
+    return ContentView()
 }

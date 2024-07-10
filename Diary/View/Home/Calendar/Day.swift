@@ -21,7 +21,7 @@ struct Day: Identifiable {
             return days
         }
 
-        let formatStyle = Date.FormatStyle(locale: .init(identifier: "en_US_POSIX"), calendar: calendar).day(.twoDigits)
+        let formatStyle = Date.FormatStyle(locale: .init(identifier: "en_US_POSIX"), calendar: calendar).day(.defaultDigits)
 
         // 1日の曜日
         let firstWeekDay = calendar.component(.weekday, from: firstDay)

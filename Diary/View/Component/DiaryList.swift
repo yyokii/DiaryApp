@@ -23,7 +23,7 @@ struct DiaryList: View {
         scrollToItem: Binding<Item?>
     ) {
         /*
-         HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
+         HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画が起こった際に特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateIntervalに紐づくものであることを保証している。
          */
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
