@@ -73,6 +73,6 @@ struct RoundedCorner: Shape {
 }
 
 enum SwipeDirection {
-    case left, right, up, down, none
+    case left, right, up, down
 }
 

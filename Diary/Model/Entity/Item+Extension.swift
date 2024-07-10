@@ -98,6 +98,7 @@ extension Item: BaseModel {
     static var thisMonth: NSFetchRequest<Item> {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         let now = Date()
+        // TODO: ここの後半、date <= %@ でいいのでは
         request.predicate = NSPredicate(
             format: "date >= %@ && date < %@",
             now.startOfMonth! as CVarArg,

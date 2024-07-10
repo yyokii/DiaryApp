@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct DiaryList: View {
-    @EnvironmentObject private var bannerState: BannerState
-
     /*
      > The fetch request and its results use the managed object context stored in the environment, which you can access using the managedObjectContext environment value.
      https://developer.apple.com/documentation/swiftui/fetchrequest
@@ -17,21 +15,19 @@ struct DiaryList: View {
      FetchRequestにより、コンテキストの変化に応じて自動取得を行う
      */
     @FetchRequest private var items: FetchedResults<Item>
-    @Binding var selectedDate: Date?
     @Binding var scrollToItem: Item?
+    @State var selectedItem: Item? = nil
 
     init(
         dateInterval: DateInterval,
-        selectedDate: Binding<Date?>,
         scrollToItem: Binding<Item?>
     ) {
         /*
-         HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画をトリガーに特定のDateでFetchRequestを作成することが難しい。
+         HomeViewでitemsを管理した場合、EnvironmentObjectの更新毎にFetchRequestが発火し、再描画が起こった際に特定のDateでFetchRequestを作成することが難しい。
          別Viewを作成しinitでFetchRequestを作成することで再描画時の表示情報が特定のDateIntervalに紐づくものであることを保証している。
          */
         _items = FetchRequest(fetchRequest: Item.items(of: dateInterval))
 
-        self._selectedDate = selectedDate
         self._scrollToItem = scrollToItem
     }
 
@@ -42,28 +38,28 @@ struct DiaryList: View {
         } else {
             LazyVStack(spacing: 24) {
                 ForEach(items) { item in
-                    NavigationLink {
-                        DiaryDetailView(diaryDataStore: .init(item: item))
-                    } label: {
-                        DiaryItem(item: item)
-                    }
-                    .id(item.objectID)
-                    .padding(.horizontal, 20)
+                    DiaryItem(item: item)
+                        .id(item.objectID)
+                        .padding(.horizontal, 20)
+                        .onTapGesture {
+                            // NavigationLinkだと、DiaryItem上でのアクションではNavigationLinkが優先されます。
+                            // 本Viewの使用箇所であるHomeではDiaryItem上で左右スワイプを効かせたかったので、tap gestureにしています。
+                            selectedItem = item
+                        }
                 }
             }
             .padding(.top, 4)
             .padding(.bottom, 200)
-            .onChange(of: selectedDate, perform: { newValue in
-                guard let date = newValue else {
-                    return
+            .navigationDestination(isPresented: .init(
+                get: {
+                    selectedItem != nil
+                }, set: { _ in
+                    selectedItem = nil
                 }
+            )) {
+                DiaryDetailView(diaryDataStore: .init(item: selectedItem))
+            }
 
-                if let firstItemOnDate = fetchFirstItem(on: date) {
-                    scrollToItem = firstItemOnDate
-                } else {
-                    bannerState.show(of: .warning(message: "この日付の日記はありません"))
-                }
-            })
         }
     }
 }
@@ -71,7 +67,7 @@ struct DiaryList: View {
 private extension DiaryList {
     var empty: some View {
         VStack {
-            Text("「+」ボタンから日記を作成して、\nあなたの経験を振り返りましょう")
+            Text("「+」ボタンから日記を作成しましょう")
                 .foregroundColor(.adaptiveBlack)
                 .font(.system(size: 20))
                 .frame(height: 100)
@@ -103,7 +99,6 @@ struct DiaryList_Previews: PreviewProvider {
         NavigationStack {
             DiaryList(
                 dateInterval: .init(start: Date(), end: Date()),
-                selectedDate: .constant(Date()),
                 scrollToItem: .constant(nil)
             )
         }
