@@ -264,7 +264,7 @@ extension Item: BaseModel {
     }
 
     // Validation
-    static let titleRange = 1...10
+    static let titleRange = 1...100
     static let textRange = 0...1000
 }
 
