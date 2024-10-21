@@ -53,7 +53,7 @@ struct CalendarContainer<Content: View>: View {
             }
         }
         .scrollIndicators(.hidden)
-        .scrollTargetBehavior(CustomScrollBehaviour(minHeight: autoScrollThreshold))
+        .scrollTargetBehavior(CustomScrollBehavior(minHeight: autoScrollThreshold))
     }
 
     /// Calendar View
@@ -154,7 +154,7 @@ struct CalendarContainer<Content: View>: View {
 }
 
 private extension CalendarContainer {
-    struct CustomScrollBehaviour: ScrollTargetBehavior {
+    struct CustomScrollBehavior: ScrollTargetBehavior {
         var minHeight: CGFloat
         func updateTarget(_ target: inout ScrollTarget, context: TargetContext) {
             // target.rect.minY はスクロールコンテンツの上部の座標（0以上の値）
