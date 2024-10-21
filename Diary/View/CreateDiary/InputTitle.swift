@@ -17,7 +17,7 @@ struct InputTitle: View {
                 .multilineTextAlignment(.leading)
 
             if title.count > Item.titleRange.upperBound {
-                Text("タイトルは10文字以内で設定しましょう")
+                Text("タイトルは100文字以内で設定しましょう")
                     .invalidInput()
                     .font(.system(size: 12))
             }
