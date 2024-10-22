@@ -12,7 +12,7 @@ struct InputTitle: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            TextField("タイトル（1~10文字）", text: $title)
+            TextField("タイトル（1~100文字）", text: $title)
                 .font(.system(size: 20))
                 .multilineTextAlignment(.leading)
 
